@@ -55,6 +55,7 @@
               fi
               ln -sf ${ags}/share/com.github.Aylur.ags/types ${agsRoot}/
             '';
+            AGS_DEBUG = 1;
           };
       });
     };
