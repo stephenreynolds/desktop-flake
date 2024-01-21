@@ -15,4 +15,17 @@ export default {
     },
 
     primaryMonitor: Option(2),
+
+    hyprland: {
+        borders: {
+            size: Option(1),
+        },
+        gaps: {
+            gapsIn: Option(4),
+            gapsOut: Option(4),
+            noGapsWhenOnly: Option(0),
+            noGapsWindowClasses: Option(['firefox']),
+        },
+        rounding: Option(10),
+    },
 };
