@@ -1,5 +1,6 @@
 import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
+import options from '../options.js';
 
 const time = Variable('', {
     poll: [1000, function() {
@@ -9,19 +10,23 @@ const time = Variable('', {
 
 const Bar = () => Widget.CenterBox({
         start_widget: Widget.Label({
-            hpack: 'center',
+            hpack: 'start',
             label: 'Welcome to AGS!',
         }),
         end_widget: Widget.Label({
-            hpack: 'center',
+            hpack: 'end',
             label: time.bind()
         }),
 });
 
-export default (monitor = 0) => Widget.Window({
-    monitor,
+/** @param {number} monitor */
+export default (monitor) => Widget.Window({
     name: `bar-${monitor}`,
-    anchor: ['top', 'left', 'right'],
+    exclusivity: 'exclusive',
+    monitor,
+    anchor: options.bar.position.bind('value').transform(pos => ([
+        pos, 'left', 'right'
+    ])),
     exclusivity: 'exclusive',
     child: Bar(),
 });
