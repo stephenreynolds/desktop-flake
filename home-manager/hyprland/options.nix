@@ -64,6 +64,21 @@ lib.mkIf cfg.enable {
       ];
     };
 
+    binds = {
+      workspace_back_and_forth = true;
+      allow_workspace_cycles = true;
+    };
+
+    group = {
+      insert_after_current = false;
+
+      groupbar = {
+        height = 0;
+        render_titles = false;
+        gradients = false;
+      };
+    };
+
     misc = {
       disable_hyprland_logo = true;
       disable_splash_rendering = true;
