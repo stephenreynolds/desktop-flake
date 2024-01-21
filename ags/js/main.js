@@ -1,3 +1,4 @@
+import { init } from './settings/setup.js';
 import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 
@@ -25,6 +26,7 @@ const Bar = (monitor = 0) => Widget.Window({
 });
 
 export default {
+    onConfigParsed: init,
     windows: [
         Bar()
     ],

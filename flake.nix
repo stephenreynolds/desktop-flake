@@ -24,11 +24,7 @@
 
       runtimeDependencies = genSystems (system: with pkgs.${system}; [
         inotify-tools
-        dart-sass
-        inter
-        swww
-        libnotify
-        imagemagick
+        sassc
       ]);
     in
     {
