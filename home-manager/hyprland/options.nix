@@ -27,7 +27,7 @@ lib.mkIf cfg.enable {
     };
 
     decoration = {
-      rounding = 20;
+      rounding = 10;
 
       blur = {
         enabled = true;
@@ -62,6 +62,26 @@ lib.mkIf cfg.enable {
         "md3_decel, 0.05, 0.7, 0.1, 1"
         "fluent_decel, 0.1, 1, 0, 1"
       ];
+    };
+
+    dwindle = {
+      no_gaps_when_only = 0;
+      pseudotile = true;
+      preserve_split = true;
+      permanent_direction_override = true;
+      force_split = 2; # Split right
+      special_scale_factor = 0.95;
+    };
+
+    master = {
+      no_gaps_when_only = 0;
+      mfact = 0.55;
+      new_is_master = true;
+      new_on_top = true;
+      orientation = "left";
+      inherit_fullscreen = true;
+      always_center_master = true;
+      special_scale_factor = 0.95;
     };
 
     binds = {
