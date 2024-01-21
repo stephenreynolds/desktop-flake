@@ -29,7 +29,7 @@
     {
       inherit configDir runtimeDependencies;
 
-      homeManagerModules.default = import ./nix/home-manager.nix self;
+      homeManagerModules.default = import ./home-manager self;
 
       devShells = genSystems (system: {
         default =
