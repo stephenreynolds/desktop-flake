@@ -8,6 +8,11 @@
       url = "github:Aylur/ags/524bad0e5ea8560ad4d9bd46862b25d7636296b6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
@@ -30,6 +35,7 @@
       inherit configDir runtimeDependencies;
 
       homeManagerModules.default = import ./home-manager self;
+      nixosModules.default = import ./nixos self;
 
       devShells = genSystems (system: {
         default =

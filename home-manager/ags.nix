@@ -1,7 +1,7 @@
 self: { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkOption mkEnableOption mkIf mkMerge;
+  inherit (lib) mkOption mkIf mkMerge;
   system = pkgs.stdenv.hostPlatform.system;
   cfg = config.desktop-flake;
 in
@@ -9,7 +9,6 @@ in
   imports = [ self.inputs.ags.homeManagerModules.default ];
 
   options.desktop-flake = {
-    enable = mkEnableOption "Whether to enable the desktop environment";
     ags = {
       package = mkOption {
         default = self.inputs.ags.packages.${system}.default;

@@ -5,8 +5,7 @@ let
 in
 {
   imports = [
-    (import ./ags.nix self)
-    (import ./hyprland self)
+    (import ./hyprland.nix self)
   ];
 
   options.desktop-flake = {
