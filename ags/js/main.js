@@ -33,4 +33,5 @@ const windows = () => [
 export default {
     onConfigParsed: init,
     windows: windows().flat(1),
+    maxStreamVolume: 1.05,
 };
