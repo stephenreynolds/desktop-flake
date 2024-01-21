@@ -26,9 +26,11 @@ const Bar = (monitor = 0) => Widget.Window({
     })
 });
 
+const windows = () => [
+    forMonitors(Bar),
+];
+
 export default {
     onConfigParsed: init,
-    windows: [
-        forMonitors(Bar),
-    ],
+    windows: windows().flat(1),
 };
