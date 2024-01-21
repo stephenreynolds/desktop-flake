@@ -4,47 +4,56 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    devshell.url = "github:numtide/devshell";
-
     ags = {
       url = "github:Aylur/ags/524bad0e5ea8560ad4d9bd46862b25d7636296b6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ inputs.devshell.flakeModule ];
+  outputs = inputs@{ self, nixpkgs, ... }:
+    let
+      genSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+      pkgs = genSystems (system: import nixpkgs { inherit system; });
 
-      systems = [ "x86_64-linux" ];
+      configDir = builtins.path { path = ./ags; name = "ags-config"; };
 
-      flake = { };
+      runtimeDependencies = genSystems (system: with pkgs.${system}; [
+        inotify-tools
+        dart-sass
+        inter
+        swww
+        libnotify
+        imagemagick
+      ]);
+    in
+    {
+      inherit configDir runtimeDependencies;
 
-      perSystem = { config, pkgs, ... }: {
-        devshells.default =
+      homeManagerModules.default = import ./nix/home-manager.nix self;
+
+      devShells = genSystems (system: {
+        default =
           let
-            ags = inputs.ags.packages.${pkgs.system}.agsWithTypes;
+            ags = inputs.ags.packages.${system}.agsWithTypes;
             projectRoot = toString (builtins.getEnv "PWD");
             agsRoot = "${projectRoot}/ags";
           in
-          {
-            packages = with pkgs; [
+          pkgs.${system}.mkShell {
+            buildInputs = with pkgs.${system}; [
               (writeShellScriptBin "ags" ''
-                ${ags}/bin/ags --config ${agsRoot}/config.js --bus-name hyprland $@
+                ${ags}/bin/ags --config ${agsRoot}/config.js $@
               '')
-              nodePackages_latest.npm
+              nodejs
               nodePackages_latest.eslint
               typescript
-            ];
-            devshell.startup.types.text = ''
+            ] ++ runtimeDependencies.${system};
+            shellHook = ''
               if [ ! -d ${agsRoot}/node_modules ]; then
                 npm --prefix ${agsRoot} install
               fi
               ln -sf ${ags}/share/com.github.Aylur.ags/types ${agsRoot}/
             '';
-            motd = "";
           };
-      };
+      });
     };
 }
