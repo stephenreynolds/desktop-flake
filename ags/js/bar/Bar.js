@@ -27,6 +27,8 @@ export default (monitor) => Widget.Window({
     anchor: options.bar.position.bind('value').transform(pos => ([
         pos, 'left', 'right'
     ])),
-    exclusivity: 'exclusive',
+    visible: options.bar.showOnAllMonitors.bind('value').transform(v => {
+        return v || monitor === options.primaryMonitor.value;
+    }),
     child: Bar(),
 });

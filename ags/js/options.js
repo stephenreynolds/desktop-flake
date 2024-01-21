@@ -11,5 +11,8 @@ export default {
             'enum': ['top', 'bottom'],
             'type': 'enum',
         }),
+        showOnAllMonitors: Option(false),
     },
+
+    primaryMonitor: Option(2),
 };
