@@ -1,0 +1,6 @@
+@use "../lib/colors";
+
+.bar-bg {
+  background-color: colors.$t_background;
+  min-height: 2.727rem;
+}

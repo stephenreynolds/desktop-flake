@@ -14,14 +14,14 @@ export function scssWatcher() {
 }
 
 export async function reloadScss() {
-    if (!dependencies(['sassc'])) {
+    if (!dependencies(['sass'])) {
         return;
     }
 
     try {
         const tmp = '/tmp/ags/scss';
         Utils.ensureDirectory(tmp);
-        await Utils.execAsync(`sassc ${App.configDir}/scss/main.scss ${tmp}/style.css`);
+        await Utils.execAsync(`sass ${App.configDir}/scss/main.scss ${tmp}/style.css`);
         App.resetCss();
         App.applyCss(`${tmp}/style.css`);
     }
