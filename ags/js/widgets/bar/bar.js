@@ -2,16 +2,14 @@ import Gtk from 'gi://Gtk';
 import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import options from '../../options.js';
+import LeftSpace from './leftSpace.js';
 import RightSpace from './rightSpace.js';
 
 /** @param {number} monitor */
 export default async (monitor = 0) => {
     const barContent = Widget.CenterBox({
         className: 'bar-bg',
-        startWidget: Widget.Label({
-            hpack: 'start',
-            label: 'Welcome to AGS!',
-        }),
+        startWidget: await LeftSpace(monitor),
         endWidget: RightSpace(monitor),
     });
 
