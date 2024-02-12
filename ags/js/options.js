@@ -28,4 +28,9 @@ export default {
         },
         rounding: Option(10),
     },
+
+    locale: {
+        dateFormat: Option('%a %b %-e'),
+        timeFormat: Option('%-I:%M %p'),
+    }
 };

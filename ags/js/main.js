@@ -4,7 +4,6 @@ import { forMonitors } from './utils.js';
 import { init } from './settings/setup.js';
 
 const windows = () => [
-    forMonitors(Bar),
 ];
 
 export default {
@@ -12,3 +11,5 @@ export default {
     windows: windows().flat(1),
     stackTraceOnError: GLib.getenv('AGS_DEBUG'),
 };
+
+forMonitors(Bar);
