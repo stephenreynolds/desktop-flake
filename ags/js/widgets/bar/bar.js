@@ -4,12 +4,6 @@ import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import options from '../../options.js';
 import RightSpace from './rightSpace.js';
 
-const time = Variable('', {
-    poll: [1000, function() {
-        return Date().toString();
-    }],
-});
-
 /** @param {number} monitor */
 export default async (monitor = 0) => {
     const barContent = Widget.CenterBox({

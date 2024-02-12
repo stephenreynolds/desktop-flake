@@ -1,7 +1,8 @@
-@use '../colors' as *;
-@use '../material' as *;
+@use '../colors';
+@use '../material';
 
 .bar-bg {
-  background-color: $t_background;
-  color: $primary;
+  background-color: colors.$t_background;
+  color: material.$onSurfaceVariant;
+  padding: 0.125rem 0.35rem;
 }
