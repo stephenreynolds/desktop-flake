@@ -1,5 +1,3 @@
-* {
-  all: unset;
-}
-
+@import './common';
+@import './classes';
 @import './widgets/bar';

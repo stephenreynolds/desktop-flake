@@ -1,5 +1,5 @@
-import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 import Gdk from 'gi://Gdk';
+import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 
 /**
   * @param {number} length

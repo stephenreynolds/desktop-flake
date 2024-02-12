@@ -1,6 +1,7 @@
-@use "../lib/colors";
+@use '../colors' as *;
+@use '../material' as *;
 
 .bar-bg {
-  background-color: colors.$t_background;
-  min-height: 2.727rem;
+  background-color: $t_background;
+  color: $primary;
 }

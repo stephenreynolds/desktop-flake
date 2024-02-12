@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     ags = {
-      url = "github:Aylur/ags/v1.7.4";
+      url = "github:Aylur/ags/109faf5d283d4d2ce90403e461b39048321b9041";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -25,6 +25,17 @@
       runtimeDependencies = genSystems (system: with pkgs.${system}; [
         inotify-tools
         dart-sass
+
+        swww
+        yad
+        wlr-randr
+        (python3.withPackages (ps: with ps; [
+          material-color-utilities
+          pywal
+          build
+          poetry-core
+          pillow
+        ]))
       ]);
     in
     {
@@ -56,6 +67,7 @@
               ln -sf ${ags}/share/com.github.Aylur.ags/types ${agsRoot}/
             '';
             AGS_DEBUG = 1;
+            AGS_CONFIG_DIR = agsRoot;
           };
       });
     };

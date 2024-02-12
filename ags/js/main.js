@@ -1,7 +1,7 @@
-import Bar from './bar/Bar.js';
 import GLib from 'gi://GLib';
-import { init } from './settings/setup.js';
+import Bar from './widgets/bar/bar.js';
 import { forMonitors } from './utils.js';
+import { init } from './settings/setup.js';
 
 const windows = () => [
     forMonitors(Bar),
@@ -10,6 +10,5 @@ const windows = () => [
 export default {
     onConfigParsed: init,
     windows: windows().flat(1),
-    maxStreamVolume: 1.05,
     stackTraceOnError: GLib.getenv('AGS_DEBUG'),
 };

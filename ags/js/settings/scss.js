@@ -2,12 +2,17 @@ import App from 'resource:///com/github/Aylur/ags/app.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 import { dependencies } from '../utils.js';
 
+const sourcePath = `${App.configDir}/scss`;
+const outputPath = '/tmp/ags/scss';
+
+let reloaded = false;
+
 export function scssWatcher() {
-    return Utils.subprocess([
+    Utils.subprocess([
         'inotifywait',
         '--recursive',
         '--event', 'create,modify',
-        '-m', App.configDir + '/scss',
+        '-m', sourcePath,
     ],
         reloadScss,
         () => print('Missing dependency inotify-tools for css hot reload.'));
@@ -19,11 +24,16 @@ export async function reloadScss() {
     }
 
     try {
-        const tmp = '/tmp/ags/scss';
-        Utils.ensureDirectory(tmp);
-        await Utils.execAsync(`sass ${App.configDir}/scss/main.scss ${tmp}/style.css`);
+        Utils.ensureDirectory(outputPath);
+        await Utils.execAsync([
+            'sass', `${sourcePath}/main.scss`, `${outputPath}/style.css`,
+        ]);
         App.resetCss();
-        App.applyCss(`${tmp}/style.css`);
+        App.applyCss(`${outputPath}/style.css`);
+        if (reloaded) {
+            console.log('Reloaded scss');
+        }
+        reloaded = true;
     }
     catch (error) {
         if (error instanceof Error) {
@@ -35,3 +45,5 @@ export async function reloadScss() {
         }
     }
 }
+
+globalThis.reloadScss = reloadScss;
