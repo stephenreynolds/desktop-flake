@@ -36,6 +36,7 @@
           poetry-core
           pillow
         ]))
+        gradience
       ]);
     in
     {
