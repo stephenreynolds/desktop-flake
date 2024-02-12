@@ -106,8 +106,7 @@ lib.mkIf cfg.enable {
       mouse_move_enables_dpms = true;
       key_press_enables_dpms = true;
       allow_session_lock_restore = true;
-      enable_swallow = true;
-      swallow_regex = "(kitty|foot)";
+      enable_swallow = false;
       new_window_takes_over_fullscreen = 1;
     };
   };
