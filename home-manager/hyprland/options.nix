@@ -108,6 +108,7 @@ lib.mkIf cfg.enable {
       allow_session_lock_restore = true;
       enable_swallow = false;
       new_window_takes_over_fullscreen = 1;
+      vfr = true;
     };
   };
 }
