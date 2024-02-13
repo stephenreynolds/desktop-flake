@@ -1,9 +1,12 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
+import Tray from './tray.js';
 import Clock from '../misc/clock.js';
 import options from '../../options.js';
 
 /** @type {number} monitor */
 export default (monitor) => {
+    const tray = monitor === options.primaryMonitor.value ? Tray() : null;
+
     const clock = Widget.Box({
         className: 'text-sm',
         vertical: true,
@@ -21,8 +24,9 @@ export default (monitor) => {
     });
 
     return Widget.Box({
-        hpack: 'end',
         children: [
+            Widget.Box({ hexpand: true }),
+            tray,
             clock,
         ],
     });

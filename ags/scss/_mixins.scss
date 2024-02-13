@@ -1,0 +1,15 @@
+@use './colors' as *;
+
+$rounding_medium: 1.159rem;
+
+@mixin normal-rounding {
+  border-radius: $rounding_medium;
+  -gtk-outline-radius: $rounding_medium;
+}
+
+@mixin elevation-border-softer {
+  border-top: 1px solid mix($t_t_surface, $t_onSurface, 90%);
+  border-left: 1px solid mix($t_t_surface, $t_onSurface, 90%);
+  border-right: 1px solid mix($t_t_surface, $t_onSurface, 95%);
+  border-bottom: 1px solid mix($t_t_surface, $t_onSurface, 95%);
+}

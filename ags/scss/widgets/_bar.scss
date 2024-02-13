@@ -34,3 +34,28 @@
     }
   }
 }
+
+.bar-systray-item {
+  min-height: 1.032rem;
+  min-width: 1.032rem;
+}
+
+.tray-content {
+  margin-right: 1rem;
+
+  &>* {
+    margin-right: 0.75rem;
+  }
+
+  &>*:last-child {
+    margin-right: 0rem;
+  }
+
+  &>revealer>* {
+    margin-right: 0.75rem;
+  }
+
+  &>revealer:last-child>* {
+    margin-right: 0;
+  }
+}

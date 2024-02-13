@@ -47,7 +47,6 @@ export default async (monitor) => {
     });
 
     return await Widget.Box({
-        hpack: 'start',
         children: [
             workspaces,
         ],
