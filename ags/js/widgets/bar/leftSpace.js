@@ -13,7 +13,7 @@ export default async (monitor) => {
             .sort((a, b) => a.id - b.id);
 
     const workspaceButton = (workspace, monitor) => Widget.Button({
-        onClicked: () => dispatch(workspace.id),
+        onClicked: () => hyprland.sendMessage(`dispatch workspace ${workspace.id}`),
         child: Widget.Label({
             label: `${workspace.name}`,
             className: 'indicator',
@@ -31,10 +31,18 @@ export default async (monitor) => {
         onScrollDown: () => dispatch('m-1'),
         child: Widget.Box({
             vpack: 'center',
-            setup: (self) => self.hook(hyprland, () => {
-                self.children = getMonitorWorkspaces(monitor)
-                    .map((w) => workspaceButton(w, monitor));
-            }),
+            setup: (self) => self.hook(hyprland, (self, event) => {
+                if (self.children.length === 0) {
+                    self.children = getMonitorWorkspaces(monitor)
+                        .map((w) => workspaceButton(w, monitor));
+                    return;
+                }
+
+                if (event === 'createworkspace' || event === 'destroyworkspace') {
+                    self.children = getMonitorWorkspaces(monitor)
+                        .map((w) => workspaceButton(w, monitor));
+                }
+            }, 'event'),
         }),
     });
 
