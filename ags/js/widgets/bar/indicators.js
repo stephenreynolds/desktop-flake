@@ -6,7 +6,7 @@ const AudioIndicator = async () => {
     const audio = await Service.import('audio');
 
     const incrementVolume = () => audio.speaker.volume = Math.min(1, audio.speaker.volume + 0.02);
-    const decrementVolume = () => audio.speaker.volume = Math.max(0, audio.speaker.volume - 0.02);
+    const decrementVolume = () => audio.speaker.volume = audio.speaker.volume - 0.02;
 
     return Widget.EventBox({
         onScrollUp: incrementVolume,
