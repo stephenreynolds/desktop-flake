@@ -5,8 +5,10 @@ import { truncateString } from '../../utils.js';
 const AudioIndicator = async () => {
     const audio = await Service.import('audio');
 
-    const incrementVolume = () => audio.speaker.volume = Math.min(1, audio.speaker.volume + 0.02);
-    const decrementVolume = () => audio.speaker.volume = audio.speaker.volume - 0.02;
+    const delta = 0.02;
+
+    const incrementVolume = () => audio.speaker.volume = Math.min(1, audio.speaker.volume + delta);
+    const decrementVolume = () => audio.speaker.volume = audio.speaker.volume - delta;
 
     return Widget.EventBox({
         onScrollUp: incrementVolume,
@@ -21,7 +23,7 @@ const AudioIndicator = async () => {
 
                 /** @type {Array<[number, string]>} */
                 const volumeIcons = [[67, 'volume_up'], [34, 'volume_down'], [0, 'volume_mute']];
-                const volume = audio.speaker.volume * 100;
+                const volume = Math.ceil(audio.speaker.volume * 100);
                 const name = truncateString(audio.speaker.description || '', 30);
                 const isMuted = audio.speaker.stream?.isMuted;
                 if (isMuted) {
