@@ -20,8 +20,13 @@ export default async (monitor) => {
             vpack: 'center',
         }),
         setup: (self) => self.hook(hyprland, () => {
-            self.toggleClassName('active', hyprland.getMonitor(monitor).activeWorkspace.id === workspace.id);
-            self.toggleClassName('focused', hyprland.active.workspace.id === workspace.id);
+            try {
+                self.toggleClassName('active', hyprland.getMonitor(monitor).activeWorkspace.id === workspace.id);
+                self.toggleClassName('focused', hyprland.active.workspace.id === workspace.id);
+            }
+            catch {
+                return;
+            }
         }),
     });
 

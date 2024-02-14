@@ -1,4 +1,5 @@
 @use './material';
+@use './mixins';
 
 .text {
   color: material.$onBackground;
@@ -46,4 +47,64 @@
 
 .text-onSurfaceVariant {
   color: material.$onSurfaceVariant;
+}
+
+.icon-material {
+  @include mixins.icon-material;
+}
+
+.spacing-h-5>* {
+  margin-right: 0.341rem;
+}
+
+.spacing-h-5>*:last-child {
+  margin-right: 0rem;
+}
+
+.spacing-h-5>widget>* {
+  margin-right: 0.341rem;
+}
+
+.spacing-h-5>widget:last-child>* {
+  margin-right: 0rem;
+}
+
+.spacing-h-5>revealer>* {
+  margin-right: 0.341rem;
+}
+
+.spacing-h-5>revealer:last-child>* {
+  margin-right: 0rem;
+}
+
+.spacing-h-5>scrolledwindow>* {
+  margin-right: 0.341rem;
+}
+
+.spacing-h-5>scrolledwindow:last-child>* {
+  margin-right: 0rem;
+}
+
+.spacing-h-15>* {
+  margin-right: 1.023rem;
+}
+
+.spacing-h-15>*:last-child {
+  margin-right: 0rem;
+}
+
+.spacing-h-15>revealer>* {
+  margin-right: 1.023rem;
+}
+
+.spacing-h-15>revealer:last-child>* {
+  margin-right: 0rem;
+}
+
+.spacing-h-15>scrolledwindow>* {
+  margin-right: 1.023rem;
+}
+
+.spacing-h-15>scrolledwindow:last-child>* {
+  margin-right: 0rem;
 }

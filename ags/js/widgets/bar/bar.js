@@ -10,7 +10,7 @@ export default async (monitor = 0) => {
     const barContent = Widget.CenterBox({
         className: 'bar-bg',
         startWidget: await LeftSpace(monitor),
-        endWidget: RightSpace(monitor),
+        endWidget: await RightSpace(monitor),
     });
 
     return Widget.Window({

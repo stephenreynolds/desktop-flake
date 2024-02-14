@@ -31,3 +31,7 @@ export function dependencies(bins) {
 
     return deps.every(has => has);
 }
+
+export function truncateString(str, len) {
+    return str.length > len ? str.slice(0, len) + '...' : str;
+}

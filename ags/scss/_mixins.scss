@@ -13,3 +13,9 @@ $rounding_medium: 1.159rem;
   border-right: 1px solid mix($t_t_surface, $t_onSurface, 95%);
   border-bottom: 1px solid mix($t_t_surface, $t_onSurface, 95%);
 }
+
+@mixin icon-material {
+  // Material Design Icons
+  font-family: "Material Symbols Rounded", "MaterialSymbolsRounded", "Material Symbols Outlined",
+    "Material Symbols Sharp";
+}

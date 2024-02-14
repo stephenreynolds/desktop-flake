@@ -3,6 +3,13 @@
 
 * {
   all: unset;
+
+  selection {
+    background-color: $secondary;
+    color: $onSecondary;
+  }
+
+  caret-color: $primary;
 }
 
 @keyframes appear {
