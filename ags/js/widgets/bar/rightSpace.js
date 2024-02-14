@@ -5,9 +5,9 @@ import Clock from '../misc/clock.js';
 import options from '../../options.js';
 
 /** @type {number} monitor */
-export default async (monitor) => {
+export default (monitor) => {
     const tray = options.primaryMonitor.value === monitor ? Tray() : null;
-    const indicators = options.primaryMonitor.value === monitor ? await Indicators() : null;
+    const indicators = options.primaryMonitor.value === monitor ? Indicators() : null;
 
     const clock = Widget.Box({
         className: 'text-sm',

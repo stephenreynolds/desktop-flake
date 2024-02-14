@@ -1,31 +1,29 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
+import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Network from 'resource:///com/github/Aylur/ags/service/network.js';
 import { truncateString } from '../../utils.js';
 
-const AudioIndicator = async () => {
-    const audio = await Service.import('audio');
-
+const AudioIndicator = () => {
     const delta = 0.02;
-
-    const incrementVolume = () => audio.speaker.volume = Math.min(1, audio.speaker.volume + delta);
-    const decrementVolume = () => audio.speaker.volume = audio.speaker.volume - delta;
+    const incrementVolume = () => Audio.speaker.volume = Math.min(1, Audio.speaker.volume + delta);
+    const decrementVolume = () => Audio.speaker.volume = Audio.speaker.volume - delta;
 
     return Widget.EventBox({
         onScrollUp: incrementVolume,
         onScrollDown: decrementVolume,
-        onMiddleClick: () => audio.speaker.stream.isMuted = !audio.speaker.stream.isMuted,
+        onMiddleClick: () => Audio.speaker.stream.isMuted = !Audio.speaker.stream.isMuted,
         child: Widget.Label({
             className: 'text-xl icon-material',
-            setup: (self) => self.hook(audio, () => {
-                if (!audio.speaker) {
+            setup: (self) => self.hook(Audio, () => {
+                if (!Audio.speaker) {
                     return;
                 }
 
                 /** @type {Array<[number, string]>} */
                 const volumeIcons = [[67, 'volume_up'], [34, 'volume_down'], [0, 'volume_mute']];
-                const volume = Math.ceil(audio.speaker.volume * 100);
-                const name = truncateString(audio.speaker.description || '', 30);
-                const isMuted = audio.speaker.stream?.isMuted;
+                const volume = Math.ceil(Audio.speaker.volume * 100);
+                const name = truncateString(Audio.speaker.description || '', 30);
+                const isMuted = Audio.speaker.stream?.isMuted;
                 if (isMuted) {
                     self.label = 'volume_off';
                 }
@@ -121,8 +119,8 @@ export const NetworkIndicator = () => Widget.Stack({
     }),
 });
 
-export default async () => {
-    const audioIndicator = await AudioIndicator();
+export default () => {
+    const audioIndicator = AudioIndicator();
     const networkIndicator = NetworkIndicator();
 
     return Widget.Box({
