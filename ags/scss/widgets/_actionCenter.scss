@@ -1,0 +1,47 @@
+@use '../lib/mixins';
+@use '../lib/colors';
+@use '../lib/notification';
+
+@mixin group-padding {
+  padding: 0.341rem;
+}
+
+.action-center {
+  @include mixins.menu_decel;
+  @include mixins.elevation-border;
+  @include mixins.elevation2;
+  min-width: 27.818rem;
+  border-radius: mixins.$rounding_large - mixins.$elevation-margin + 0.068rem;
+  background-color: colors.$t_background;
+  padding: 1.023rem;
+}
+
+.action-center-show {
+  @include mixins.menu_decel;
+}
+
+.action-center-hide {
+  @include mixins.menu_accel;
+  margin-right: -30.682rem;
+}
+
+.action-center-group-invisible {
+  @include group-padding;
+}
+
+.notifications-scrollable {
+  @include mixins.scrollbar;
+}
+
+.notification-closeall-btn {
+  @include notification.notification-rounding;
+  padding: 0.341rem;
+
+  &:hover {
+    background-color: colors.$hovercolor;
+  }
+
+  &:active {
+    background-color: colors.$activecolor;
+  }
+}

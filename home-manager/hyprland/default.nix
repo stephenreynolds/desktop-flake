@@ -8,6 +8,7 @@ in
   imports = [
     (import ./autostart.nix self)
     (import ./options.nix self)
+    (import ./layer-rules.nix self)
     (import ./window-rules.nix self)
   ];
 
