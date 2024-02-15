@@ -1,6 +1,12 @@
-@use './colors' as *;
+@use 'colors' as *;
 
+$rounding_small: 0.818rem;
 $rounding_medium: 1.159rem;
+
+@mixin small-rounding {
+  border-radius: $rounding_small;
+  -gtk-outline-radius: $rounding_small;
+}
 
 @mixin normal-rounding {
   border-radius: $rounding_medium;
@@ -12,6 +18,10 @@ $rounding_medium: 1.159rem;
   border-left: 1px solid mix($t_t_surface, $t_onSurface, 90%);
   border-right: 1px solid mix($t_t_surface, $t_onSurface, 95%);
   border-bottom: 1px solid mix($t_t_surface, $t_onSurface, 95%);
+}
+
+@mixin titlefont {
+  font-family: "Gabarito", "Lexend", sans-serif;
 }
 
 @mixin icon-material {

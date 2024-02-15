@@ -1,5 +1,5 @@
-@use './mixins';
-@use './material' as *;
+@use './lib/mixins';
+@use './lib/material' as *;
 
 * {
   all: unset;

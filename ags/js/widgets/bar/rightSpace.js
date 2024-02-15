@@ -1,3 +1,4 @@
+import App from 'resource:///com/github/Aylur/ags/app.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import Indicators from './indicators.js';
 import Tray from './tray.js';
@@ -31,7 +32,10 @@ export default (monitor) => {
             Widget.Box({ hexpand: true }),
             tray,
             indicators,
-            clock,
+            Widget.Button({
+                onPrimaryClick: () => App.toggleWindow('action-center'),
+                child: clock,
+            }),
         ],
     });
 };

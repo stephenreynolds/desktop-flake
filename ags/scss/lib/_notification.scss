@@ -1,0 +1,106 @@
+@use "material";
+@use "colors";
+@use "mixins";
+
+@mixin notification-rounding {
+  @include mixins.normal-rounding;
+}
+
+.notification-low {
+  @include notification-rounding;
+  background-color: colors.$l_l_t_surfaceVariant;
+  color: material.$onSurfaceVariant;
+  padding: mixins.$rounding_small;
+  padding-right: mixins.$rounding_small + 0.545rem;
+}
+
+.notification-normal {
+  @include notification-rounding;
+  background-color: colors.$l_l_t_surfaceVariant;
+  color: material.$onSurfaceVariant;
+  padding: mixins.$rounding_small;
+  padding-right: mixins.$rounding_small + 0.545rem;
+}
+
+.notification-critical {
+  @include notification-rounding;
+  background-color: material.$error;
+  color: material.$onError;
+  padding: mixins.$rounding_small;
+  padding-right: mixins.$rounding_small + 0.545rem;
+}
+
+.notification-body-low {
+  color: mix(material.$onSurfaceVariant, material.$surfaceVariant, 67%);
+}
+
+.notification-body-normal {
+  color: mix(material.$onSurfaceVariant, material.$surfaceVariant, 67%);
+}
+
+.notification-body-critical {
+  color: mix(material.$onError, material.$error, 67%);
+}
+
+.notification-icon {
+  @include mixins.small-rounding;
+  min-width: 3.409rem;
+  min-height: 3.409rem;
+}
+
+.notification-icon-material {
+  background-color: colors.$t_secondaryContainer;
+  color: material.$onSecondaryContainer;
+}
+
+.notification-icon-material-low {
+  background-color: colors.$t_secondaryContainer;
+  color: material.$onSecondaryContainer;
+}
+
+.notification-icon-material-normal {
+  background-color: colors.$t_secondaryContainer;
+  color: material.$onSecondaryContainer;
+}
+
+.notification-icon-material-critical {
+  background-color: colors.$t_errorContainer;
+  color: material.$onErrorContainer;
+}
+
+.notification-close-btn {
+  @include notification-rounding;
+  padding: 0 0.136rem;
+
+  &:hover {
+    background-color: colors.$hovercolor;
+  }
+
+  &:active {
+    background-color: colors.$activecolor;
+  }
+}
+
+.notification-circprog-low {
+  transition: 0ms linear;
+  min-width: 0.136rem;
+  min-height: 1.77rem;
+  padding: 0;
+  color: material.$onSecondaryContainer;
+}
+
+.notification-circprog-normal {
+  transition: 0ms linear;
+  min-width: 0.136rem;
+  min-height: 1.77rem;
+  padding: 0;
+  color: material.$onSecondaryContainer;
+}
+
+.notification-circprog-critical {
+  transition: 0ms linear;
+  min-width: 0.136rem;
+  min-height: 1.77rem;
+  padding: 0;
+  color: material.$onError;
+}

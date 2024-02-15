@@ -1,0 +1,37 @@
+@use "../lib/material";
+@use "../lib/colors";
+@use "../lib/mixins";
+@use "../lib/notification";
+
+$notification_surface: colors.$t_background;
+
+.notification-popups {
+  padding-top: 0.313rem;
+
+  .popup-notification-low {
+    @include notification.notification-rounding;
+    min-width: 30.682rem;
+    background-color: $notification_surface;
+    color: material.$onSurfaceVariant;
+    padding: mixins.$rounding_small;
+    padding-right: mixins.$rounding_small + 0.545rem;
+  }
+
+  .popup-notification-normal {
+    @include notification.notification-rounding;
+    min-width: 30.682rem;
+    background-color: $notification_surface;
+    color: material.$onSurfaceVariant;
+    padding: mixins.$rounding_small;
+    padding-right: mixins.$rounding_small + 0.545rem;
+  }
+
+  .popup-notification-critical {
+    @include notification.notification-rounding;
+    min-width: 30.682rem;
+    background-color: colors.$t_error;
+    color: material.$onError;
+    padding: mixins.$rounding_small;
+    padding-right: mixins.$rounding_small + 0.545rem;
+  }
+}

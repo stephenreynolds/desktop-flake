@@ -1,5 +1,5 @@
-@use '../colors';
-@use '../material';
+@use '../lib/colors';
+@use '../lib/material';
 
 .bar-bg {
   background-color: colors.$t_background;
