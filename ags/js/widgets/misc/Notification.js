@@ -226,6 +226,7 @@ export default ({ notification, isPopup = false, props = {} } = {}) => {
         justify: Gtk.Justification.LEFT,
         hexpand: true,
         maxWidthChars: 24,
+        wrap: true,
         truncate: 'end',
         ellipsize: 3,
         useMarkup: notification.summary.startsWith('<'),

@@ -5,7 +5,7 @@ import MaterialIcon from '../misc/MaterialIcon.js';
 import Notification from '../misc/Notification.js';
 import { setupCursorHover } from '../../lib/cursorHover.js';
 
-const Placeholder = Widget.Box({
+const notificationsEmptyContent = Widget.Box({
     hexpand: true,
     vertical: true,
     vpack: 'center',
@@ -14,8 +14,6 @@ const Placeholder = Widget.Box({
         MaterialIcon('check', '5xl'),
         Widget.Label({ label: 'No new notifications' }),
     ],
-    setup: (self) => self.hook(Notifications, (box) =>
-        box.visible = Notifications.notifications.length === 0)
 });
 
 const NotificationList = Widget.Box({
@@ -90,23 +88,31 @@ export default (props) => {
             .bind('visible', Notifications, 'notifications', (notifications) => notifications.length > 0)
     });
 
-    const listContents = Widget.Scrollable({
+    const notificationList = Widget.Scrollable({
         hexpand: true,
         hscroll: 'never',
         vscroll: 'automatic',
         className: 'notifications-scrollable',
         child: Widget.Box({
             vexpand: true,
-            children: [
-                Placeholder,
-                NotificationList,
-            ],
+            children: [ NotificationList ],
         }),
+        setup: (self) => {
+            const vScrollbar = self.get_vscrollbar();
+            vScrollbar.get_style_context().add_class('sidebar-scrollbar');
+        }
     });
 
-    listContents.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
-    const vScrollbar = listContents.get_vscrollbar();
-    vScrollbar.get_style_context().add_class('sidebar-scrollbar');
+    const listContents = Widget.Stack({
+        transition: 'crossfade',
+        transitionDuration: 150,
+        children: {
+            empty: notificationsEmptyContent,
+            list: notificationList,
+        },
+        setup: (self) => self
+            .bind('shown', Notifications, 'notifications', (notifications) => notifications.length > 0 ? 'list' : 'empty')
+    });
 
     return Widget.Box({
         ...props,

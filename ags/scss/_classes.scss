@@ -204,3 +204,11 @@
 .spacing-v-5-revealer>revealer:last-child>box {
   margin-bottom: 0;
 }
+
+.spacing-v-10>* {
+  margin-bottom: 0.682rem;
+}
+
+.spacing-v-10>*:last-child {
+  margin-bottom: 0rem;
+}
