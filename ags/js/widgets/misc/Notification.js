@@ -428,6 +428,9 @@ export default ({ notification, isPopup = false, props = {} } = {}) => {
     widget.add(notificationBox);
     wholeThing.child.children = [widget];
     if (isPopup) Utils.timeout(popupTimeout, () => {
+        if (notification.hints.transient) {
+            notification.close();
+        }
         if (wholeThing) {
             wholeThing.revealChild = false;
             Utils.timeout(200, () => {

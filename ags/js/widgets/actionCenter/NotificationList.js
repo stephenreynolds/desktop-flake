@@ -51,7 +51,7 @@ const NotificationList = Widget.Box({
 
             for (const ch of box.children) {
                 if (ch._id === id) {
-                    ch._destroyWithAnims();
+                    ch.attribute.destroyWithAnims();
                 }
             }
         }, 'closed'),
@@ -95,7 +95,7 @@ export default (props) => {
         className: 'notifications-scrollable',
         child: Widget.Box({
             vexpand: true,
-            children: [ NotificationList ],
+            children: [NotificationList],
         }),
         setup: (self) => {
             const vScrollbar = self.get_vscrollbar();
