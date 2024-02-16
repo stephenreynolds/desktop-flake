@@ -38,6 +38,7 @@
         ]))
         gradience
         glib
+        gsettings-desktop-schemas
       ]);
     in
     {
