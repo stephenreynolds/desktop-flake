@@ -7,11 +7,12 @@ const AudioIndicator = () => {
     const delta = 0.02;
     const incrementVolume = () => Audio.speaker.volume = Math.min(1, Audio.speaker.volume + delta);
     const decrementVolume = () => Audio.speaker.volume = Audio.speaker.volume - delta;
+    const muteVolume = () => Audio.speaker.stream.isMuted = !Audio.speaker.stream.isMuted;
 
     return Widget.EventBox({
         onScrollUp: incrementVolume,
         onScrollDown: decrementVolume,
-        onMiddleClick: () => Audio.speaker.stream.isMuted = !Audio.speaker.stream.isMuted,
+        onMiddleClick: muteVolume,
         child: Widget.Label({
             className: 'text-xl icon-material',
             setup: (self) => self.hook(Audio, () => {
