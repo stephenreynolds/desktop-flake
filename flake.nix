@@ -40,6 +40,7 @@
         glib
         gsettings-desktop-schemas
         gtk3
+        adw-gtk3
       ]);
     in
     {
