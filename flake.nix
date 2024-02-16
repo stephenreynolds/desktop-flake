@@ -37,6 +37,7 @@
           pillow
         ]))
         gradience
+        glib
       ]);
     in
     {
