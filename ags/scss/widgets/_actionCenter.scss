@@ -74,3 +74,7 @@
 .notification-listaction-button-enabled:active {
   background-color: mix(material.$secondaryContainer, material.$onSecondaryContainer, 75%);
 }
+
+.tz-local {
+  font-size: 2rem;
+}

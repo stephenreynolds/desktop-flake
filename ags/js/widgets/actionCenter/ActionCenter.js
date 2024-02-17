@@ -1,6 +1,7 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import PopupWindow from '../misc/PopupWindow.js';
 import NotificationList from './NotificationList.js';
+import Timezones from './Timezones.js';
 
 const ActionCenter = () => Widget.Box({
     vexpand: true,
@@ -18,6 +19,7 @@ const ActionCenter = () => Widget.Box({
             className: 'action-center spacing-v-15',
             children: [
                 NotificationList(),
+                Timezones(),
             ]
         })
     ],

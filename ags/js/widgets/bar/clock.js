@@ -1,5 +1,5 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import Clock from '../misc/clock.js';
+import Clock from '../misc/Clock.js';
 import options from '../../options.js';
 
 export default () => Widget.Box({
