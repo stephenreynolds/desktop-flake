@@ -11,7 +11,8 @@ $notification_surface: colors.$t_background;
   .popup-notification-low {
     @include notification.notification-rounding;
     min-width: 30.682rem;
-    background-color: $notification_surface;
+    background-color: transparentize($notification_surface, 0.4);
+    border: 1px solid mix($notification_surface, material.$onSurfaceVariant, 90%);
     color: material.$onSurfaceVariant;
     padding: mixins.$rounding_small;
     padding-right: mixins.$rounding_small + 0.545rem;
@@ -20,7 +21,8 @@ $notification_surface: colors.$t_background;
   .popup-notification-normal {
     @include notification.notification-rounding;
     min-width: 30.682rem;
-    background-color: $notification_surface;
+    background-color: transparentize($notification_surface, 0.4);
+    border: 1px solid mix($notification_surface, material.$onSurfaceVariant, 90%);
     color: material.$onSurfaceVariant;
     padding: mixins.$rounding_small;
     padding-right: mixins.$rounding_small + 0.545rem;
@@ -29,7 +31,8 @@ $notification_surface: colors.$t_background;
   .popup-notification-critical {
     @include notification.notification-rounding;
     min-width: 30.682rem;
-    background-color: colors.$t_error;
+    background-color: transparentize(colors.$t_error, 0.4);
+    border: 1px solid mix($notification_surface, material.$onSurfaceVariant, 90%);
     color: material.$onError;
     padding: mixins.$rounding_small;
     padding-right: mixins.$rounding_small + 0.545rem;

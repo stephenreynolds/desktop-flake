@@ -31,8 +31,8 @@ lib.mkIf cfg.enable {
       actionCenter = [ "action-center" ];
     in
     mapLayerRules [
-      (rule [ "blur" "ignorealpha 0" ] bar)
-      (rule [ "blur" "ignorealpha 0.69" ] notifications)
-      (rule [ "noanim" "xray on" ] actionCenter)
+      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] bar)
+      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] notifications)
+      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] actionCenter)
     ];
 }
