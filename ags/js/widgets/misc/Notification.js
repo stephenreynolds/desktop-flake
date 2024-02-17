@@ -236,7 +236,12 @@ export default ({ notification, isPopup = false, props = {} } = {}) => {
         vpack: 'center',
         justification: 'right',
         className: 'text-sm text-semibold',
-        label: !isPopup ? dayjs.unix(notification.time).fromNow() : null,
+        setup: (self) => {
+            if (isPopup) {
+                return;
+            }
+            self.poll(1000, (self) => self.label = dayjs.unix(notification.time).fromNow());
+        }
     });
     const notifText = Widget.Box({
         valign: Gtk.Align.CENTER,
