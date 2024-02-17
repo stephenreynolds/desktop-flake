@@ -10,6 +10,7 @@ in
     (import ./options.nix self)
     (import ./layer-rules.nix self)
     (import ./window-rules.nix self)
+    (import ./binds.nix self)
   ];
 
   options.desktop-flake = {
