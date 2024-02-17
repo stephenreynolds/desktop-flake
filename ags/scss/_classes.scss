@@ -65,6 +65,10 @@
   @include mixins.icon-material;
 }
 
+.button-minsize {
+  @include mixins.button-minsize;
+}
+
 .spacing-h-5>* {
   margin-right: 0.341rem;
 }

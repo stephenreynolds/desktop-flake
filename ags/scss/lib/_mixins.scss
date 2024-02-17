@@ -17,6 +17,16 @@ $rounding_large: 1.705rem;
   -gtk-outline-radius: $rounding_medium;
 }
 
+@mixin large-rounding {
+  border-radius: $rounding_large;
+  -gtk-outline-radius: $rounding_large;
+}
+
+@mixin full-rounding {
+  border-radius: 9999px;
+  -gtk-outline-radius: 9999px;
+}
+
 @mixin elevation-border-softer {
   border-top: 1px solid mix($t_t_surface, $t_onSurface, 90%);
   border-left: 1px solid mix($t_t_surface, $t_onSurface, 90%);
@@ -32,6 +42,11 @@ $rounding_large: 1.705rem;
   // Material Design Icons
   font-family: "Material Symbols Rounded", "MaterialSymbolsRounded", "Material Symbols Outlined",
     "Material Symbols Sharp";
+}
+
+@mixin button-minsize {
+  min-width: 2.727rem;
+  min-height: 2.727rem;
 }
 
 $elevation_margin: 0.476rem;

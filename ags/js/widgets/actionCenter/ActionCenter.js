@@ -2,6 +2,7 @@ import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import PopupWindow from '../misc/PopupWindow.js';
 import NotificationList from './NotificationList.js';
 import Timezones from './Timezones.js';
+import Calendar from './Calendar.js';
 
 const ActionCenter = () => Widget.Box({
     vexpand: true,
@@ -20,6 +21,7 @@ const ActionCenter = () => Widget.Box({
             children: [
                 NotificationList(),
                 Timezones(),
+                Calendar(),
             ]
         })
     ],

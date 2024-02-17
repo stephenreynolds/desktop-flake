@@ -78,3 +78,257 @@
 .tz-local {
   font-size: 2rem;
 }
+
+.sidebar-calendar-btn {
+  @include mixins.full-rounding;
+  @include mixins.menu_decel;
+  min-height: 2.523rem;
+  min-width: 2.523rem;
+  color: material.$onSurface;
+}
+
+.sidebar-calendar-btn:hover {
+  background-color: colors.$hovercolor;
+}
+
+.sidebar-calendar-btn:active {
+  background-color: colors.$activecolor;
+}
+
+.sidebar-calendar-btn-txt {
+  margin-left: -10.341rem;
+  margin-right: -10.341rem;
+}
+
+.sidebar-calendar-btn-today {
+  background-color: material.$primary;
+  color: material.$onPrimary;
+}
+
+.sidebar-calendar-btn-today:hover {
+  background-color: mix(material.$primary, colors.$hovercolor, 90%);
+}
+
+.sidebar-calendar-btn-today:active {
+  background-color: mix(material.$primary, colors.$hovercolor, 70%);
+}
+
+.sidebar-calendar-btn-othermonth {
+  color: mix(material.$onSurface, material.$surface, 50%);
+}
+
+.sidebar-calendar-header {
+  margin: 0.341rem;
+}
+
+.sidebar-calendar-monthyear-btn {
+  @include mixins.full-rounding;
+  padding: 0rem 0.682rem;
+  background-color: colors.$t_surfaceVariant;
+  color: material.$onSurfaceVariant;
+}
+
+.sidebar-calendar-monthyear-btn:hover {
+  background-color: mix(colors.$t_surfaceVariant, material.$onSurfaceVariant, 95%);
+  color: mix(material.$onSurfaceVariant, material.$surfaceVariant, 95%);
+}
+
+.sidebar-calendar-monthyear-btn:active {
+  background-color: mix(material.$surfaceVariant, material.$onSurfaceVariant, 85%);
+  color: mix(material.$onSurfaceVariant, material.$surfaceVariant, 85%);
+}
+
+.sidebar-calendar-monthshift-btn {
+  @include mixins.full-rounding;
+  min-width: 2.045rem;
+  min-height: 2.045rem;
+  background-color: colors.$t_surfaceVariant;
+  color: material.$onSurfaceVariant;
+}
+
+.sidebar-calendar-monthshift-btn:hover {
+  background-color: mix(colors.$t_surfaceVariant, material.$onSurfaceVariant, 95%);
+  color: mix(material.$onSurfaceVariant, material.$surfaceVariant, 95%);
+}
+
+.sidebar-calendar-monthshift-btn:active {
+  background-color: mix(material.$surfaceVariant, material.$onSurfaceVariant, 85%);
+  color: mix(material.$onSurfaceVariant, material.$surfaceVariant, 85%);
+}
+
+.sidebar-todo-selector-tab {
+  @include mixins.small-rounding;
+  transition: 0ms;
+  min-height: 2.5rem;
+  color: material.$onSurface;
+}
+
+.sidebar-todo-selector-tab:hover {
+  background-color: mix(colors.$t_surfaceVariant, material.$onSurfaceVariant, 90%);
+}
+
+.sidebar-todo-selector-tab:active {
+  background-color: mix(material.$surfaceVariant, material.$onSurfaceVariant, 75%);
+}
+
+.sidebar-todo-selector-tab-active>box>label {
+  color: material.$primary;
+}
+
+.sidebar-todo-selector-highlight-offset {
+  margin-top: -0.205rem;
+  margin-bottom: 0.205rem;
+}
+
+.sidebar-todo-selector-highlight {
+  transition: 180ms ease-in-out;
+  color: material.$primary;
+  padding: 0rem 2.045rem;
+  min-height: 0.205rem;
+}
+
+.sidebar-todo-item {
+  padding-right: 0.545rem;
+}
+
+.sidebar-todo-item-even {
+  background-color: colors.$t_t_surfaceVariant;
+}
+
+.sidebar-todo-item-action {
+  border-radius: 9999px;
+  min-width: 1.705rem;
+  min-height: 1.705rem;
+}
+
+.sidebar-todo-item-action:hover {
+  background-color: mix(colors.$t_surface, colors.$t_onSurface, 80%);
+}
+
+.sidebar-todo-item-action:active {
+  background-color: mix(colors.$t_surface, colors.$t_onSurface, 65%);
+}
+
+.sidebar-todo-crosser {
+  transition: margin 200ms cubic-bezier(0.1, 1, 0, 1), background-color 0ms;
+  min-width: 0rem;
+}
+
+.sidebar-todo-crosser-crossed {
+  background-color: material.$onBackground;
+}
+
+.sidebar-todo-crosser-removed {
+  background-color: material.$error;
+}
+
+.sidebar-clipboard-item {
+  border-radius: mixins.$rounding_small;
+  min-height: 2.045rem;
+  padding: 0.341rem;
+  background-color: colors.$t_secondaryContainer;
+  color: material.$onSecondaryContainer;
+}
+
+.sidebar-clipboard-item:hover {
+  background-color: mix(colors.$t_secondaryContainer, colors.$t_onSecondaryContainer, 90%);
+}
+
+.sidebar-clipboard-item:active {
+  background-color: mix(colors.$t_secondaryContainer, colors.$t_onSecondaryContainer, 80%);
+}
+
+.sidebar-todo-new {
+  @include mixins.full-rounding;
+  color: material.$onSecondaryContainer;
+  margin: 0.341rem;
+  padding: 0.205rem 0.545rem;
+  border: 0.068rem solid material.$onSurface;
+}
+
+.sidebar-todo-new:hover {
+  background-color: mix(colors.$t_secondaryContainer, colors.$t_onSecondaryContainer, 97%);
+}
+
+.sidebar-todo-new:active {
+  background-color: mix(colors.$t_secondaryContainer, colors.$t_onSecondaryContainer, 80%);
+}
+
+.sidebar-todo-add {
+  @include mixins.full-rounding;
+  @include mixins.menu_decel;
+  min-width: 1.705rem;
+  min-height: 1.705rem;
+  color: material.$onSecondaryContainer;
+  border: 0.068rem solid material.$onSurface;
+}
+
+.sidebar-todo-add:hover {
+  background-color: mix(colors.$t_secondaryContainer, colors.$t_onSecondaryContainer, 97%);
+}
+
+.sidebar-todo-add:active {
+  background-color: mix(colors.$t_secondaryContainer, colors.$t_onSecondaryContainer, 80%);
+}
+
+.sidebar-todo-add-available {
+  @include mixins.menu_decel;
+  @include mixins.full-rounding;
+  min-width: 1.705rem;
+  min-height: 1.705rem;
+  background-color: material.$primary;
+  color: material.$onPrimary;
+  border: 0.068rem solid material.$primary;
+}
+
+.sidebar-todo-add-available:hover {
+  background-color: mix(material.$primary, material.$onPrimary, 97%);
+}
+
+.sidebar-todo-add-available:active {
+  background-color: mix(material.$primary, material.$onPrimary, 80%);
+}
+
+.sidebar-todo-entry {
+  @include mixins.menu_decel;
+  @include mixins.small-rounding;
+  background-color: material.$surfaceVariant;
+  color: material.$onSurfaceVariant;
+  caret-color: material.$onSurfaceVariant;
+  margin: 0rem 0.341rem;
+  min-height: 1.773rem;
+  min-width: 0rem;
+  padding: 0.205rem 0.682rem;
+  border: 0.068rem solid mix(material.$onSurfaceVariant, material.$surfaceVariant, 50%);
+}
+
+.sidebar-todo-entry:focus {
+  border: 0.068rem solid mix(material.$onSurfaceVariant, material.$surfaceVariant, 90%);
+}
+
+.sidebar-navrail {
+  padding: 0rem mixins.$rounding_medium;
+}
+
+.sidebar-navrail-btn>box>label {
+  @include mixins.full-rounding;
+  @include mixins.menu_decel;
+}
+
+.sidebar-navrail-btn:hover>box>label:first-child {
+  background-color: mix(colors.$t_surfaceVariant, material.$onSurfaceVariant, 90%);
+}
+
+.sidebar-navrail-btn:active>box>label:first-child {
+  background-color: mix(material.$surfaceVariant, material.$onSurfaceVariant, 75%);
+}
+
+.sidebar-navrail-btn-active>box>label:first-child {
+  background-color: material.$secondaryContainer;
+  color: material.$onSecondaryContainer;
+}
+
+.sidebar-navrail-btn-active:hover>box>label:first-child {
+  background-color: mix(material.$secondaryContainer, colors.$hovercolor, 90%);
+  color: mix(material.$onSecondaryContainer, colors.$hovercolor, 90%);
+}
