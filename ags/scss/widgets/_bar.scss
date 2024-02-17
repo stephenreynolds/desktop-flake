@@ -3,9 +3,14 @@
 @use '../lib/mixins';
 
 .bar-bg {
+  @include mixins.element_accel;
   background-color: colors.$t_background;
   color: material.$onSurfaceVariant;
   padding: 0.125rem 0.35rem;
+}
+
+.bar-space {
+  @include mixins.element_accel;
 }
 
 .bar-floating {
@@ -13,6 +18,7 @@
   @include mixins.element_decel;
 
   .bar-space {
+    @include mixins.element_decel;
     @include mixins.small-rounding;
     @include mixins.elevation2;
     background-color: transparentize(colors.$t_background, 0.4);
