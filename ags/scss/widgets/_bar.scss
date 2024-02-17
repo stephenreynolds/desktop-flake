@@ -1,5 +1,6 @@
 @use '../lib/colors';
 @use '../lib/material';
+@use '../lib/mixins';
 
 .bar-bg {
   background-color: colors.$t_background;
@@ -55,5 +56,19 @@
 
   &>revealer:last-child>* {
     margin-right: 0;
+  }
+}
+
+.action-center-button {
+  border-radius: 0.5rem;
+  @include mixins.element_decel;
+
+  &:hover,
+  &:focus {
+    background-color: mix(colors.$t_background, colors.$t_onBackground, 90%);
+  }
+
+  &.action-center-button-active {
+    background-color: mix(colors.$t_background, colors.$t_onBackground, 90%);
   }
 }

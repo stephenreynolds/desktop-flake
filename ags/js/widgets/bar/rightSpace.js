@@ -20,6 +20,7 @@ export default (monitor) => {
             tray,
             systemIndicators,
             Widget.Button({
+                className: 'action-center-button',
                 onPrimaryClick: () => App.toggleWindow('action-center'),
                 child: Widget.Box({
                     className: 'spacing-h-5',
@@ -28,6 +29,11 @@ export default (monitor) => {
                         notificationIndicator,
                     ],
                 }),
+                setup: (self) => self.hook(App, (self, currentName, visible) => {
+                    if (currentName === 'action-center') {
+                        self.toggleClassName('action-center-button-active', visible);
+                    }
+                })
             }),
         ],
     });
