@@ -63,6 +63,10 @@ apply_gtk() {
 }
 
 apply_kitty() {
+    if ! command -v kitty > /dev/null 2>&1; then
+        return
+    fi
+
     lightdark=$(get_light_dark)
 
     wal -c
