@@ -13,12 +13,13 @@ const windows = () => [
     Launcher(),
 ];
 
-const CLOSE_ANIM_TIME = 210;
+const CLOSE_ANIM_TIME = 130;
 
 export default {
     onConfigParsed: init,
     closeWindowDelay: {
         'action-center': CLOSE_ANIM_TIME,
+        'launcher': CLOSE_ANIM_TIME,
     },
     windows: windows().flat(1),
     stackTraceOnError: GLib.getenv('AGS_DEBUG'),

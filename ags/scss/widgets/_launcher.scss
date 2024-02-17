@@ -65,12 +65,11 @@
   }
 }
 
-.launcher-show .applauncher {
+.launcher-show {
   @include mixins.menu_decel;
 }
 
-.launcher-hide .applauncher {
+.launcher-hide {
   @include mixins.menu_accel;
-  margin-top: 30.682rem;
-  margin-bottom: -30.682rem;
+  margin-top: 50rem;
 }
