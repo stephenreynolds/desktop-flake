@@ -4,7 +4,10 @@ CONFIG_DIR="${AGS_CONFIG_DIR:-$XDG_CONFIG_HOME/ags}"
 CACHE_DIR="${AGS_CACHE_DIR:-$XDG_CACHE_HOME/ags/user}"
 MATERIAL_DIR="/tmp/ags/scss"
 
-sleep 0
+if [ ! -d "$CACHE_DIR" ]; then
+    mkdir -p "$CACHE_DIR"
+fi
+
 cd "$CONFIG_DIR" || exit
 
 colornames=$(cat $MATERIAL_DIR/_material.scss | cut -d: -f1)
@@ -37,7 +40,7 @@ apply_ags() {
 apply_gtk() {
     lightdark=$(get_light_dark)
 
-    cp "scripts/color_generation/gradience_template.json" "$CACHE_DIR/gradience.json"
+    cp "scripts/color_generation/templates/gradience_template.json" "$CACHE_DIR/gradience.json"
     #
     # Apply colors
     for i in "${!colorlist[@]}"; do
@@ -59,6 +62,23 @@ apply_gtk() {
     fi
 }
 
+apply_kitty() {
+    lightdark=$(get_light_dark)
+
+    wal -c
+
+    if [ "$lightdark" = "-l" ]; then
+        wal -i "$CACHE_DIR"/wallpaper -qnel
+    else
+        wal -i "$CACHE_DIR"/wallpaper -qne
+    fi
+
+    mkdir -p "$XDG_CONFIG_HOME/kitty/generated"
+    cp "$XDG_CACHE_HOME"/wal/colors-kitty.conf "$XDG_CONFIG_HOME"/kitty/themes/generated-wal.conf
+    kitty +kitten themes --reload-in=all --config-file-name "generated-theme.conf" Generated-Wal
+}
+
 apply_ags &
 apply_hyprland &
+apply_kitty &
 apply_gtk &
