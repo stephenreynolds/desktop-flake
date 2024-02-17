@@ -126,7 +126,7 @@ export default () => {
 
     return Widget.Box({
         child: Widget.Box({
-            className: 'spacing-h-5',
+            className: 'system-indicators spacing-h-5',
             children: [
                 networkIndicator,
                 audioIndicator,

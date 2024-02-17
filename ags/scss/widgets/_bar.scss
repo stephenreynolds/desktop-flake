@@ -8,6 +8,19 @@
   padding: 0.125rem 0.35rem;
 }
 
+.bar-floating {
+  background-color: transparent;
+  @include mixins.element_decel;
+
+  .bar-space {
+    @include mixins.small-rounding;
+    @include mixins.elevation2;
+    background-color: transparentize(colors.$t_background, 0.4);
+    padding: 0 1rem;
+    margin: 0.25rem;
+  }
+}
+
 .workspaces {
   button {
     .indicator {

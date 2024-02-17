@@ -52,6 +52,8 @@ export default async (monitor) => {
     });
 
     return await Widget.Box({
+        className: 'bar-space',
+        hpack: 'start',
         children: [
             workspaces,
         ],
