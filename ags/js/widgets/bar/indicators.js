@@ -49,10 +49,10 @@ const SimpleNetworkIndicator = () => Widget.Icon({
 const NetworkWiredIndicator = () => Widget.Stack({
     children: {
         'fallback': SimpleNetworkIndicator(),
-        'unknown': Widget.Label({ className: 'txt-norm icon-material', label: 'wifi_off' }),
-        'disconnected': Widget.Label({ className: 'txt-norm icon-material', label: 'signal_wifi_off' }),
-        'connected': Widget.Label({ className: 'txt-norm icon-material', label: 'lan' }),
-        'connecting': Widget.Label({ className: 'txt-norm icon-material', label: 'settings_ethernet' }),
+        'unknown': Widget.Label({ className: 'text-xl icon-material', label: 'wifi_off' }),
+        'disconnected': Widget.Label({ className: 'text-xl icon-material', label: 'signal_wifi_off' }),
+        'connected': Widget.Label({ className: 'text-xl icon-material', label: 'lan' }),
+        'connecting': Widget.Label({ className: 'text-xl icon-material', label: 'settings_ethernet' }),
     },
     setup: (self) => self.hook(Network, stack => {
         if (!Network.wired)
@@ -70,14 +70,14 @@ const NetworkWiredIndicator = () => Widget.Stack({
 
 const NetworkWifiIndicator = () => Widget.Stack({
     children: {
-        'disabled': Widget.Label({ className: 'txt-norm icon-material', label: 'wifi_off' }),
-        'disconnected': Widget.Label({ className: 'txt-norm icon-material', label: 'signal_wifi_off' }),
-        'connecting': Widget.Label({ className: 'txt-norm icon-material', label: 'settings_ethernet' }),
-        '0': Widget.Label({ className: 'txt-norm icon-material', label: 'signal_wifi_0_bar' }),
-        '1': Widget.Label({ className: 'txt-norm icon-material', label: 'network_wifi_1_bar' }),
-        '2': Widget.Label({ className: 'txt-norm icon-material', label: 'network_wifi_2_bar' }),
-        '3': Widget.Label({ className: 'txt-norm icon-material', label: 'network_wifi_3_bar' }),
-        '4': Widget.Label({ className: 'txt-norm icon-material', label: 'signal_wifi_4_bar' }),
+        'disabled': Widget.Label({ className: 'text-xl icon-material', label: 'wifi_off' }),
+        'disconnected': Widget.Label({ className: 'text-xl icon-material', label: 'signal_wifi_off' }),
+        'connecting': Widget.Label({ className: 'text-xl icon-material', label: 'settings_ethernet' }),
+        '0': Widget.Label({ className: 'text-xl icon-material', label: 'signal_wifi_0_bar' }),
+        '1': Widget.Label({ className: 'text-xl icon-material', label: 'network_wifi_1_bar' }),
+        '2': Widget.Label({ className: 'text-xl icon-material', label: 'network_wifi_2_bar' }),
+        '3': Widget.Label({ className: 'text-xl icon-material', label: 'network_wifi_3_bar' }),
+        '4': Widget.Label({ className: 'text-xl icon-material', label: 'signal_wifi_4_bar' }),
     },
     setup: (self) => self.hook(Network, (stack) => {
         if (!Network.wifi) {

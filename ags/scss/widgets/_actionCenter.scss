@@ -1,5 +1,6 @@
 @use '../lib/mixins';
 @use '../lib/colors';
+@use '../lib/material';
 @use '../lib/notification';
 
 @mixin group-padding {
@@ -33,7 +34,7 @@
   @include mixins.scrollbar;
 }
 
-.notification-closeall-btn {
+.notification-closeall-button {
   @include notification.notification-rounding;
   padding: 0.341rem;
 
@@ -44,4 +45,32 @@
   &:active {
     background-color: colors.$activecolor;
   }
+}
+
+.notification-listaction-button {
+  @include notification.notification-rounding;
+  padding: 0.341rem 0.682rem;
+}
+
+.notification-listaction-button:hover,
+.notification-listaction-button:focus {
+  background-color: colors.$hovercolor;
+}
+
+.notification-listaction-button:active {
+  background-color: colors.$activecolor;
+}
+
+.notification-listaction-button-enabled {
+  background-color: material.$secondaryContainer;
+  color: material.$onSecondaryContainer;
+}
+
+.notification-listaction-button-enabled:hover,
+.notification-listaction-button-enabled:focus {
+  background-color: mix(material.$secondaryContainer, material.$onSecondaryContainer, 90%);
+}
+
+.notification-listaction-button-enabled:active {
+  background-color: mix(material.$secondaryContainer, material.$onSecondaryContainer, 75%);
 }

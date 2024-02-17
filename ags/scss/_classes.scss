@@ -53,6 +53,10 @@
   @include mixins.icon-material;
 }
 
+.text-primary {
+  color: material.$primary;
+}
+
 .text-onSurfaceVariant {
   color: material.$onSurfaceVariant;
 }
