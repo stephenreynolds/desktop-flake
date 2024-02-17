@@ -2,6 +2,7 @@ import GLib from 'gi://GLib';
 import Bar from './widgets/bar/bar.js';
 import Notifications from './widgets/Notifications.js';
 import ActionCenter from './widgets/actionCenter/ActionCenter.js';
+import Launcher from './widgets/launcher/Launcher.js';
 import { forMonitors } from './utils.js';
 import { init } from './settings/setup.js';
 import options from './options.js';
@@ -9,6 +10,7 @@ import options from './options.js';
 const windows = () => [
     Notifications(options.primaryMonitor.value),
     ActionCenter(),
+    Launcher(),
 ];
 
 const CLOSE_ANIM_TIME = 210;

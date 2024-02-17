@@ -35,3 +35,8 @@ export function dependencies(bins) {
 export function truncateString(str, len) {
     return str.length > len ? str.slice(0, len) + '...' : str;
 }
+
+export async function launchApp(app) {
+    await Utils.execAsync([`${app.executable}`]);
+    app.frequency += 1;
+}

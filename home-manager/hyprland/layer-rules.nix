@@ -29,10 +29,12 @@ lib.mkIf cfg.enable {
       bar = [ "^(bar-.*)$" ];
       notifications = [ "^(notifications-.*)$" ];
       actionCenter = [ "action-center" ];
+      launcher = [ "launcher" ];
     in
     mapLayerRules [
       (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] bar)
       (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] notifications)
       (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] actionCenter)
+      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] launcher)
     ];
 }
