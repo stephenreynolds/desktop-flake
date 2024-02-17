@@ -26,10 +26,12 @@ in
 lib.mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.layerrule =
     let
-      notifications = [ "notifications" ];
+      bar = [ "^(bar-.*)$" ];
+      notifications = [ "^(notifications-.*)$" ];
       actionCenter = [ "action-center" ];
     in
     mapLayerRules [
+      (rule [ "blur" "ignorealpha 0" ] bar)
       (rule [ "blur" "ignorealpha 0.69" ] notifications)
       (rule [ "noanim" "xray on" ] actionCenter)
     ];
