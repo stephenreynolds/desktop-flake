@@ -40,7 +40,7 @@ const todoListItem = (task, id, isDone) => {
                         else { Todo.check(id); }
                     });
                 },
-                setup: (button) => setupCursorHover(button),
+                setup: setupCursorHover,
             }),
             Widget.Button({
                 vpack: 'center',
@@ -57,7 +57,7 @@ const todoListItem = (task, id, isDone) => {
                         Todo.remove(id);
                     });
                 },
-                setup: (button) => setupCursorHover(button),
+                setup: setupCursorHover,
             }),
             crosser,
         ],
@@ -76,7 +76,7 @@ const todoItems = (isDone) => Widget.Scrollable({
         vertical: true,
         setup: (self) => self.hook(Todo, (self) => {
             self.children = Todo.todo_json.map((task, i) => {
-                if (task.done != isDone) {
+                if (task.done !== isDone) {
                     return null;
                 }
                 return todoListItem(task, i, isDone);
@@ -102,7 +102,6 @@ const todoItems = (isDone) => Widget.Scrollable({
         }, 'updated')
     }),
     setup: (listContents) => {
-        listContents.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
         const vScrollbar = listContents.get_vscrollbar();
         vScrollbar.get_style_context().add_class('sidebar-scrollbar');
     },
@@ -118,7 +117,7 @@ const UndoneTodoList = () => {
             halign: 'end',
             vpack: 'center',
             label: '+ New task',
-            setup: (button) => setupCursorHover(button),
+            setup: setupCursorHover,
             onClicked: () => {
                 newTaskButton.revealChild = false;
                 newTaskEntryRevealer.revealChild = true;
@@ -137,7 +136,7 @@ const UndoneTodoList = () => {
             halign: 'end',
             vpack: 'center',
             label: 'close',
-            setup: (button) => setupCursorHover(button),
+            setup: setupCursorHover,
             onClicked: () => {
                 newTaskEntryRevealer.revealChild = false;
                 confirmAddTask.revealChild = false;
@@ -152,13 +151,13 @@ const UndoneTodoList = () => {
         className: 'text-lg sidebar-todo-entry',
         placeholderText: 'Add a task...',
         onAccept: ({ text }) => {
-            if (text == '') {
+            if (text === '') {
                 return;
             }
             Todo.add(text);
             newTaskEntry.text = '';
         },
-        onChange: ({ text }) => confirmAddTask.child.toggleClassName('sidebar-todo-add-available', text != ''),
+        onChange: ({ text }) => confirmAddTask.child.toggleClassName('sidebar-todo-add-available', text !== ''),
     });
     const newTaskEntryRevealer = Widget.Revealer({
         transition: 'slide_right',
@@ -175,7 +174,7 @@ const UndoneTodoList = () => {
             halign: 'end',
             vpack: 'center',
             label: 'arrow_upward',
-            setup: (button) => setupCursorHover(button),
+            setup: setupCursorHover,
             onClicked: () => {
                 if (newTaskEntry.text == '') {
                     return;
@@ -188,9 +187,9 @@ const UndoneTodoList = () => {
     return Widget.Box({
         vertical: true,
         className: 'spacing-v-5',
-        setup: (self) => {
-            self.pack_start(todoItems(false), true, true, 0);
-            self.pack_start(Widget.Box({
+        setup: (box) => {
+            box.pack_start(todoItems(false), true, true, 0);
+            box.pack_start(Widget.Box({
                 setup: (self) => {
                     self.pack_start(cancelAddTask, false, false, 0);
                     self.pack_start(newTaskEntryRevealer, true, true, 0);
@@ -198,8 +197,8 @@ const UndoneTodoList = () => {
                     self.pack_start(newTaskButton, false, false, 0);
                 },
             }), false, false, 0);
-            self.hook(App, (_, name) => {
-                if (name !== 'overview') {
+            box.hook(App, (_, name) => {
+                if (name !== 'action-center') {
                     return;
                 }
 
@@ -208,7 +207,7 @@ const UndoneTodoList = () => {
                 cancelAddTask.revealChild = false;
                 newTaskButton.revealChild = true;
                 newTaskEntry.text = '';
-            })
+            }, 'window-toggled')
         },
     });
 };
@@ -229,9 +228,13 @@ export default () => {
         onClicked: (button) => {
             todoItemsBox.shown = `${isDone ? 'done' : 'undone'}`;
             const kids = button.get_parent().get_children();
-            for (let i = 0; i < kids.length; i++) {
-                if (kids[i] != button) { kids[i].toggleClassName('sidebar-todo-selector-tab-active', false); }
-                else { button.toggleClassName('sidebar-todo-selector-tab-active', true); }
+            for (const kid of kids) {
+                if (kid !== button) {
+                    kid.toggleClassName('sidebar-todo-selector-tab-active', false);
+                }
+                else {
+                    button.toggleClassName('sidebar-todo-selector-tab-active', true);
+                }
             }
             const buttonWidth = button.get_allocated_width();
             const highlightWidth = button.get_children()[0].get_allocated_width();
@@ -260,13 +263,13 @@ export default () => {
     const doneButton = TodoTabButton(true, 1);
     const navIndicator = NavigationIndicator(2, false, {
         className: 'sidebar-todo-selector-highlight',
-        css: 'font-size: 0px;',
+        css: 'font-size: 0px; padding: 0rem 1.636rem;',
     });
     return Widget.Box({
         hexpand: true,
         vertical: true,
         className: 'spacing-v-10',
-        setup: (box) => Utils.timeout(1, () => {
+        setup: (box) => {
             box.pack_start(Widget.Box({
                 vertical: true,
                 children: [
@@ -286,6 +289,6 @@ export default () => {
                 ],
             }), false, false, 0);
             box.pack_end(todoItemsBox, true, true, 0);
-        }),
+        },
     });
 };
