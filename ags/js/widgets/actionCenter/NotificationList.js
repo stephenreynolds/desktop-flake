@@ -85,7 +85,7 @@ export default (props) => {
                 xalign: 0,
                 label: 'Notifications',
             }),
-            ListActionButton('notifications_paused', 'Silence', (self) => {
+            ListActionButton('notifications_paused', 'Silent', (self) => {
                 Notifications.dnd = !Notifications.dnd
                 self.toggleClassName('notification-listaction-button-enabled', Notifications.dnd);
             }),
