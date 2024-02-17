@@ -62,11 +62,7 @@ apply_gtk() {
     fi
 }
 
-apply_kitty() {
-    if ! command -v kitty > /dev/null 2>&1; then
-        return
-    fi
-
+apply_wal() {
     lightdark=$(get_light_dark)
 
     wal -c
@@ -76,6 +72,12 @@ apply_kitty() {
     else
         wal -i "$CACHE_DIR"/wallpaper -qne
     fi
+}
+
+apply_kitty() {
+    if ! command -v kitty > /dev/null 2>&1; then
+        return
+    fi
 
     mkdir -p "$XDG_CONFIG_HOME/kitty/generated"
     cp "$XDG_CACHE_HOME"/wal/colors-kitty.conf "$XDG_CONFIG_HOME"/kitty/themes/generated-wal.conf
@@ -84,5 +86,6 @@ apply_kitty() {
 
 apply_ags &
 apply_hyprland &
+apply_wal &
 apply_kitty &
 apply_gtk &
