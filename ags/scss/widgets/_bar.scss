@@ -2,8 +2,13 @@
 @use '../lib/material';
 @use '../lib/mixins';
 
+@mixin transition-duration {
+  transition-duration: 200ms;
+}
+
 .bar-bg {
   @include mixins.element_accel;
+  @include transition-duration;
   background-color: colors.$t_background;
   color: material.$onSurfaceVariant;
   padding: 0.125rem 0.35rem;
@@ -11,11 +16,13 @@
 
 .bar-space {
   @include mixins.element_accel;
+  @include transition-duration;
 }
 
 .bar-floating {
   background-color: transparent;
   @include mixins.element_decel;
+  @include transition-duration;
 
   .bar-space {
     @include mixins.element_decel;
