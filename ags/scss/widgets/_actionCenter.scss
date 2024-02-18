@@ -13,7 +13,7 @@
   @include mixins.elevation2;
   min-width: 27.818rem;
   border-radius: mixins.$rounding_large - mixins.$elevation-margin + 0.068rem;
-  background-color: transparentize(colors.$t_background, 0.2);
+  background-color: transparentize(colors.$t_background, 0.15);
   padding: 1.023rem;
 }
 

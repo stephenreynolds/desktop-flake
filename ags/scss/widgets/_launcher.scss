@@ -6,7 +6,7 @@
   @include mixins.normal-rounding;
   @include mixins.elevation-border;
   @include mixins.elevation2;
-  background-color: transparentize(colors.$t_background, 0.2);
+  background-color: transparentize(colors.$t_background, 0.15);
   min-height: 36.5rem;
   min-width: 36.5rem;
 
