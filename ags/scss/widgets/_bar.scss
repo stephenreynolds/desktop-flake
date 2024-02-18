@@ -23,6 +23,7 @@
   background-color: transparent;
   @include mixins.element_decel;
   @include transition-duration;
+  padding: 0;
 
   .bar-space {
     @include mixins.element_decel;
@@ -30,7 +31,7 @@
     @include mixins.elevation2;
     background-color: transparentize(colors.$t_background, 0.15);
     padding: 0 1rem;
-    margin: 0.25rem;
+    margin: 5px;
     margin-top: 0;
   }
 }
