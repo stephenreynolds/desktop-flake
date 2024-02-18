@@ -1,17 +1,16 @@
 import Gtk from 'gi://Gtk';
 import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import options from '../../options.js';
-import LeftSpace from './leftSpace.js';
-import RightSpace from './rightSpace.js';
+import options from 'options';
+import LeftSpace from './LeftSpace';
+import RightSpace from './RightSpace';
 import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 
-/** @param {number} monitor */
-export default async (monitor = 0) => {
+export default (monitor = 0) => {
     const events = ['workspace', 'openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
 
-    const setFloating = (box) => Utils.timeout(10, async () => {
+    const setFloating = (box) => Utils.timeout(15, async () => {
         try {
             const monitorObject = Hyprland.getMonitor(monitor);
             const activeWorkspace = monitorObject?.activeWorkspace.id;
@@ -32,7 +31,7 @@ export default async (monitor = 0) => {
 
     const barContent = Widget.CenterBox({
         className: 'bar-bg',
-        startWidget: await LeftSpace(monitor),
+        startWidget: LeftSpace(monitor),
         endWidget: RightSpace(monitor),
         setup: (self) => self
             .hook(App, setFloating, 'config-parsed')

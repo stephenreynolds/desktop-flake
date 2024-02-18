@@ -2,10 +2,10 @@ import App from 'resource:///com/github/Aylur/ags/app.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 import Gtk from 'gi://Gtk';
-import MaterialIcon from '../misc/MaterialIcon.js';
-import Todo from '../../services/todo.js';
-import NavigationIndicator from '../misc/NavigationIndicator.js';
-import { setupCursorHover } from '../../lib/cursorHover.js';
+import MaterialIcon from 'widgets/misc/MaterialIcon';
+import Todo from 'services/todo';
+import NavigationIndicator from 'widgets/misc/NavigationIndicator';
+import { setupCursorHover } from 'lib/cursorHover';
 
 const defaultTodoSelected = 'undone';
 

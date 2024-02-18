@@ -1,7 +1,7 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 import Network from 'resource:///com/github/Aylur/ags/service/network.js';
-import { truncateString } from '../../utils.js';
+import { truncateString } from 'utils';
 
 const AudioIndicator = () => {
     const delta = 0.02;

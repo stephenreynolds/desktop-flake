@@ -1,28 +1,28 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
+import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
+import { type Workspace } from 'types/service/hyprland';
 
-/** @type {number} monitor */
-export default async (monitor) => {
-    const hyprland = await Service.import('hyprland');
-    const dispatch = (arg) => hyprland.sendMessage(`dispatch workspace ${arg}`)
+export default (monitor: number) => {
+    const dispatch = (arg) => Hyprland.sendMessage(`dispatch workspace ${arg}`)
 
-    const getMonitorWorkspaces = (monitor) =>
-        hyprland.workspaces
+    const getMonitorWorkspaces = (monitor: number) =>
+        Hyprland.workspaces
             .filter((w) =>
-                w.monitor === hyprland.getMonitor(monitor).name &&
+                w.monitor === Hyprland.getMonitor(monitor).name &&
                 w.id !== -99)
             .sort((a, b) => a.id - b.id);
 
-    const workspaceButton = (workspace, monitor) => Widget.Button({
-        onClicked: () => hyprland.sendMessage(`dispatch workspace ${workspace.id}`),
+    const workspaceButton = (workspace: Workspace, monitor: number) => Widget.Button({
+        onClicked: () => Hyprland.sendMessage(`dispatch workspace ${workspace.id}`),
         child: Widget.Label({
             label: `${workspace.name}`,
             className: 'indicator',
             vpack: 'center',
         }),
-        setup: (self) => self.hook(hyprland, () => {
+        setup: (self) => self.hook(Hyprland, () => {
             try {
-                self.toggleClassName('active', hyprland.getMonitor(monitor).activeWorkspace.id === workspace.id);
-                self.toggleClassName('focused', hyprland.active.workspace.id === workspace.id);
+                self.toggleClassName('active', Hyprland.getMonitor(monitor).activeWorkspace.id === workspace.id);
+                self.toggleClassName('focused', Hyprland.active.workspace.id === workspace.id);
             }
             catch {
                 return;
@@ -36,7 +36,7 @@ export default async (monitor) => {
         onScrollDown: () => dispatch('m-1'),
         child: Widget.Box({
             vpack: 'center',
-            setup: (self) => self.hook(hyprland, (self, event) => {
+            setup: (self) => self.hook(Hyprland, (self, event) => {
                 if (self.children.length === 0) {
                     self.children = getMonitorWorkspaces(monitor)
                         .map((w) => workspaceButton(w, monitor));
@@ -51,7 +51,7 @@ export default async (monitor) => {
         }),
     });
 
-    return await Widget.Box({
+    return Widget.Box({
         className: 'bar-space',
         hpack: 'start',
         children: [

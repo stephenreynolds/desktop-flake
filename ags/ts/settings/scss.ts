@@ -1,11 +1,9 @@
 import App from 'resource:///com/github/Aylur/ags/app.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
-import { dependencies } from '../utils.js';
+import { dependencies } from 'utils';
 
 const sourcePath = `${App.configDir}/scss`;
 const outputPath = '/tmp/ags/scss';
-
-let reloaded = false;
 
 export function scssWatcher() {
     Utils.subprocess([
@@ -30,10 +28,6 @@ export async function reloadScss() {
         ]);
         App.resetCss();
         App.applyCss(`${outputPath}/style.css`);
-        if (reloaded) {
-            console.log('Reloaded scss');
-        }
-        reloaded = true;
     }
     catch (error) {
         if (error instanceof Error) {

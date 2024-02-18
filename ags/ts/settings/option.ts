@@ -1,6 +1,6 @@
 import { CACHE_DIR, exec, readFile, writeFile } from 'resource:///com/github/Aylur/ags/utils.js';
 import Service from 'resource:///com/github/Aylur/ags/service.js';
-import options from '../options.js';
+import options from 'options';
 import { reloadScss } from './scss.js';
 import { setupHyprland } from './hyprland.js';
 const CACHE_FILE = CACHE_DIR + '/options.json';
@@ -66,7 +66,7 @@ export class Opt extends Service {
         if (config)
             Object.keys(config).forEach(c => this[c] = config[c]);
 
-        import('../options.js').then(this.#init.bind(this));
+        import('options').then(this.#init.bind(this));
     }
 
     set scss(scss) { this.#scss = scss; }

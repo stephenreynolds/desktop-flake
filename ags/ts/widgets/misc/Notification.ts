@@ -3,11 +3,11 @@ import Gtk from 'gi://Gtk';
 import GLib from 'gi://GLib';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js'
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js'
-import MaterialIcon from "./MaterialIcon.js";
-import AnimatedCircProg from "./AnimatedCircularProgress.js";
-import { setupCursorHover } from "../../lib/cursorHover.js";
-import dayjs from '../../lib/dayjs/dayjs.js';
-import relativeTime from '../../lib/dayjs/plugin/relativeTime.js';
+import MaterialIcon from "./MaterialIcon";
+import AnimatedCircProg from "./AnimatedCircularProgress";
+import { setupCursorHover } from "lib/cursorHover";
+import dayjs from 'lib/dayjs/dayjs';
+import relativeTime from 'lib/dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 

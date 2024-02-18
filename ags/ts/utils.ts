@@ -1,26 +1,19 @@
 import Gdk from 'gi://Gdk';
+import Gtk from "gi://Gtk?version=3.0";
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
+import { type Config } from "types/app"
+import { type Application } from "types/service/applications"
 
-/**
-  * @param {number} length
-  * @param {number=} start
-  * @returns {Array<number>}
-  */
-export function range(length, start = 1) {
+export function range(length: number, start = 1) {
     return Array.from({ length }, (_, i) => i + start);
 }
 
-/**
-  * @param {(monitor: number) => any} widget
-  * @returns {Array<import('types/widgets/window').default>}
-  */
-export function forMonitors(widget) {
+export function forMonitors(widget: (monitor: number) => Gtk.Window) {
     const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
     return range(n, 0).map(widget).flat(1);
 }
 
-/** @param {Array<string>} bins */
-export function dependencies(bins) {
+export function dependencies(bins: Array<string>) {
     const deps = bins.map(bin => {
         const has = Utils.exec(`which ${bin}`);
         if (!has)
@@ -32,11 +25,15 @@ export function dependencies(bins) {
     return deps.every(has => has);
 }
 
-export function truncateString(str, len) {
+export function truncateString(str: string, len: number) {
     return str.length > len ? str.slice(0, len) + '...' : str;
 }
 
-export async function launchApp(app) {
+export async function launchApp(app: Application) {
     await Utils.execAsync([`${app.executable}`]);
     app.frequency += 1;
+}
+
+export function config<T extends Gtk.Window>(config: Config<T>) {
+    return config
 }

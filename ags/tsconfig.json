@@ -9,11 +9,11 @@
         "checkJs": true,
         "strict": true,
         "noImplicitAny": false,
-        "baseUrl": ".",
+        "baseUrl": "ts",
         "typeRoots": [
-            "./types"
+            "./types",
+            "./node_modules/@girs"
         ],
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "skipLibCheck": true
     }
 }

@@ -1,6 +1,6 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import Clock from '../misc/Clock.js';
-import options from '../../options.js';
+import Clock from 'widgets/misc/Clock';
+import options from 'options';
 
 export default () => Widget.Box({
     className: 'text text-sm',

@@ -1,6 +1,7 @@
 import Gdk from 'gi://Gdk';
+import Gtk from 'gi://Gtk?version=3.0';
 
-export function setupCursorHover(button) {
+export function setupCursorHover(button: Gtk.Button) {
     const display = Gdk.Display.get_default();
     button.connect('enter-notify-event', () => {
         const cursor = Gdk.Cursor.new_from_name(display, 'pointer');
@@ -13,7 +14,7 @@ export function setupCursorHover(button) {
     });
 }
 
-export function setupCursorHoverAim(button) {
+export function setupCursorHoverAim(button: Gtk.Button) {
     button.connect('enter-notify-event', () => {
         const display = Gdk.Display.get_default();
         const cursor = Gdk.Cursor.new_from_name(display, 'crosshair');
@@ -27,7 +28,7 @@ export function setupCursorHoverAim(button) {
     });
 }
 
-export function setupCursorHoverGrab(button) {
+export function setupCursorHoverGrab(button: Gtk.Button) {
     button.connect('enter-notify-event', () => {
         const display = Gdk.Display.get_default();
         const cursor = Gdk.Cursor.new_from_name(display, 'grab');

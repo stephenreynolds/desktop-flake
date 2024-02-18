@@ -1,8 +1,8 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import PopupWindow from '../misc/PopupWindow.js';
-import NotificationList from './NotificationList.js';
-import Timezones from './Timezones.js';
-import Calendar from './Calendar.js';
+import PopupWindow from 'widgets/misc/PopupWindow';
+import NotificationList from './NotificationList';
+import Timezones from './Timezones';
+import Calendar from './Calendar';
 
 const ActionCenter = () => Widget.Box({
     vexpand: true,

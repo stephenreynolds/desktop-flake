@@ -24,6 +24,7 @@
 
       runtimeDependencies = genSystems (system: with pkgs.${system}; [
         inotify-tools
+        bun
         dart-sass
 
         swww

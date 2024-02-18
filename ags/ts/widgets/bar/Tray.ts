@@ -3,20 +3,17 @@ import Widget from "resource:///com/github/Aylur/ags/widget.js";
 import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
+import { type TrayItem } from "types/service/systemtray";
+import Gtk from "gi://Gtk?version=3.0";
 
 export default () => {
-    const TrayItem = (item) => Widget.Button({
+    const TrayItem = (item: TrayItem) => Widget.Button({
         className: 'bar-systray-item',
         child: Widget.Icon({
             hpack: 'center',
+            icon: item.icon,
             setup: (self) => {
                 self.hook(item, (self) => self.icon = item.icon);
-                Utils.timeout(1, () => {
-                    const styleContext = self.get_parent().get_style_context();
-                    const width = styleContext.get_property('min-width', Gtk.StateFlags.NORMAL);
-                    const height = styleContext.get_property('min-height', Gtk.StateFlags.NORMAL);
-                    self.size = Math.max(width, height, 1);
-                });
             }
         }),
         setup: (self) => self.hook(item, (self) => self.tooltipMarkup = item['tooltip-markup']),
@@ -28,7 +25,7 @@ export default () => {
         className: 'tray-content',
         attribute: {
             items: new Map(),
-            onAdded: (box, id) => {
+            onAdded: (box: Gtk.Box, id: number) => {
                 const item = SystemTray.getItem(id);
                 if (!item) {
                     return;
@@ -45,7 +42,7 @@ export default () => {
                     trayRevealer.revealChild = true;
                 }
             },
-            onRemoved: (box, id) => {
+            onRemoved: (box: Gtk.Box, id: number) => {
                 if (!box.attribute.items.has(id)) {
                     return;
                 }

@@ -1,6 +1,6 @@
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import Notification from './misc/Notification.js';
+import Notification from 'widgets/misc/Notification';
 
 const Popups = () =>
     Widget.Box({
@@ -53,7 +53,7 @@ const Popups = () =>
             .hook(Notifications, (self, id) => self.attribute.dismiss(self, id, true), 'closed'),
     });
 
-export default (monitor) =>
+export default (monitor: number) =>
     Widget.Window({
         monitor,
         name: `notifications-${monitor}`,

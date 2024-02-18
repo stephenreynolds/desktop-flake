@@ -1,14 +1,15 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
-import { setupCursorHover } from '../../lib/cursorHover.js';
-import MaterialIcon from '../misc/MaterialIcon.js';
-import TodoList from './TodoList.js';
+import { setupCursorHover } from 'lib/cursorHover';
+import MaterialIcon from 'widgets/misc/MaterialIcon';
+import TodoList from './TodoList';
+import Gtk from 'gi://Gtk?version=3.0';
 
-function checkLeapYear(year) {
+function checkLeapYear(year: number) {
     return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
 }
 
-function getMonthDays(month, year) {
+function getMonthDays(month: number, year: number) {
     const leapYear = checkLeapYear(year);
     if ((month <= 7 && month % 2 == 1) || (month >= 8 && month % 2 == 0)) {
         return 31;
@@ -22,7 +23,7 @@ function getMonthDays(month, year) {
     return 30;
 }
 
-function getNextMonthDays(month, year) {
+function getNextMonthDays(month: number, year: number) {
     const leapYear = checkLeapYear(year);
     if (month == 1 && leapYear) {
         return 29;
@@ -39,7 +40,7 @@ function getNextMonthDays(month, year) {
     return 31;
 }
 
-function getPrevMonthDays(month, year) {
+function getPrevMonthDays(month: number, year: number) {
     const leapYear = checkLeapYear(year);
     if (month == 3 && leapYear) {
         return 29;
@@ -56,8 +57,10 @@ function getPrevMonthDays(month, year) {
     return 31;
 }
 
-export function getCalendarLayout(dateObject, highlight) {
-    if (!dateObject) {dateObject = new Date();}
+export function getCalendarLayout(dateObject: Date, highlight: boolean) {
+    if (!dateObject) {
+        dateObject = new Date();
+    }
     const weekday = (dateObject.getDay() + 6) % 7; // MONDAY IS THE FIRST DAY OF THE WEEK
     const day = dateObject.getDate();
     const month = dateObject.getMonth() + 1;
@@ -112,7 +115,7 @@ export function getCalendarLayout(dateObject, highlight) {
 let calendarJson = getCalendarLayout(undefined, true);
 let monthShift = 0;
 
-function getDateInXMonthsTime(x) {
+function getDateInXMonthsTime(x: number) {
     const currentDate = new Date();
     let targetMonth = currentDate.getMonth() + x;
     let targetYear = currentDate.getFullYear();
@@ -133,7 +136,7 @@ const weekDays = [
     { day: 'Sat', today: 0 },
 ];
 
-const CalendarDay = (day, today) => Widget.Button({
+const CalendarDay = (day: number, today: number) => Widget.Button({
     className: `sidebar-calendar-btn ${today === 1 ? 'sidebar-calendar-btn-today' : today === -1 ? 'sidebar-calendar-btn-othermonth' : ''}`,
     child: Widget.Overlay({
         child: Widget.Box({}),
@@ -158,13 +161,13 @@ const Calendar = () => {
             setupCursorHover(button);
         },
     });
-    const addCalendarChildren = (box, calendarJson) => {
+    const addCalendarChildren = (box: Gtk.Box, calendarJson) => {
         box.children = calendarJson.map((row) => Widget.Box({
             className: 'spacing-h-5',
             children: row.map((day) => CalendarDay(day.day, day.today)),
         }));
     };
-    function shiftCalendarXMonths(x) {
+    function shiftCalendarXMonths(x: number) {
         monthShift = x === 0 ? 0 : monthShift + x;
         const newDate = monthShift === 0 ? new Date() : getDateInXMonthsTime(monthShift);
         calendarJson = getCalendarLayout(newDate, monthShift === 0);
@@ -240,7 +243,7 @@ const contentStack = Widget.Stack({
     }),
 });
 
-const StackButton = (stackItemName, icon, name) => Widget.Button({
+const StackButton = (stackItemName: string, icon: string, name: string) => Widget.Button({
     className: 'button-minsize sidebar-navrail-btn sidebar-button-alone text-sm spacing-h-5',
     onClicked: (button) => {
         contentStack.shown = stackItemName;

@@ -1,5 +1,5 @@
-import { setupHyprland } from './hyprland.js';
-import { reloadScss, scssWatcher } from './scss.js';
+import { setupHyprland } from './hyprland';
+import { reloadScss, scssWatcher } from './scss';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 
 async function restoreTheme() {

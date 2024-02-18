@@ -1,7 +1,7 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import GLib from 'gi://GLib';
 import { localTime, utcTime } from '../misc/Clock.js';
-import options from '../../options.js';
+import options from 'options';
 
 function getDayString(time) {
     const localTime = GLib.DateTime.new_now_local();
