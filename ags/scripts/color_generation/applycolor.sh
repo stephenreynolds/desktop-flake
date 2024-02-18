@@ -62,7 +62,7 @@ apply_gtk() {
     fi
 }
 
-apply_wal() {
+apply_term() {
     lightdark=$(get_light_dark)
 
     wal -c
@@ -72,6 +72,8 @@ apply_wal() {
     else
         wal -i "$CACHE_DIR"/wallpaper -qne
     fi
+
+    apply_kitty &
 }
 
 apply_kitty() {
@@ -86,6 +88,5 @@ apply_kitty() {
 
 apply_ags &
 apply_hyprland &
-apply_wal &
-apply_kitty &
+apply_term &
 apply_gtk &
