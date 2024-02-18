@@ -86,7 +86,17 @@ apply_kitty() {
     kitty +kitten themes --reload-in=all --config-file-name "generated-theme.conf" Generated-Wal
 }
 
+apply_electronmail() {
+    config_file="$XDG_CONFIG_HOME/electron-mail/config.json"
+    if [ ! -f "$config_file" ]; then
+        return
+    fi
+    primary=${colorvalues[1]#\#}
+    sed -i "s/\"customUnreadBgColor\": \"#.*\"/\"customUnreadBgColor\": \"#$primary\"/" "$config_file"
+}
+
 apply_ags &
 apply_hyprland &
 apply_term &
 apply_gtk &
+apply_electronmail &
