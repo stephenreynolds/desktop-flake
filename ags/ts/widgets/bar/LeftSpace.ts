@@ -36,14 +36,14 @@ export default (monitor: number) => {
         onScrollDown: () => dispatch('m-1'),
         child: Widget.Box({
             vpack: 'center',
-            setup: (self) => self.hook(Hyprland, (self, event) => {
+            setup: (self) => self.hook(Hyprland, (self, event, name) => {
                 if (self.children.length === 0) {
                     self.children = getMonitorWorkspaces(monitor)
                         .map((w) => workspaceButton(w, monitor));
                     return;
                 }
 
-                if (event === 'createworkspace' || event === 'destroyworkspace') {
+                if ((event === 'createworkspace' || event === 'destroyworkspace') && name !== 'special') {
                     self.children = getMonitorWorkspaces(monitor)
                         .map((w) => workspaceButton(w, monitor));
                 }
