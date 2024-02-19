@@ -4,6 +4,7 @@ import Notifications from 'resource:///com/github/Aylur/ags/service/notification
 import MaterialIcon from 'widgets/misc/MaterialIcon';
 import Notification from 'widgets/misc/Notification';
 import { setupCursorHover } from 'lib/cursorHover';
+import Gdk from 'gi://Gdk?version=3.0';
 
 const notificationsEmptyContent = Widget.Box({
     hexpand: true,
@@ -87,7 +88,13 @@ export default (props) => {
             }),
             ListActionButton('notifications_paused', 'Silent', (self) => {
                 Notifications.dnd = !Notifications.dnd
-                self.toggleClassName('notification-listaction-button-enabled', Notifications.dnd);
+            }, {
+                setup: (self) => {
+                    setupCursorHover(self);
+                    self.hook(Notifications, (self) => {
+                        self.toggleClassName('notification-listaction-button-enabled', Notifications.dnd);
+                    })
+                }
             }),
             ListActionButton('clear_all', 'Clear', () => Notifications.clear(), {
                 setup: (self) => {
@@ -133,5 +140,20 @@ export default (props) => {
             listTitle,
             listContents,
         ],
+        setup: (self) => self.on('key-press-event', (_, event) => {
+            const keyval = event.get_keyval()[1];
+            const mod = event.get_state()[1] - 16;
+            if (mod !== Gdk.ModifierType.MOD1_MASK) {
+                return;
+            }
+            switch (keyval) {
+                case Gdk.KEY_c:
+                    Notifications.clear();
+                    break;
+                case Gdk.KEY_s:
+                    Notifications.dnd = !Notifications.dnd;
+                    break;
+            }
+        })
     });
 };
