@@ -9,7 +9,7 @@ const AppItem = (app) =>
     Widget.Button({
         class_name: 'app',
         onClicked: () => {
-            App.closeWindow('overview');
+            App.closeWindow('launcher');
             launchApp(app);
         },
         child: Widget.Box({
@@ -102,7 +102,7 @@ const Launcher = () => {
         onAccept: ({ text }) => {
             const list = Applications.query(text);
             if (list[0]) {
-                App.closeWindow('overview');
+                App.closeWindow('launcher');
                 list[0].launch();
             }
         },
