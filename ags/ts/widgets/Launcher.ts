@@ -145,17 +145,22 @@ const Launcher = () => {
                 }),
             }),
         ],
-        setup: (self) => self.hook(App, (_, name, visible) => {
-            if (name !== 'launcher') {
-                return;
-            }
+        setup: (self) => self
+            .hook(App, (_, name, visible) => {
+                if (name !== 'launcher') {
+                    return;
+                }
 
-            entry.set_text('');
+                entry.set_text('');
 
-            if (visible) {
-                entry.grab_focus();
-            }
-        }, 'window-toggled')
+                if (visible) {
+                    Applications.reload();
+                    entry.grab_focus();
+                }
+            }, 'window-toggled')
+            .hook(Applications, () => {
+                fuse.setCollection(Applications.list);
+            }, 'changed')
     });
 };
 
