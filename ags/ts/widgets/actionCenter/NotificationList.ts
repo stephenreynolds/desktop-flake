@@ -140,20 +140,5 @@ export default (props) => {
             listTitle,
             listContents,
         ],
-        setup: (self) => self.on('key-press-event', (_, event) => {
-            const keyval = event.get_keyval()[1];
-            const mod = event.get_state()[1] - 16;
-            if (mod !== Gdk.ModifierType.MOD1_MASK) {
-                return;
-            }
-            switch (keyval) {
-                case Gdk.KEY_c:
-                    Notifications.clear();
-                    break;
-                case Gdk.KEY_s:
-                    Notifications.dnd = !Notifications.dnd;
-                    break;
-            }
-        })
     });
 };
