@@ -1,19 +1,12 @@
 import App from 'resource:///com/github/Aylur/ags/app.js';
-import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
+import { monitorFile, ensureDirectory, execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 import { dependencies } from 'utils';
 
 const sourcePath = `${App.configDir}/scss`;
 const outputPath = '/tmp/ags/scss';
 
 export function scssWatcher() {
-    Utils.subprocess([
-        'inotifywait',
-        '--recursive',
-        '--event', 'create,modify',
-        '-m', sourcePath,
-    ],
-        reloadScss,
-        () => print('Missing dependency inotify-tools for css hot reload.'));
+    monitorFile(sourcePath, reloadScss);
 }
 
 export async function reloadScss() {
@@ -22,8 +15,8 @@ export async function reloadScss() {
     }
 
     try {
-        Utils.ensureDirectory(outputPath);
-        await Utils.execAsync([
+        ensureDirectory(outputPath);
+        await execAsync([
             'sass', `${sourcePath}/main.scss`, `${outputPath}/style.css`,
         ]);
         App.resetCss();

@@ -3,7 +3,7 @@ import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import { type Workspace } from 'types/service/hyprland';
 
 export default (monitor: number) => {
-    const dispatch = (arg) => Hyprland.sendMessage(`dispatch workspace ${arg}`)
+    const dispatch = (arg) => Hyprland.messageAsync(`dispatch workspace ${arg}`)
 
     const getMonitorWorkspaces = (monitor: number) =>
         Hyprland.workspaces
@@ -13,7 +13,7 @@ export default (monitor: number) => {
             .sort((a, b) => a.id - b.id);
 
     const workspaceButton = (workspace: Workspace, monitor: number) => Widget.Button({
-        onClicked: () => Hyprland.sendMessage(`dispatch workspace ${workspace.id}`),
+        onClicked: () => Hyprland.messageAsync(`dispatch workspace ${workspace.id}`),
         child: Widget.Label({
             label: `${workspace.name}`,
             className: 'indicator',

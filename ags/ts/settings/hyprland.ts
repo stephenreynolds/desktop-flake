@@ -9,7 +9,7 @@ function sendBatch(batch) {
         .map(x => `keyword ${x}`)
         .join('; ');
 
-    Hyprland.sendMessage(`[[BATCH]]/${command}`);
+    Hyprland.messageAsync(`[[BATCH]]/${command}`);
 }
 
 function listenForNoGapsWhenSingle(gapsout) {
@@ -21,13 +21,13 @@ function listenForNoGapsWhenSingle(gapsout) {
 
             const noGapsWindowClasses = options.hyprland.gaps.noGapsWindowClasses.value;
             if (tiledClients.length === 1 && noGapsWindowClasses.includes(tiledClients[0].class)) {
-                Hyprland.sendMessage(`keyword workspace ${workspace.id},gapsout:0,rounding:false,border:false`)
+                Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:0,rounding:false,border:false`)
                     .catch(() => { });
                 
                 return;
             }
 
-            Hyprland.sendMessage(`keyword workspace ${workspace.id},gapsout:${gapsout},rounding:true,border:true`)
+            Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:${gapsout},rounding:true,border:true`)
                 .catch(() => { });
         }),
     );

@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     ags = {
-      url = "github:Aylur/ags/109faf5d283d4d2ce90403e461b39048321b9041";
+      url = "github:Aylur/ags/622e808adadeaa02525eb228b168676a214214ad";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -23,10 +23,8 @@
       configDir = builtins.path { path = ./ags; name = "ags-config"; };
 
       runtimeDependencies = genSystems (system: with pkgs.${system}; [
-        inotify-tools
         bun
         dart-sass
-
         swww
         yad
         wlr-randr
