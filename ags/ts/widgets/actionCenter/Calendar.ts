@@ -1,8 +1,6 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 import { setupCursorHover } from 'lib/cursorHover';
 import MaterialIcon from 'widgets/misc/MaterialIcon';
-import TodoList from './TodoList';
 import Gtk from 'gi://Gtk?version=3.0';
 
 function checkLeapYear(year: number) {
@@ -151,7 +149,7 @@ const CalendarDay = (day: number, today: number) => Widget.Button({
     }),
 });
 
-const Calendar = () => {
+export default () => {
     const calendarMonthYear = Widget.Button({
         className: 'text text-xl sidebar-calendar-monthyear-btn',
         onClicked: () => shiftCalendarXMonths(0),
@@ -162,12 +160,14 @@ const Calendar = () => {
             setupCursorHover(button);
         },
     });
+
     const addCalendarChildren = (box: Gtk.Box, calendarJson) => {
         box.children = calendarJson.map((row) => Widget.Box({
             className: 'spacing-h-5',
             children: row.map((day) => CalendarDay(day.day, day.today)),
         }));
     };
+
     function shiftCalendarXMonths(x: number) {
         monthShift = x === 0 ? 0 : monthShift + x;
         const newDate = monthShift === 0 ? new Date() : getDateInXMonthsTime(monthShift);
@@ -177,6 +177,7 @@ const Calendar = () => {
         calendarMonthYear.label = `${monthShift === 0 ? '' : '• '}${date} ${year}`;
         addCalendarChildren(calendarDays, calendarJson);
     }
+
     const calendarHeader = Widget.Box({
         className: 'spacing-h-5 sidebar-calendar-header',
         setup: (box) => {
@@ -201,12 +202,14 @@ const Calendar = () => {
             }), false, false, 0);
         },
     });
+
     const calendarDays = Widget.Box({
         hexpand: true,
         vertical: true,
         className: 'spacing-v-5',
         setup: (box) => addCalendarChildren(box, calendarJson),
     });
+
     return Widget.EventBox({
         onScrollUp: () => shiftCalendarXMonths(-1),
         onScrollDown: () => shiftCalendarXMonths(1),
@@ -229,71 +232,3 @@ const Calendar = () => {
         }),
     });
 };
-
-const defaultShown = 'calendar';
-const contentStack = Widget.Stack({
-    hexpand: true,
-    children: {
-        calendar: Calendar(),
-        todo: TodoList(),
-    },
-    transition: 'slide_up_down',
-    transition_duration: 180,
-    setup: (stack) => Utils.timeout(1, () => {
-        stack.shown = defaultShown;
-    }),
-});
-
-const StackButton = (stackItemName: string, icon: string, name: string) => Widget.Button({
-    className: 'button-minsize sidebar-navrail-btn sidebar-button-alone text-sm spacing-h-5',
-    onClicked: (button) => {
-        contentStack.shown = stackItemName;
-        const children = button.get_parent().get_children();
-        for (let i = 0; i < children.length; i++) {
-            if (children[i] !== button) {
-                children[i].toggleClassName('sidebar-navrail-btn-active', false);
-            }
-            else {
-                button.toggleClassName('sidebar-navrail-btn-active', true);
-            }
-        }
-    },
-    child: Widget.Box({
-        className: 'spacing-v-5',
-        vertical: true,
-        children: [
-            Widget.Label({
-                className: 'text icon-material text-3xl',
-                label: icon,
-            }),
-            Widget.Label({
-                className: 'text text-base',
-                label: name,
-            }),
-        ],
-    }),
-    setup: (button) => Utils.timeout(1, () => {
-        button.toggleClassName('sidebar-navrail-btn-active', defaultShown === stackItemName);
-        setupCursorHover(button);
-    }),
-});
-
-export default () => Widget.Box({
-    className: 'sidebar-group spacing-h-5',
-    vertical: true,
-    child: Widget.Box({
-        setup: (box) => {
-            box.pack_start(Widget.Box({
-                vpack: 'center',
-                homogeneous: true,
-                vertical: true,
-                className: 'sidebar-navrail spacing-v-10',
-                children: [
-                    StackButton('calendar', 'calendar_month', 'Calendar'),
-                    StackButton('todo', 'lists', 'To Do'),
-                ],
-            }), false, false, 0);
-            box.pack_end(contentStack, false, false, 0);
-        },
-    }),
-});
