@@ -17,13 +17,13 @@ export default (monitor: number) => {
     const clock = Clock();
 
     return Widget.Box({
-        className: 'bar-space spacing-h-15',
+        className: 'bar-space spacing-h-10',
         hpack: 'end',
         children: [
             tray,
             systemIndicators,
             Widget.Button({
-                className: 'action-center-button',
+                className: 'bar-button',
                 onPrimaryClick: () => App.toggleWindow('action-center'),
                 child: Widget.Box({
                     className: 'spacing-h-5',
