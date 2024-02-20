@@ -36,7 +36,7 @@ export default (monitor: number) => {
                     if (currentName === 'action-center') {
                         self.toggleClassName('action-center-button-active', visible);
                     }
-                })
+                }, 'window-toggled'),
             }),
         ],
     });

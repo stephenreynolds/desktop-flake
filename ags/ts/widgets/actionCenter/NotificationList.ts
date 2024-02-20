@@ -93,13 +93,14 @@ export default (props) => {
                     setupCursorHover(self);
                     self.hook(Notifications, (self) => {
                         self.toggleClassName('notification-listaction-button-enabled', Notifications.dnd);
-                    })
+                    });
+                    self.set_can_focus(false);
                 }
             }),
             ListActionButton('clear_all', 'Clear', () => Notifications.clear(), {
                 setup: (self) => {
                     setupCursorHover(self);
-                    self.bind('visible', Notifications, 'notifications', (notifications) => notifications.length > 0)
+                    self.bind('visible', Notifications, 'notifications', (notifications) => notifications.length > 0);
                 }
             })
         ],
