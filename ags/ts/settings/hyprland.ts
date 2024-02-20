@@ -12,7 +12,7 @@ function sendBatch(batch) {
     Hyprland.messageAsync(`[[BATCH]]/${command}`);
 }
 
-function listenForNoGapsWhenSingle(gapsout) {
+function listenForNoGapsWhenSingle(gapsout, gapsin) {
     const events = ['openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
 
     const setGaps = () => Utils.timeout(10, () =>
@@ -20,14 +20,13 @@ function listenForNoGapsWhenSingle(gapsout) {
             const tiledClients = Hyprland.clients.filter((c) => c.workspace.id === workspace.id && !c.floating && c.mapped);
 
             const noGapsWindowClasses = options.hyprland.gaps.noGapsWindowClasses.value;
-            if (tiledClients.length === 1 && noGapsWindowClasses.includes(tiledClients[0].class)) {
-                Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:0,rounding:false,border:false`)
+            if (tiledClients.every(c => noGapsWindowClasses.includes(c.class))) {
+                Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:0,gapsin:0,rounding:false,border:false`)
                     .catch(() => { });
-                
                 return;
             }
 
-            Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:${gapsout},rounding:true,border:true`)
+            Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:${gapsout},gapsin:${gapsin}rounding:true,border:true`)
                 .catch(() => { });
         }),
     );
@@ -54,6 +53,9 @@ export async function setupHyprland() {
     sendBatch(batch);
 
     if (options.hyprland.gaps.noGapsWhenOnly.value === 0) {
-        listenForNoGapsWhenSingle(options.hyprland.gaps.gapsOut.value);
+        listenForNoGapsWhenSingle(
+            options.hyprland.gaps.gapsOut.value,
+            options.hyprland.gaps.gapsIn.value
+        );
     }
 }
