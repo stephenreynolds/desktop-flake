@@ -34,10 +34,6 @@
     background-color: transparentize(colors.$t_background, 0.15);
     padding: 0 1rem;
     margin: 0;
-
-    &:last-child {
-      padding-right: 0.5rem;
-    }
   }
 }
 
