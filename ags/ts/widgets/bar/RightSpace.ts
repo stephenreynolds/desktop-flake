@@ -17,7 +17,7 @@ export default (monitor: number) => {
     const clock = Clock();
 
     return Widget.Box({
-        className: 'bar-space spacing-h-10',
+        className: 'bar-space spacing-h-15',
         hpack: 'end',
         children: [
             tray,
