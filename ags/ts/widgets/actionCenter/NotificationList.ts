@@ -97,10 +97,14 @@ export default (props) => {
                     self.set_can_focus(false);
                 }
             }),
-            ListActionButton('clear_all', 'Clear', () => Notifications.clear(), {
+            ListActionButton('clear_all', 'Clear', () => {
+                Notifications.clear();
+                Utils.timeout(210, () => App.toggleWindow('action-center'));
+            }, {
                 setup: (self) => {
                     setupCursorHover(self);
                     self.bind('visible', Notifications, 'notifications', (notifications) => notifications.length > 0);
+                    self.set_can_focus(false);
                 }
             })
         ],
