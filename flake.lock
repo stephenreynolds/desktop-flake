@@ -7,17 +7,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1708372801,
-        "narHash": "sha256-quJ27wrdcoANs/QnHGXSO6c4hhn8m6cqv06uUIoH+NA=",
+        "lastModified": 1708472464,
+        "narHash": "sha256-dZzhUDumm6GlT3iokCycOQakWbH1IZANltu+gLdKtEY=",
         "owner": "Aylur",
         "repo": "ags",
-        "rev": "622e808adadeaa02525eb228b168676a214214ad",
+        "rev": "7465dcfa064c1aed1ca9c843f3a76c520c43a3d3",
         "type": "github"
       },
       "original": {
         "owner": "Aylur",
         "repo": "ags",
-        "rev": "622e808adadeaa02525eb228b168676a214214ad",
+        "rev": "7465dcfa064c1aed1ca9c843f3a76c520c43a3d3",
         "type": "github"
       }
     },
