@@ -101,33 +101,21 @@ const ActionCenter = () => Widget.Box({
             ]
         })
     ],
-    setup: (self) => self.on('key-press-event', (_, event) => {
-        const keyval = event.get_keyval()[1];
-        const mod = event.get_state()[1] - 16;
-        if (mod !== Gdk.ModifierType.MOD1_MASK) {
-            return;
-        }
-        switch (keyval) {
-            case Gdk.KEY_c:
-                Notifications.clear();
-                break;
-            case Gdk.KEY_s:
-                Notifications.dnd = !Notifications.dnd;
-                break;
-            case Gdk.KEY_Tab:
-                if (contentStack.shown === 'calendar') {
-                    contentStack.shown = 'todo';
-                    calendarButton.toggleClassName('sidebar-navrail-btn-active', false);
-                    todoButton.toggleClassName('sidebar-navrail-btn-active', true);
-                }
-                else {
-                    contentStack.shown = 'calendar';
-                    todoButton.toggleClassName('sidebar-navrail-btn-active', false);
-                    calendarButton.toggleClassName('sidebar-navrail-btn-active', true);
-                }
-                break;
-        }
-    })
+    setup: (self) => self
+        .keybind(['MOD1', 'MOD2'], 'c', Notifications.clear)
+        .keybind(['MOD1', 'MOD2'], 's', () => Notifications.dnd = !Notifications.dnd)
+        .keybind(['MOD1', 'MOD2'], 'Tab', () => {
+            if (contentStack.shown === 'calendar') {
+                contentStack.shown = 'todo';
+                calendarButton.toggleClassName('sidebar-navrail-btn-active', false);
+                todoButton.toggleClassName('sidebar-navrail-btn-active', true);
+            }
+            else {
+                contentStack.shown = 'calendar';
+                todoButton.toggleClassName('sidebar-navrail-btn-active', false);
+                calendarButton.toggleClassName('sidebar-navrail-btn-active', true);
+            }
+        })
 });
 
 export default () => PopupWindow({
