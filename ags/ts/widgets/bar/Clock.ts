@@ -3,7 +3,7 @@ import Clock from 'widgets/misc/Clock';
 import options from 'options';
 
 export default () => Widget.Box({
-    className: 'text text-sm',
+    className: 'text text-xs',
     vertical: true,
     vpack: 'center',
     children: [
