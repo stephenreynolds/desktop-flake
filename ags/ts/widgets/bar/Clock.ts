@@ -3,7 +3,8 @@ import Clock from 'widgets/misc/Clock';
 import options from 'options';
 
 export default () => Widget.Box({
-    className: 'text text-xs text-semibold',
+    className: 'text text-semibold',
+    css: 'font-size: 0.8rem;',
     vertical: true,
     vpack: 'center',
     children: [
