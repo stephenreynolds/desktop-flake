@@ -81,7 +81,7 @@ apply_kitty() {
         return
     fi
 
-    mkdir -p "$XDG_CONFIG_HOME/kitty/generated"
+    mkdir -p "$XDG_CONFIG_HOME/kitty/themes"
     cp "$XDG_CACHE_HOME"/wal/colors-kitty.conf "$XDG_CONFIG_HOME"/kitty/themes/generated-wal.conf
     kitty +kitten themes --reload-in=all --config-file-name "generated-theme.conf" Generated-Wal
 }
