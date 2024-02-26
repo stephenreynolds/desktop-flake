@@ -26,8 +26,8 @@ in
 lib.mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.layerrule =
     let
-      bar = [ "^(bar-.*)$" ];
-      notifications = [ "^(notifications-.*)$" ];
+      bar = [ "bar-.*" ];
+      notifications = [ "notifications-.*" ];
       actionCenter = [ "action-center" ];
       launcher = [ "launcher" ];
     in
