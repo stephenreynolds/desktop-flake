@@ -23,7 +23,8 @@ export default (monitor = 0) => {
             const workspacerules = JSON.parse(await Utils.execAsync(['hyprctl', 'workspacerules', '-j']));
             const barWorkspace = workspacerules.find(rule => rule.workspaceString === activeWorkspace.toString());
             if (!barWorkspace) return;
-            box.toggleClassName('bar-floating', barWorkspace.gapsOut > 0);
+            const bottomGaps = barWorkspace.gapsOut[2];
+            box.toggleClassName('bar-floating', bottomGaps > 0);
         } catch (e) {
             console.log(e);
         }
