@@ -20,7 +20,8 @@ function listenForNoGapsWhenSingle(gapsout, gapsin) {
             const tiledClients = Hyprland.clients.filter((c) => c.workspace.id === workspace.id && !c.floating && c.mapped);
 
             const noGapsWindowClasses = options.hyprland.gaps.noGapsWindowClasses.value;
-            if (tiledClients.every(c => noGapsWindowClasses.includes(c.class))) {
+
+            if (tiledClients.length > 0 && tiledClients.every(c => noGapsWindowClasses.includes(c.class))) {
                 Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:0,gapsin:0,rounding:false,border:false`)
                     .catch(() => { });
                 return;
