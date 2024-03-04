@@ -9,9 +9,9 @@ try {
         '--external', 'gi://*',
         '--external', 'file://*',
     ]);
+
+    await import(`file://${main}`);
 } catch (error) {
     console.error(error);
     App.quit();
 }
-
-export default (await import(`file://${main}`)).default;

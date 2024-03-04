@@ -1,4 +1,5 @@
 import GLib from 'gi://GLib';
+import App from 'resource:///com/github/Aylur/ags/app.js';
 import Bar from 'widgets/bar/Bar';
 import Notifications from 'widgets/Notifications';
 import ActionCenter from 'widgets/actionCenter/ActionCenter';
@@ -16,7 +17,7 @@ const windows = () => [
 
 const CLOSE_ANIM_TIME = 130;
 
-export default config({
+App.config({
     onConfigParsed: init,
     closeWindowDelay: {
         'action-center': CLOSE_ANIM_TIME,
