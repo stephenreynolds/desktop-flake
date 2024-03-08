@@ -23,6 +23,13 @@ fi
 cd "$CONFIG_DIR/scripts/" || exit
 color_generation/generate_colors_material.py --path "$1" "$lightdark" > "$CACHE_DIR/generated_colors.txt"
 if [ "$2" = "--apply" ]; then
-    cp "$CACHE_DIR/generated_colors.txt" "$DEST_DIR/_material.scss"
+    file="$CACHE_DIR/generated_colors.txt"
+
+    # If there is a warning in the first line, remove it
+    if [[ $(head -n 1 "$file") == *"Warning"* ]]; then
+        sed -i '1d' "$file"
+    fi
+
+    cp "$file" "$DEST_DIR/_material.scss"
     color_generation/applycolor.sh
 fi
