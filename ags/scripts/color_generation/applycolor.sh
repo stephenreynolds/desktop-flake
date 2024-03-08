@@ -41,7 +41,7 @@ apply_gtk() {
     lightdark=$(get_light_dark)
 
     cp "scripts/color_generation/templates/gradience_template.json" "$CACHE_DIR/gradience.json"
-    #
+    
     # Apply colors
     for i in "${!colorlist[@]}"; do
         sed -i "s/{{ ${colorlist[$i]} }}/${colorvalues[$i]}/g" "$CACHE_DIR/gradience.json"
@@ -95,8 +95,24 @@ apply_electronmail() {
     sed -i "s/\"customUnreadBgColor\": \"#.*\"/\"customUnreadBgColor\": \"#$primary\"/" "$config_file"
 }
 
+apply_vesktop() {
+    theme_file="$XDG_CONFIG_HOME/vesktop/themes/material_generated.css"
+    cp "scripts/color_generation/templates/vesktop.css.template" "$theme_file"
+    
+    # Apply colors
+    for i in "${!colorlist[@]}"; do
+        if (( i == 0 )); then
+            continue
+        fi
+        hex=${colorvalues[$i]:1:6}
+        rgb=$(printf "%d, %d, %d" 0x"${hex:0:2}" 0x"${hex:2:2}" 0x"${hex:4:2}")
+        sed -i "s/{{ ${colorlist[$i]} }}/$rgb/g" "$theme_file"
+    done
+}
+
 apply_ags &
 apply_hyprland &
 apply_term &
 apply_gtk &
 apply_electronmail &
+apply_vesktop &

@@ -1,0 +1,43 @@
+@import url("https://slowstab.github.io/dracula/BetterDiscord/source.css");
+@import url("https://mulverinex.github.io/legacy-settings-icons/dist-native.css");
+.theme-dark, .theme-light, :root {
+  --gen-primary: {{ $primary }};
+  --gen-secondary: {{ $secondary }};
+  --gen-tertiary: {{ $tertiary }};
+  --gen-errorContainer: {{ $errorContainer }};
+  --gen-background: {{ $background }};
+  --gen-onBackground: {{ $onBackground }};
+  --gen-surface: {{ $surface }};
+  --gen-surfaceVariant: {{ $surfaceVariant }};
+  --gen-onSurface: {{ $onSurface }};
+  --gen-onSurfaceVariant: {{ $onSurfaceVariant }};
+
+  --text-default: rgb(var(--gen-onBackground));
+  --header-primary: rgb(var(--gen-onBackground));
+  --header-secondary: rgb(var(--gen-onBackground));
+  --channeltextarea-background: rgb(var(--gen-surface));
+  --interactive-normal: rgb(var(--gen-onSurfaceVariant));
+  --interactive-active: rgb(var(--gen-onBackground));
+  --button-danger-background: rgb(var(--gen-errorContainer));
+  --button-outline-danger-border: rgb(var(--gen-errorContainer));
+  --home-background: rgb(var(--gen-surface));
+
+  --dracula-primary: rgb(var(--gen-background));
+  --dracula-secondary: rgb(var(--gen-surface));
+  --dracula-secondary-alpha: rgba(var(--gen-surface), 0.93);
+  --dracula-tertiary: rgb(var(--gen-surfaceVariant));
+  --dracula-tertiary-alpha: rgb(var(--gen-surfaceVariant));
+  --dracula-primary-light: rgb(var(--gen-surface));
+
+  --dracula-accent: rgb(var(--gen-primary));
+  --dracula-accent-alpha: rgba(var(--gen-primary), 0.4);
+  --dracula-accent-alpha-alt: rgba(var(--gen-primary), 0.53);
+  --dracula-accent-alpha-alt2: rgba(var(--gen-primary), 0.67);
+  --dracula-accent-dark: rgb(var(--gen-secondary));
+  --dracula-accent-light: rgba(var(--gen-primary), 0.67);
+}
+
+.button_afdfd9.colorBrand_b2253e div {
+    --gen-onPrimary: {{ $onPrimary }};
+	color: rgb(var(--gen-onPrimary));
+}
