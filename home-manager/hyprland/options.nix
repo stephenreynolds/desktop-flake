@@ -40,6 +40,7 @@ lib.mkIf cfg.enable {
         contrast = 1;
         new_optimizations = true;
         ignore_opacity = true;
+        popups = true;
       };
 
       drop_shadow = true;
