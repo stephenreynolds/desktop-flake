@@ -1,7 +1,7 @@
 @use './lib/mixins';
 @use './lib/material' as *;
 
-* {
+*:not(popover) {
   all: unset;
 
   selection {
