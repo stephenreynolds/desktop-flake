@@ -1,10 +1,8 @@
-import Gtk from 'gi://Gtk';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import MaterialIcon from 'widgets/misc/MaterialIcon';
 import Notification from 'widgets/misc/Notification';
 import { setupCursorHover } from 'lib/cursorHover';
-import Gdk from 'gi://Gdk?version=3.0';
 
 const notificationsEmptyContent = Widget.Box({
     hexpand: true,
@@ -58,6 +56,12 @@ const NotificationList = Widget.Box({
         }, 'closed'),
 });
 
+export const clearNotifications = () => {
+    Notifications.clear();
+    NotificationList.get_children().forEach(ch => ch.attribute.destroyWithAnims());
+    Utils.timeout(210, () => App.toggleWindow('action-center'));
+};
+
 export default (props) => {
     const ListActionButton = (icon, name, action, { ...rest } = {}) => Widget.Button({
         className: 'notification-listaction-button',
@@ -86,7 +90,7 @@ export default (props) => {
                 xalign: 0,
                 label: 'Notifications',
             }),
-            ListActionButton('notifications_paused', 'Silent', (self) => {
+            ListActionButton('notifications_paused', 'Silent', () => {
                 Notifications.dnd = !Notifications.dnd
             }, {
                 setup: (self) => {
@@ -97,10 +101,7 @@ export default (props) => {
                     self.set_can_focus(false);
                 }
             }),
-            ListActionButton('clear_all', 'Clear', () => {
-                Notifications.clear();
-                Utils.timeout(210, () => App.toggleWindow('action-center'));
-            }, {
+            ListActionButton('clear_all', 'Clear', clearNotifications, {
                 setup: (self) => {
                     setupCursorHover(self);
                     self.bind('visible', Notifications, 'notifications', (notifications) => notifications.length > 0);

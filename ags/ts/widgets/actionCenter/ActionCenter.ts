@@ -1,9 +1,8 @@
-import Gdk from 'gi://Gdk?version=3.0';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 import PopupWindow from 'widgets/misc/PopupWindow';
-import NotificationList from './NotificationList';
+import NotificationList, { clearNotifications } from './NotificationList';
 import Timezones from './Timezones';
 import Calendar from './Calendar';
 import TodoList from './TodoList';
@@ -102,7 +101,7 @@ const ActionCenter = () => Widget.Box({
         })
     ],
     setup: (self) => self
-        .keybind(['MOD1', 'MOD2'], 'c', Notifications.clear)
+        .keybind(['MOD1', 'MOD2'], 'c', clearNotifications)
         .keybind(['MOD1', 'MOD2'], 's', () => Notifications.dnd = !Notifications.dnd)
         .keybind(['MOD1', 'MOD2'], 'Tab', () => {
             if (contentStack.shown === 'calendar') {
