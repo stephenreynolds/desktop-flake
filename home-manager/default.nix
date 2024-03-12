@@ -7,6 +7,7 @@ in
   imports = [
     (import ./ags.nix self)
     (import ./hyprland self)
+    (import ./hyprlock.nix self)
   ];
 
   options.desktop-flake = {

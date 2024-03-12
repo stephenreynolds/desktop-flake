@@ -13,6 +13,11 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
@@ -23,11 +28,13 @@
       configDir = builtins.path { path = ./ags; name = "ags-config"; };
 
       runtimeDependencies = genSystems (system: with pkgs.${system}; [
+        adw-gtk3
         bun
         dart-sass
-        swww
-        yad
-        wlr-randr
+        glib
+        gradience
+        gsettings-desktop-schemas
+        gtk3
         (python3.withPackages (ps: with ps; [
           material-color-utilities
           pywal
@@ -35,11 +42,14 @@
           poetry-core
           pillow
         ]))
-        gradience
-        glib
-        gsettings-desktop-schemas
-        gtk3
-        adw-gtk3
+        swww
+        wlr-randr
+        yad
+
+        (google-fonts.override {
+          fonts = [ "Gabarito" "Lexend" ];
+        })
+        material-symbols
       ]);
     in
     {
