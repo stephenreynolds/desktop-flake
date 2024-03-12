@@ -27,24 +27,28 @@ in
         '';
       };
     };
-    dpms = {
-      onCmd = mkOption {
-        type = types.str;
-        default = "hyprctl dispatch dpms on";
+    dpms =
+      let
+        hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+      in
+      {
+        onCmd = mkOption {
+          type = types.str;
+          default = "${hyprctl} dispatch dpms on";
+        };
+        offCmd = mkOption {
+          type = types.str;
+          default = "${hyprctl} dispatch dpms off";
+        };
+        timeout = mkOption {
+          type = types.int;
+          default = 240;
+          description = ''
+            The time to wait before turning off display.
+            Default is 4 minutes.
+          '';
+        };
       };
-      offCmd = mkOption {
-        type = types.str;
-        default = "hyprctl dispatch dpms off";
-      };
-      timeout = mkOption {
-        type = types.int;
-        default = 240;
-        description = ''
-          The time to wait before turning off display.
-          Default is 4 minutes.
-        '';
-      };
-    };
     suspend = {
       cmd = mkOption {
         type = types.str;
