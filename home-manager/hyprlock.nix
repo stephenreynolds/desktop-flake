@@ -29,6 +29,13 @@ in
         See `man date`.
       '';
     };
+    grace = mkOption {
+      type = types.int;
+      default = 5;
+      description = ''
+        The amount of seconds for which the lockscreen will unlock on mouse movement.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -44,6 +51,11 @@ in
       in
       {
         enable = true;
+
+        general = {
+          disable_loading_bar = true;
+          grace = cfg.grace;
+        };
 
         backgrounds = [
           {
