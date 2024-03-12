@@ -40,7 +40,7 @@ in
         type = types.int;
         default = 240;
         description = ''
-          The time to wait before turning of display.
+          The time to wait before turning off display.
           Default is 4 minutes.
         '';
       };
