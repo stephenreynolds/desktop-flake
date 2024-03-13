@@ -75,7 +75,6 @@ in
             outer_color = entry_border_color;
             inner_color = entry_background_color;
             font_color = entry_color;
-            shadow_passes = 3;
             fade_on_empty = true;
             position = {
               x = 0;
@@ -94,7 +93,6 @@ in
             color = text_color;
             font_size = 65;
             font_family = font_family_clock;
-            shadow_passes = 3;
             position = {
               x = 0;
               y = 300;
@@ -109,7 +107,6 @@ in
             color = text_color;
             font_size = 20;
             font_family = font_family;
-            shadow_passes = 3;
             position = {
               x = 0;
               y = 240;
@@ -124,7 +121,6 @@ in
             color = text_color;
             font_size = 21;
             font_family = font_material_symbols;
-            shadow_passes = 3;
             position = {
               x = 0;
               y = 65;
@@ -139,7 +135,6 @@ in
             color = text_color;
             font_size = 14;
             font_family = font_family;
-            shadow_passes = 3;
             position = {
               x = 0;
               y = 50;
@@ -158,11 +153,3 @@ in
     ];
   };
 }
-
-
-
-
-
-
-
-
