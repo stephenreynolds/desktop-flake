@@ -1,7 +1,7 @@
 self: { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption types getExe;
+  inherit (lib) mkIf mkMerge mkOption mkEnableOption types getExe;
   cfg = config.desktop-flake.hypridle;
 in
 {
@@ -50,6 +50,7 @@ in
         };
       };
     suspend = {
+      enable = mkEnableOption "Whether to enable automatically suspending";
       cmd = mkOption {
         type = types.str;
         default = "systemctl suspend";
@@ -92,10 +93,10 @@ in
             onTimeout = cfg.dpms.offCmd;
             onResume = cfg.dpms.onCmd;
           }
-          {
+          (mkIf cfg.suspend.enable {
             timeout = cfg.suspend.timeout;
             onTimeout = cfg.suspend.cmd;
-          }
+          })
         ];
       };
     }
