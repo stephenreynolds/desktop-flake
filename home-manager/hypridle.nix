@@ -1,7 +1,7 @@
 self: { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption mkEnableOption types getExe;
+  inherit (lib) mkIf mkMerge mkOption types getExe;
   cfg = config.desktop-flake.hypridle;
 in
 {
@@ -50,7 +50,11 @@ in
         };
       };
     suspend = {
-      enable = mkEnableOption "Whether to enable automatically suspending";
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to enable automatically suspending";
+      };
       cmd = mkOption {
         type = types.str;
         default = "systemctl suspend";
