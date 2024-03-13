@@ -89,7 +89,7 @@ in
           # Clock
           {
             inherit monitor;
-            text = ''cmd[update:1000] echo "<span>$(date +'${cfg.clockFormat}')</span>"'';
+            text = ''cmd[update:1000:1] echo "<span>$(date +'${cfg.clockFormat}')</span>"'';
             color = text_color;
             font_size = 65;
             font_family = font_family_clock;
