@@ -1,17 +1,23 @@
 import { setupHyprland } from './hyprland';
 import { reloadScss, scssWatcher } from './scss';
-import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
+import { fileExists } from 'utils';
 
 async function restoreTheme() {
-    await Utils.execAsync([
+    return Utils.execAsync([
         `${App.configDir}/scripts/color_generation/switchwall.sh`,
         `${Utils.CACHE_DIR}/user/wallpaper`
     ]);
 }
 
-export function init() {
+export async function init() {
     scssWatcher();
-    reloadScss();
     setupHyprland();
-    restoreTheme();
+    reloadScss();
+
+    if (fileExists("/tmp/ags/scss/style.css")) {
+        restoreTheme();
+    }
+    else {
+        await restoreTheme();
+    }
 }
