@@ -13,14 +13,6 @@ in
       default = config.desktop-flake.enable;
       description = "Whether to enable hyprlock";
     };
-    primaryMonitor = mkOption {
-      type = types.str;
-      default = "";
-      description = ''
-        The display show the widgets on.
-        Empty string means they are visible on all displays.
-      '';
-    };
     clockFormat = mkOption {
       type = types.str;
       default = "%-I:%M %p";
@@ -41,6 +33,7 @@ in
   config = mkIf cfg.enable {
     programs.hyprlock =
       let
+        monitor = config.desktop-flaken.primaryMonitor;
         text_color = "rgba(ede0deff)";
         entry_background_color = "rgba(130f0f11)";
         entry_border_color = "rgba(a08c8955)";
@@ -71,7 +64,7 @@ in
 
         input-fields = [
           {
-            monitor = cfg.primaryMonitor;
+            inherit monitor;
             size = {
               width = 250;
               height = 50;
@@ -95,7 +88,7 @@ in
         labels = [
           # Clock
           {
-            monitor = cfg.primaryMonitor;
+            inherit monitor;
             text = ''cmd[update:1000] echo "<span>$(date +'${cfg.clockFormat}')</span>"'';
             color = text_color;
             font_size = 65;
@@ -109,7 +102,7 @@ in
           }
           # Greeting
           {
-            monitor = cfg.primaryMonitor;
+            inherit monitor;
             text = "$USER";
             color = text_color;
             font_size = 20;
@@ -123,7 +116,7 @@ in
           }
           # Lock icon
           {
-            monitor = cfg.primaryMonitor;
+            inherit monitor;
             text = "lock";
             color = text_color;
             font_size = 21;
@@ -137,7 +130,7 @@ in
           }
           # "locked" text
           {
-            monitor = cfg.primaryMonitor;
+            inherit monitor;
             text = "locked";
             color = text_color;
             font_size = 14;

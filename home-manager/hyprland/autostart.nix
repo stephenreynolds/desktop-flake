@@ -8,6 +8,7 @@ in
 lib.mkIf cfg.enable {
   wayland.windowManager.hyprland.settings = {
     exec = [
+      "${lib.getExe pkgs.xorg.xrandr} --output ${config.desktop-flake.primaryMonitor} --primary"
       "${ags} -q; ${ags}"
     ];
   };
