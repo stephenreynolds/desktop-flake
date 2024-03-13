@@ -33,7 +33,7 @@ in
   config = mkIf cfg.enable {
     programs.hyprlock =
       let
-        monitor = config.desktop-flaken.primaryMonitor;
+        monitor = config.desktop-flake.primaryMonitor;
         text_color = "rgba(ede0deff)";
         entry_background_color = "rgba(130f0f11)";
         entry_border_color = "rgba(a08c8955)";

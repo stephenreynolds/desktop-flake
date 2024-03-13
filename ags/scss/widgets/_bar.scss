@@ -31,6 +31,7 @@
     @include mixins.element_decel;
     @include mixins.small-rounding;
     @include mixins.elevation2;
+    @include mixins.elevation-border;
     background-color: transparentize(colors.$t_background, 0.15);
     padding: 0 0.5rem;
     margin: 0;
