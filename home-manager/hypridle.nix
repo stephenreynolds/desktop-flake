@@ -20,7 +20,7 @@ in
       };
       timeout = mkOption {
         type = types.int;
-        default = 180;
+        default = 300;
         description = ''
           The time to wait before locking.
           Default is 3 minutes.
@@ -42,7 +42,7 @@ in
         };
         timeout = mkOption {
           type = types.int;
-          default = 240;
+          default = 360;
           description = ''
             The time to wait before turning off display.
             Default is 4 minutes.
@@ -65,7 +65,7 @@ in
       };
       timeout = mkOption {
         type = types.int;
-        default = 540;
+        default = 3600;
         description = ''
           The time to wait before suspending.
           Default is 9 minutes.
