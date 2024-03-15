@@ -23,7 +23,7 @@ in
     };
     grace = mkOption {
       type = types.int;
-      default = 5;
+      default = 0;
       description = ''
         The amount of seconds for which the lockscreen will unlock on mouse movement.
       '';
