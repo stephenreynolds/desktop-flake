@@ -1,10 +1,12 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption types getExe;
+  inherit (lib) mkIf mkMerge mkOption mkEnableOption types getExe;
   cfg = config.desktop-flake.hypridle;
-in
-{
+
+  hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+in {
   imports = [ self.inputs.hypridle.homeManagerModules.default ];
 
   options.desktop-flake.hypridle = {
@@ -13,62 +15,97 @@ in
       default = config.desktop-flake.enable;
       description = "Whether to enable hypridle";
     };
-    lock = {
-      cmd = mkOption {
+    dim = let brightnessctl = getExe pkgs.brightnessctl;
+    in {
+      enable = mkEnableOption "Whether to dim display";
+      timeout = mkOption {
+        type = types.int;
+        default = cfg.dpms.timeout - 10;
+        description = ''
+          The time to wait before dimming.
+          Default is dpms.timeout - 10 seconds.
+        '';
+      };
+      onTimeout = mkOption {
         type = types.str;
-        default = "pidof hyprlock || PATH=$PATH:${pkgs.coreutils}/bin ${getExe config.programs.hyprlock.package}";
+        default = "${brightnessctl} -s set 10";
+      };
+      onResume = mkOption {
+        type = types.str;
+        default = "${brightnessctl} -r";
+      };
+    };
+    dpms = {
+      onTimeout = mkOption {
+        type = types.str;
+        default = "${hyprctl} dispatch dpms off";
+      };
+      onResume = mkOption {
+        type = types.str;
+        default = "${hyprctl} dispatch dpms on";
       };
       timeout = mkOption {
         type = types.int;
-        default = 300;
+        default = cfg.lock.timeout - 10;
         description = ''
-          The time to wait before locking.
-          Default is 3 minutes.
+          The time to wait before turning off display.
+          Default is lock.timeout - 10 seconds.
         '';
       };
     };
-    dpms =
-      let
-        hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-      in
-      {
-        onCmd = mkOption {
-          type = types.str;
-          default = "${hyprctl} dispatch dpms on";
-        };
-        offCmd = mkOption {
-          type = types.str;
-          default = "${hyprctl} dispatch dpms off";
-        };
-        timeout = mkOption {
-          type = types.int;
-          default = 360;
-          description = ''
-            The time to wait before turning off display.
-            Default is 4 minutes.
-          '';
-        };
+    pause = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to pause all players before lock and suspend";
       };
+      onTimeout = mkOption {
+        type = types.str;
+        default = "${getExe pkgs.playerctl} --all-players pause";
+      };
+    };
+    lock = {
+      onTimeout = mkOption {
+        type = types.str;
+        default =
+          "${cfg.pause.onTimeout} ; pidof hyprlock || PATH=$PATH:${pkgs.coreutils}/bin ${
+            getExe config.programs.hyprlock.package
+          }";
+      };
+      timeout = mkOption {
+        type = types.int;
+        default = 600;
+        description = ''
+          The time to wait before locking.
+          Default is 10 minutes.
+        '';
+      };
+    };
     suspend = {
       enable = mkOption {
         type = types.bool;
         default = true;
         description = "Whether to enable automatically suspending";
       };
-      cmd = mkOption {
+      onTimeout = mkOption {
         type = types.str;
         default = "systemctl suspend";
       };
       beforeCmd = mkOption {
         type = types.str;
-        default = "${pkgs.systemd}/bin/loginctl lock-session";
+        default =
+          "${cfg.pause.onTimeout} ; ${pkgs.systemd}/bin/loginctl lock-session";
+      };
+      afterCmd = mkOption {
+        type = types.str;
+        default = "${hyprctl} dispatch dpms on";
       };
       timeout = mkOption {
         type = types.int;
         default = 3600;
         description = ''
           The time to wait before suspending.
-          Default is 9 minutes.
+          Default is 1 hour.
         '';
       };
     };
@@ -78,39 +115,38 @@ in
     {
       assertions = [{
         assertion = !(cfg.enable && config.services.swayidle.enable);
-        message = "Only one of services.hypridle and services.swayidle can be enabled";
+        message =
+          "Only one of services.hypridle and services.swayidle can be enabled";
       }];
     }
 
     {
       services.hypridle = {
         enable = true;
-        lockCmd = cfg.lock.cmd;
+        lockCmd = cfg.lock.onTimeout;
         beforeSleepCmd = cfg.suspend.beforeCmd;
+        afterSleepCmd = cfg.suspend.afterCmd;
         listeners = [
-          {
-            timeout = cfg.lock.timeout;
-            onTimeout = cfg.lock.cmd;
-          }
-          {
-            timeout = cfg.dpms.timeout;
-            onTimeout = cfg.dpms.offCmd;
-            onResume = cfg.dpms.onCmd;
-          }
-          (mkIf cfg.suspend.enable {
-            timeout = cfg.suspend.timeout;
-            onTimeout = cfg.suspend.cmd;
+          # Dim display
+          (mkIf cfg.dim.enable {
+            inherit (cfg.dim) timeout onTimeout onResume;
           })
+
+          # Display on/off
+          {
+            inherit (cfg.dpms) timeout onTimeout onResume;
+          }
+
+          # Lock session
+          {
+            inherit (cfg.lock) timeout onTimeout;
+          }
+
+          # Suspend
+          (mkIf cfg.suspend.enable { inherit (cfg.suspend) timeout onTimeout; })
         ];
       };
     }
   ]);
 }
-
-
-
-
-
-
-
 
