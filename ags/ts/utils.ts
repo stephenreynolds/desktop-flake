@@ -1,5 +1,4 @@
 import Gdk from 'gi://Gdk';
-import Gio from 'gi://Gio';
 import Gtk from "gi://Gtk?version=3.0";
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 import { type Config } from "types/app"
@@ -12,10 +11,6 @@ export function range(length: number, start = 1) {
 export function forMonitors(widget: (monitor: number) => Gtk.Window) {
     const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
     return range(n, 0).map(widget).flat(1);
-}
-
-export function fileExists(path: string) {
-    return Gio.File.new_for_path(path).query_exists(null);
 }
 
 export function dependencies(bins: Array<string>) {
