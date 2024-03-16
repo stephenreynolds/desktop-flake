@@ -10,7 +10,7 @@ in {
   options.desktop-flake.hyprlock = {
     enable = mkOption {
       type = types.bool;
-      default = config.desktop-flake.enable;
+      default = config.desktop-flake.hyprland.enable;
       description = "Whether to enable hyprlock";
     };
     clockFormat = mkOption {

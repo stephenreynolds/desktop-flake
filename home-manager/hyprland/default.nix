@@ -3,7 +3,7 @@ self:
 
 let
   inherit (lib) mkEnableOption mkOption mkIf mkMerge types;
-  cfg = config.desktop-flake;
+  cfg = config.desktop-flake.hyprland;
 in {
   imports = [
     (import ./autostart.nix self)
@@ -16,7 +16,7 @@ in {
   options.desktop-flake.hyprland = {
     enable = mkOption {
       type = types.bool;
-      default = true;
+      default = config.desktop-flake.enable;
       description = "Whether to enable Hyprland";
     };
     tearing.enable = mkEnableOption "Whether to allow screen tearing";
