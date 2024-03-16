@@ -1,14 +1,14 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.desktop-flake;
+  inherit (lib) mkIf concatStringsSep concatLists mapNullable optional pipe;
+  cfg = config.desktop-flake.hyprland;
 
   compileWindowRulePatterns = rule:
     rule // {
-      class = lib.mapNullable (x: "class:^(${lib.concatStringsSep "|" x})$")
-        rule.class;
-      title = lib.mapNullable (x: "title:^(${lib.concatStringsSep "|" x})$")
-        rule.title;
+      class = mapNullable (x: "class:^(${concatStringsSep "|" x})$") rule.class;
+      title = mapNullable (x: "title:^(${concatStringsSep "|" x})$") rule.title;
     };
 
   expandRuleToList = rule2:
@@ -16,25 +16,21 @@ let
     in map (rule: rule1 // { inherit rule; }) rule2.rules;
 
   windowRuleToString = rule:
-    lib.concatStringsSep ", " ([ rule.rule ]
-      ++ (lib.optional (rule.class != null) rule.class)
-      ++ (lib.optional (rule.title != null) rule.title));
+    concatStringsSep ", " ([ rule.rule ]
+      ++ (optional (rule.class != null) rule.class)
+      ++ (optional (rule.title != null) rule.title));
 
-  mapWindowRules = rules: lib.pipe rules [
-    (map compileWindowRulePatterns)
-    (map expandRuleToList)
-    lib.concatLists
-    (map windowRuleToString)
-  ];
+  mapWindowRules = rules:
+    pipe rules [
+      (map compileWindowRulePatterns)
+      (map expandRuleToList)
+      concatLists
+      (map windowRuleToString)
+    ];
 
   rule = rules: { class ? null, title ? null }: { inherit rules class title; };
-in
-lib.mkIf cfg.enable {
+in mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.windowrulev2 =
-    let
-      yad.class = [ "yad" ];
-    in
-    mapWindowRules [
-      (rule [ "float" ] yad)
-    ];
+    let yad.class = [ "yad" ];
+    in mapWindowRules [ (rule [ "float" ] yad) ];
 }

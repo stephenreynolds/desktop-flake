@@ -1,12 +1,13 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.desktop-flake;
+  inherit (lib) mkIf;
+  cfg = config.desktop-flake.hyprland;
 
   modifier = "SUPER";
   ags = "ags -b hyprland";
-in
-lib.mkIf cfg.enable {
+in mkIf cfg.enable {
   wayland.windowManager.hyprland.extraConfig = ''
     bind = ${modifier}, Space, exec, ${ags} -t launcher
     bind = ${modifier}, N, exec, ${ags} -t action-center

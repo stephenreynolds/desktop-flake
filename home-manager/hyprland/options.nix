@@ -1,9 +1,10 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.desktop-flake;
-in
-lib.mkIf cfg.enable {
+  inherit (lib) mkIf;
+  cfg = config.desktop-flake.hyprland;
+in mkIf cfg.enable {
   wayland.windowManager.hyprland.settings = {
     general = {
       gaps_in = 4;
@@ -36,7 +37,7 @@ lib.mkIf cfg.enable {
         size = 5;
         passes = 4;
         brightness = 1;
-        noise = 0.01;
+        noise = 1.0e-2;
         contrast = 1;
         new_optimizations = true;
         ignore_opacity = true;
@@ -59,10 +60,7 @@ lib.mkIf cfg.enable {
         "workspaces, 1, 7, fluent_decel, slide"
         "specialWorkspace, 1, 3, md3_decel, slidevert"
       ];
-      bezier = [
-        "md3_decel, 0.05, 0.7, 0.1, 1"
-        "fluent_decel, 0.1, 1, 0, 1"
-      ];
+      bezier = [ "md3_decel, 0.05, 0.7, 0.1, 1" "fluent_decel, 0.1, 1, 0, 1" ];
     };
 
     dwindle = {

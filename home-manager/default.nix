@@ -1,9 +1,8 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkEnableOption mkOption types;
-in
-{
+let inherit (lib) mkEnableOption mkOption types;
+in {
   imports = [
     (import ./ags.nix self)
     (import ./hypridle.nix self)

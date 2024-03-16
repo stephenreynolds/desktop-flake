@@ -1,11 +1,13 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
 let
+  inherit (lib) mkIf concatStringsSep concatLists pipe;
   cfg = config.desktop-flake;
 
   compileLayerRulePatterns = rule:
     rule // {
-      namespace = "^(${lib.concatStringsSep "|" rule.namespace})";
+      namespace = "^(${concatStringsSep "|" rule.namespace})";
     };
 
   expandRuleToList = rule2:
@@ -14,27 +16,25 @@ let
 
   layerRuleToString = rule: "${rule.rule}, ${rule.namespace}";
 
-  mapLayerRules = rules: lib.pipe rules [
-    (map compileLayerRulePatterns)
-    (map expandRuleToList)
-    lib.concatLists
-    (map layerRuleToString)
-  ];
+  mapLayerRules = rules:
+    pipe rules [
+      (map compileLayerRulePatterns)
+      (map expandRuleToList)
+      concatLists
+      (map layerRuleToString)
+    ];
 
   rule = rules: namespace: { inherit rules namespace; };
-in
-lib.mkIf cfg.enable {
-  wayland.windowManager.hyprland.settings.layerrule =
-    let
-      bar = [ "bar-.*" ];
-      notifications = [ "notifications-.*" ];
-      actionCenter = [ "action-center" ];
-      launcher = [ "launcher" ];
-    in
-    mapLayerRules [
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] bar)
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] notifications)
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] actionCenter)
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] launcher)
-    ];
+in mkIf cfg.enable {
+  wayland.windowManager.hyprland.settings.layerrule = let
+    bar = [ "bar-.*" ];
+    notifications = [ "notifications-.*" ];
+    actionCenter = [ "action-center" ];
+    launcher = [ "launcher" ];
+  in mapLayerRules [
+    (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] bar)
+    (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] notifications)
+    (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] actionCenter)
+    (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] launcher)
+  ];
 }

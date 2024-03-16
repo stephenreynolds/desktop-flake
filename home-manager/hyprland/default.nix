@@ -1,10 +1,10 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkOption mkIf mkMerge;
+  inherit (lib) mkEnableOption mkOption mkIf mkMerge types;
   cfg = config.desktop-flake;
-in
-{
+in {
   imports = [
     (import ./autostart.nix self)
     (import ./options.nix self)
@@ -13,9 +13,14 @@ in
     (import ./binds.nix self)
   ];
 
-  options.desktop-flake = {
+  options.desktop-flake.hyprland = {
+    enable = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to enable Hyprland";
+    };
     xdg-autostart = mkOption {
-      type = lib.types.bool;
+      type = types.bool;
       default = true;
       description = "Whether to autostart programs that ask for it";
     };
@@ -49,12 +54,13 @@ in
       };
     }
 
-    (lib.mkIf cfg.xdg-autostart {
+    (mkIf cfg.xdg-autostart {
       systemd.user.targets.hyprland-session = {
         Unit = {
           Description = "Hyprland compositor session";
           BindsTo = [ "graphical-session.target" ];
-          Wants = [ "graphical-session-pre.target" "xdg-desktop-autostart.target" ];
+          Wants =
+            [ "graphical-session-pre.target" "xdg-desktop-autostart.target" ];
           After = [ "graphical-session-pre.target" ];
           Before = [ "xdg-desktop-autostart.target" ];
         };
