@@ -19,6 +19,7 @@ in {
       default = true;
       description = "Whether to enable Hyprland";
     };
+    tearing.enable = mkEnableOption "Whether to allow screen tearing";
     xdg-autostart = mkOption {
       type = types.bool;
       default = true;

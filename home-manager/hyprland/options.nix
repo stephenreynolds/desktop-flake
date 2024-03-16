@@ -15,6 +15,8 @@ in mkIf cfg.enable {
       resize_on_border = true;
       no_focus_fallback = true;
 
+      allow_tearing = cfg.tearing.enable;
+
       # Fallback colors
       "col.active_border" = "rgba(0DB7D4FF)";
       "col.inactive_border" = "rgba(31313600)";
