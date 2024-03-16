@@ -1,4 +1,5 @@
 import Gdk from 'gi://Gdk';
+import Gio from 'gi://Gio';
 import Gtk from "gi://Gtk?version=3.0";
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 import { type Config } from "types/app"
@@ -36,4 +37,8 @@ export async function launchApp(app: Application) {
 
 export function config<T extends Gtk.Window>(config: Config<T>) {
     return config
+}
+
+export function fileExists(path: string) {
+    return Gio.File.new_for_path(path).query_exists(null);
 }

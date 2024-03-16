@@ -1,7 +1,5 @@
 import SystemTray from "resource:///com/github/Aylur/ags/service/systemtray.js";
 import Widget from "resource:///com/github/Aylur/ags/widget.js";
-import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
-import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
 import { type TrayItem } from "types/service/systemtray";
 import Gtk from "gi://Gtk?version=3.0";
@@ -16,11 +14,11 @@ export default () => {
                 self.hook(item, (self) => self.icon = item.icon);
             }
         }),
-        setup: (self) => self.hook(item, (self) => self.tooltipMarkup = item['tooltip-markup']),
+        setup: (self) => self.hook(item, (self) => self.tooltip_markup = item['tooltip-markup']),
         onClicked: (btn) => item.menu.popup_at_widget(btn, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null),
         onSecondaryClick: (btn) => item.menu.popup_at_widget(btn, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null),
     });
-    
+
     const trayContent = Widget.Box({
         className: 'tray-content',
         attribute: {

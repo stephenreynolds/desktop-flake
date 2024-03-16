@@ -1,5 +1,3 @@
-import Gtk from 'gi://Gtk';
-import Variable from 'resource:///com/github/Aylur/ags/variable.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import options from 'options';
 import LeftSpace from './LeftSpace';
@@ -16,6 +14,7 @@ export default (monitor = 0) => {
             const activeWorkspace = monitorObject?.activeWorkspace.id;
             if (!activeWorkspace) return;
             const workspace = Hyprland.getWorkspace(activeWorkspace);
+            if (!workspace) return;
             if (workspace.windows === 0) {
                 box.toggleClassName('bar-floating', true);
                 return;
