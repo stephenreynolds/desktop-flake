@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     ags = {
-      url = "github:Aylur/ags/v1.8.0";
+      url = "github:Aylur/ags/5dec6c7f37be13781144a7964e75cc00c7d7045f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -30,48 +30,49 @@
       genSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
       pkgs = genSystems (system: import nixpkgs { inherit system; });
 
-      configDir = builtins.path { path = ./ags; name = "ags-config"; };
+      configDir = builtins.path {
+        path = ./ags;
+        name = "ags-config";
+      };
 
-      runtimeDependencies = genSystems (system: with pkgs.${system}; [
-        adw-gtk3
-        bun
-        dart-sass
-        glib
-        gradience
-        gsettings-desktop-schemas
-        gtk3
-        (python3.withPackages (ps: with ps; [
-          material-color-utilities
-          pywal
-          build
-          poetry-core
-          pillow
-        ]))
-        swww
-        wlr-randr
-        yad
+      runtimeDependencies = genSystems (system:
+        with pkgs.${system}; [
+          adw-gtk3
+          bun
+          dart-sass
+          glib
+          gradience
+          gsettings-desktop-schemas
+          gtk3
+          (python3.withPackages (ps:
+            with ps; [
+              material-color-utilities
+              pywal
+              build
+              poetry-core
+              pillow
+            ]))
+          swww
+          wlr-randr
+          yad
 
-        (google-fonts.override {
-          fonts = [ "Gabarito" "Lexend" ];
-        })
-        material-symbols
-      ]);
-    in
-    {
+          (google-fonts.override { fonts = [ "Gabarito" "Lexend" ]; })
+          material-symbols
+        ]);
+    in {
       inherit configDir runtimeDependencies;
 
       homeManagerModules.default = import ./home-manager self;
       nixosModules.default = import ./nixos self;
 
       devShells = genSystems (system: {
-        default =
-          let
-            ags = inputs.ags.packages.${system}.agsWithTypes;
-            projectRoot = toString (builtins.getEnv "PWD");
-            agsRoot = "${projectRoot}/ags";
-          in
-          pkgs.${system}.mkShell {
-            buildInputs = with pkgs.${system}; [
+        default = let
+          ags = inputs.ags.packages.${system}.agsWithTypes;
+          projectRoot = toString (builtins.getEnv "PWD");
+          agsRoot = "${projectRoot}/ags";
+        in pkgs.${system}.mkShell {
+          buildInputs = with pkgs.${system};
+            [
               (writeShellScriptBin "ags" ''
                 ${ags}/bin/ags --config ${agsRoot}/config.js $@
               '')
@@ -79,15 +80,15 @@
               nodePackages_latest.eslint
               typescript
             ] ++ runtimeDependencies.${system};
-            shellHook = ''
-              if [ ! -d ${agsRoot}/node_modules ]; then
-                npm --prefix ${agsRoot} install
-              fi
-              ln -sf ${ags}/share/com.github.Aylur.ags/types ${agsRoot}/
-            '';
-            AGS_DEBUG = 1;
-            AGS_CONFIG_DIR = agsRoot;
-          };
+          shellHook = ''
+            if [ ! -d ${agsRoot}/node_modules ]; then
+              npm --prefix ${agsRoot} install
+            fi
+            ln -sf ${ags}/share/com.github.Aylur.ags/types ${agsRoot}/
+          '';
+          AGS_DEBUG = 1;
+          AGS_CONFIG_DIR = agsRoot;
+        };
       });
     };
 }
