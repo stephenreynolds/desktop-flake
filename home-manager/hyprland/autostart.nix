@@ -16,5 +16,13 @@ in mkIf cfg.enable {
       } --output ${config.desktop-flake.primaryMonitor} --primary"
       "${ags} -q; ${ags}"
     ];
+
+    exec-once = let
+      cliphist = "${pkgs.cliphist}/bin/cliphist";
+      wl-paste = "${pkgs.wl-clipboard}/bin/wl-paste";
+    in [
+      "${wl-paste} --type text --watch ${cliphist} store"
+      "${wl-paste} --type image --watch ${cliphist} store"
+    ];
   };
 }
