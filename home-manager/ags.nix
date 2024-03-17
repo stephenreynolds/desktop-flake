@@ -1,12 +1,11 @@
-self:
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, self, ... }:
 
 let
   inherit (lib) mkOption mkIf mkMerge types;
   system = pkgs.stdenv.hostPlatform.system;
   cfg = config.desktop-flake.ags;
 in {
-  imports = [ self.inputs.ags.homeManagerModules.default ];
+  imports = [ inputs.ags.homeManagerModules.default ];
 
   options.desktop-flake.ags = {
     enable = mkOption {
@@ -14,8 +13,7 @@ in {
       default = config.desktop-flake.hyprland.enable;
       description = "Whether to enable Aylur's Gtk Shell";
     };
-    package =
-      mkOption { default = self.inputs.ags.packages.${system}.default; };
+    package = mkOption { default = inputs.ags.packages.${system}.default; };
   };
 
   config = mkIf cfg.enable (mkMerge [{

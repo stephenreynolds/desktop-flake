@@ -1,10 +1,9 @@
-self: { config, lib, ... }:
+{ config, lib, ... }:
 
 let
   inherit (lib) mkIf mkOption types;
   cfg = config.desktop-flake.hyprlock;
-in
-{
+in {
   options.desktop-flake.hyprlock = {
     enable = mkOption {
       type = types.bool;

@@ -8,6 +8,7 @@ import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 export default (monitor = 0) => {
     const events = ['workspace', 'openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
 
+    // TODO: Check for no_gaps_when_only
     const setFloating = (box) => Utils.timeout(15, async () => {
         try {
             const monitorObject = Hyprland.getMonitor(monitor);

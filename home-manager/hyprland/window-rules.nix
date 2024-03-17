@@ -1,5 +1,4 @@
-self:
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   inherit (lib) mkIf concatStringsSep concatLists mapNullable optional pipe;
@@ -30,7 +29,19 @@ let
 
   rule = rules: { class ? null, title ? null }: { inherit rules class title; };
 in mkIf cfg.enable {
-  wayland.windowManager.hyprland.settings.windowrulev2 =
-    let yad.class = [ "yad" ];
-    in mapWindowRules [ (rule [ "float" ] yad) ];
+  wayland.windowManager.hyprland.settings.windowrulev2 = let
+    ags.class = [ "com.github.Aylur.ags" ];
+    polkitAgent.class = [
+      "lxqt-policykit-agent"
+      "polkit-gnome-authentication-agent-1"
+      "polkit-mate-authentication-agent-1"
+    ];
+    xdgPortal.class =
+      [ "xdg-desktop-portal.*" "org.freedesktop.impl.portal.desktop.kde" ];
+    yad.class = [ "yad" ];
+  in mapWindowRules (concatLists [
+    (map (rule [ "float" ]) [ ags xdgPortal yad ])
+
+    (map (rule [ "float" "center" ]) [ polkitAgent ])
+  ]);
 }

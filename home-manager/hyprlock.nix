@@ -1,11 +1,10 @@
-self:
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   inherit (lib) mkIf mkOption types;
   cfg = config.desktop-flake.hyprlock;
 in {
-  imports = [ self.inputs.hyprlock.homeManagerModules.default ];
+  imports = [ inputs.hyprlock.homeManagerModules.default ];
 
   options.desktop-flake.hyprlock = {
     enable = mkOption {

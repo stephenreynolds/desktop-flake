@@ -1,5 +1,4 @@
-self:
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   inherit (lib) mkIf concatStringsSep concatLists pipe;

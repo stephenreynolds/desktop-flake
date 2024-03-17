@@ -1,12 +1,13 @@
-self: { config, lib, pkgs, ... }:
+self:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkEnableOption;
-in
-{
-  imports = [
-    (import ./hyprland.nix self)
-    (import ./hyprlock.nix self)
+  inherit (self) inputs;
+in {
+  imports = map (path: import path { inherit config lib pkgs inputs; }) [
+    ./hyprland.nix
+    ./hyprlock.nix
   ];
 
   options.desktop-flake = {

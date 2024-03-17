@@ -1,11 +1,10 @@
-self: { config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   cfg = config.desktop-flake;
 
-  hyprland = self.inputs.hyprland.packages.${pkgs.system};
-in
-{
+  hyprland = inputs.hyprland.packages.${pkgs.system};
+in {
   config = lib.mkIf cfg.enable {
     programs.hyprland = {
       enable = true;
@@ -14,12 +13,8 @@ in
 
     xdg.portal = {
       enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-      ];
-      configPackages = [
-        hyprland.xdg-desktop-portal-hyprland
-      ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      configPackages = [ hyprland.xdg-desktop-portal-hyprland ];
     };
   };
 }

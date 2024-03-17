@@ -1,16 +1,18 @@
-self:
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   inherit (lib) mkEnableOption mkOption mkIf mkMerge types;
   cfg = config.desktop-flake.hyprland;
 in {
-  imports = [
-    (import ./autostart.nix self)
-    (import ./options.nix self)
-    (import ./layer-rules.nix self)
-    (import ./window-rules.nix self)
-    (import ./binds.nix self)
+  imports = map (path: import path { inherit config lib pkgs inputs; }) [
+    ./autostart.nix
+    ./binds.nix
+    ./environment.nix
+    ./layer-rules.nix
+    ./options.nix
+    ./submaps.nix
+    ./window-rules.nix
+    ./workspaces.nix
   ];
 
   options.desktop-flake.hyprland = {
@@ -18,6 +20,16 @@ in {
       type = types.bool;
       default = config.desktop-flake.enable;
       description = "Whether to enable Hyprland";
+    };
+    additionalSessionVariables = mkOption {
+      type = types.attrs;
+      default = { };
+      description = "List of environment variables to set on login";
+    };
+    modifier = mkOption {
+      type = types.str;
+      default = "SUPER";
+      description = "The modifier key for some keybinds";
     };
     tearing.enable = mkEnableOption "Whether to allow screen tearing";
     xdg-autostart = mkOption {
@@ -31,7 +43,7 @@ in {
     {
       wayland.windowManager.hyprland = {
         enable = true;
-        package = self.inputs.hyprland.packages.${pkgs.system}.hyprland;
+        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
       };
 
       # Stolen from https://github.com/alebastr/sway-systemd/commit/0fdb2c4b10beb6079acd6073c5b3014bd58d3b74

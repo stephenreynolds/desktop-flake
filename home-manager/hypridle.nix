@@ -1,5 +1,4 @@
-self:
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   inherit (lib) mkIf mkMerge mkOption mkEnableOption types getExe;
@@ -7,7 +6,7 @@ let
 
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
 in {
-  imports = [ self.inputs.hypridle.homeManagerModules.default ];
+  imports = [ inputs.hypridle.homeManagerModules.default ];
 
   options.desktop-flake.hypridle = {
     enable = mkOption {
