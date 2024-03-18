@@ -143,7 +143,7 @@ in mkIf cfg.enable {
       "$mod CTRL, V, exec, ${cliphist} list | ${wofi} --dmenu | ${cliphist} decode | ${wl-copy}"
 
       # Color picker
-      "$mod SHIFT, C, exec, PATH=$PATH:${pkgs.wl-clipboard}/bin ${hyprpicker} --format=hex --autocopy"
+      "$mod SHIFT, C, exec, ${hyprpicker} --format=hex --autocopy"
 
       # Capture the active output
       ", Print, exec, ${grimblast} save output - | ${swappy} -f -"
