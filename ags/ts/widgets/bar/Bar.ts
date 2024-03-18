@@ -6,9 +6,8 @@ import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
 
 export default (monitor = 0) => {
-    const events = ['workspace', 'openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
+    const events = ['workspace', 'openwindow', 'closewindow', 'movewindow', 'changefloatingmode', 'submap'];
 
-    // TODO: Check for no_gaps_when_only
     const setFloating = (box) => Utils.timeout(15, async () => {
         try {
             const monitorObject = Hyprland.getMonitor(monitor);
@@ -19,6 +18,14 @@ export default (monitor = 0) => {
             if (workspace.windows === 0) {
                 box.toggleClassName('bar-floating', true);
                 return;
+            }
+            if (workspace.windows === 1) {
+                const layout = JSON.parse(await Utils.execAsync(['hyprctl', 'getoption', 'general:layout', '-j'])).str;
+                const noGapsWhenOnly = JSON.parse(await Utils.execAsync(['hyprctl', 'getoption', `${layout}:no_gaps_when_only`, '-j'])).int;
+                if (noGapsWhenOnly === 1) {
+                    box.toggleClassName('bar-floating', false);
+                    return;
+                }
             }
             const workspacerules = JSON.parse(await Utils.execAsync(['hyprctl', 'workspacerules', '-j']));
             const barWorkspace = workspacerules.find(rule => rule.workspaceString === activeWorkspace.toString());

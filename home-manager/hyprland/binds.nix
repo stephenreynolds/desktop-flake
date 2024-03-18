@@ -134,6 +134,7 @@ in mkIf cfg.enable {
       # Toggle no_gaps_when_only
       "$mod SHIFT, M, exec, hyprctl keyword ${dwindleMonocle} $(($(hyprctl getoption ${dwindleMonocle} -j | ${jaq} -r '.int') ^ 1))"
       "$mod SHIFT, M, exec, hyprctl keyword ${masterMonocle} $(($(hyprctl getoption ${masterMonocle} -j | ${jaq} -r '.int') ^ 1))"
+      "$mod SHIFT, M, submap"
 
       # Toggle AGS windows
       "$mod, Space, exec, ${ags} -t launcher"
