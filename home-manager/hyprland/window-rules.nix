@@ -35,6 +35,7 @@ in mkIf cfg.enable {
       "lxqt-policykit-agent"
       "polkit-gnome-authentication-agent-1"
       "polkit-mate-authentication-agent-1"
+      "org.kde.polkit-kde-authentication-agent-1"
     ];
     xdgPortal.class =
       [ "xdg-desktop-portal.*" "org.freedesktop.impl.portal.desktop.kde" ];
