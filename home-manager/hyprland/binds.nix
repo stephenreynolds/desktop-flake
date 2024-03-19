@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf optionals;
   cfg = config.desktop-flake.hyprland;
 in mkIf cfg.enable {
   wayland.windowManager.hyprland.settings = {
@@ -9,7 +9,6 @@ in mkIf cfg.enable {
 
     bind = let
       hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-      ags = "${config.programs.ags.package}/bin/ags -b hyprland";
 
       scripts = (path:
         lib.mapAttrs' (file: _: {
@@ -136,10 +135,6 @@ in mkIf cfg.enable {
       "$mod SHIFT, M, exec, hyprctl keyword ${masterMonocle} $(($(hyprctl getoption ${masterMonocle} -j | ${jaq} -r '.int') ^ 1))"
       "$mod SHIFT, M, submap"
 
-      # Toggle AGS windows
-      "$mod, Space, exec, ${ags} -t launcher"
-      "$mod, N, exec, ${ags} -t action-center"
-
       # Clipboard history
       "$mod CTRL, V, exec, ${cliphist} list | ${wofi} --dmenu | ${cliphist} decode | ${wl-copy}"
 
@@ -156,7 +151,13 @@ in mkIf cfg.enable {
       "SHIFT, Print, exec, ${grimblast} save area - | ${swappy} -f -"
       # Copy screenshot text using OCR
       "SUPER, Print, exec, ${grimblast} --freeze save area - | ${tesseract} - - | ${wl-copy} && ${notify-send} -t 3000 'OCR result copied to clipboard'"
-    ];
+    ] ++ (optionals config.desktop-flake.ags.enable
+      (let ags = "${config.programs.ags.package}/bin/ags -b hyprland";
+      in [
+        # Toggle AGS windows
+        "$mod, Space, exec, ${ags} -t launcher"
+        "$mod, N, exec, ${ags} -t action-center"
+      ]));
 
     binde = [
       # Resize window with {modifier} + Ctrl + arrow keys

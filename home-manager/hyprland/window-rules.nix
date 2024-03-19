@@ -1,7 +1,8 @@
 { config, lib, ... }:
 
 let
-  inherit (lib) mkIf concatStringsSep concatLists mapNullable optional pipe;
+  inherit (lib)
+    mkIf concatStringsSep concatLists mapNullable optional optionals pipe;
   cfg = config.desktop-flake.hyprland;
 
   compileWindowRulePatterns = rule:
@@ -30,7 +31,6 @@ let
   rule = rules: { class ? null, title ? null }: { inherit rules class title; };
 in mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.windowrulev2 = let
-    ags.class = [ "com.github.Aylur.ags" ];
     polkitAgent.class = [
       "lxqt-policykit-agent"
       "polkit-gnome-authentication-agent-1"
@@ -41,8 +41,10 @@ in mkIf cfg.enable {
       [ "xdg-desktop-portal.*" "org.freedesktop.impl.portal.desktop.kde" ];
     yad.class = [ "yad" ];
   in mapWindowRules (concatLists [
-    (map (rule [ "float" ]) [ ags xdgPortal yad ])
+    (map (rule [ "float" ]) [ xdgPortal yad ])
 
     (map (rule [ "float" "center" ]) [ polkitAgent ])
-  ]);
+  ] ++ (optionals config.desktop-flake.ags.enable
+    (let ags.class = [ "com.github.Aylur.ags" ];
+    in [ ((rule [ "float" ]) ags) ])));
 }
