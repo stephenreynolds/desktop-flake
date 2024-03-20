@@ -136,7 +136,7 @@ in mkIf cfg.enable {
       "$mod SHIFT, M, submap"
 
       # Toggle animations
-      "$mod SHIFT, A, exec, ${hyprctl} keyword animations:enabled $(($(${hyprctl} getoption animations:enabled -j | ${jaq} -r '.int') ^ 1))"
+      "$mod SHIFT, A, exec, ${scripts.toggleGaps}"
 
       # Clipboard history
       "$mod CTRL, V, exec, ${cliphist} list | ${wofi} --dmenu | ${cliphist} decode | ${wl-copy}"
