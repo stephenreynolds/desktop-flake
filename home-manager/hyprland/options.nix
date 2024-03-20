@@ -22,9 +22,9 @@ in mkIf cfg.enable {
     };
 
     input = {
-      kb_layout = "us";
-      follow_mouse = 2;
       float_switch_override_focus = 0;
+      follow_mouse = 2;
+      kb_layout = "us";
       numlock_by_default = true;
     };
 
@@ -33,16 +33,16 @@ in mkIf cfg.enable {
 
       blur = {
         enabled = true;
-        xray = true;
-        special = false;
-        size = 5;
-        passes = 4;
         brightness = 1;
-        noise = 1.0e-2;
         contrast = 1;
-        new_optimizations = true;
         ignore_opacity = true;
+        new_optimizations = true;
+        noise = 1.0e-2;
+        passes = 4;
         popups = true;
+        size = 5;
+        special = false;
+        xray = true;
       };
 
       drop_shadow = true;
@@ -65,48 +65,49 @@ in mkIf cfg.enable {
     };
 
     dwindle = {
-      no_gaps_when_only = 0;
-      pseudotile = true;
-      preserve_split = true;
-      permanent_direction_override = true;
       force_split = 2; # Split right
+      no_gaps_when_only = 0;
+      permanent_direction_override = true;
+      preserve_split = true;
+      pseudotile = true;
       special_scale_factor = 0.95;
     };
 
     master = {
-      no_gaps_when_only = 0;
+      always_center_master = true;
+      inherit_fullscreen = true;
       mfact = 0.55;
       new_is_master = true;
       new_on_top = true;
+      no_gaps_when_only = 0;
       orientation = "left";
-      inherit_fullscreen = true;
-      always_center_master = true;
       special_scale_factor = 0.95;
     };
 
     binds = {
-      workspace_back_and_forth = false;
       allow_workspace_cycles = true;
+      movefocus_cycles_fullscreen = false;
+      workspace_back_and_forth = false;
     };
 
     group = {
       insert_after_current = false;
 
       groupbar = {
+        gradients = false;
         height = 0;
         render_titles = false;
-        gradients = false;
       };
     };
 
     misc = {
+      allow_session_lock_restore = true;
       disable_hyprland_logo = true;
       disable_splash_rendering = true;
-      focus_on_activate = true;
-      mouse_move_enables_dpms = true;
-      key_press_enables_dpms = true;
-      allow_session_lock_restore = true;
       enable_swallow = false;
+      focus_on_activate = true;
+      key_press_enables_dpms = true;
+      mouse_move_enables_dpms = true;
       new_window_takes_over_fullscreen = 1;
       vfr = true;
     };
