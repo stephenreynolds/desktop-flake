@@ -8,6 +8,6 @@ let
   terminal = config.home.sessionVariables.TERMINAL;
 in mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.workspace = [
-    "special, monitor:${primaryMonitor}, on-created-empty:[group new] ${terminal}"
+    "s[true], monitor:${primaryMonitor}, on-created-empty:[group new] ${terminal}"
   ];
 }
