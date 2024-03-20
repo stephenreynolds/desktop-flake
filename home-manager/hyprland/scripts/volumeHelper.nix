@@ -38,7 +38,7 @@ in pkgs.writeShellScript "volume_helper" ''
   done
 
   play_sound() {
-    ${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play -f ${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop/stereo/audio-volume-change.oga
+    ${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play -f ${pkgs.yaru-theme}/share/sounds/Yaru/stereo/audio-volume-change.oga
   }
 
   if [ "$CHANGE" -gt 0 ]; then
