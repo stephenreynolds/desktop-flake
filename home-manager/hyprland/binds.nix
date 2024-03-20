@@ -131,9 +131,12 @@ in mkIf cfg.enable {
       "$mod SHIFT, W, exec, ${scripts.openPrivateBrowser}"
 
       # Toggle no_gaps_when_only
-      "$mod SHIFT, M, exec, hyprctl keyword ${dwindleMonocle} $(($(hyprctl getoption ${dwindleMonocle} -j | ${jaq} -r '.int') ^ 1))"
-      "$mod SHIFT, M, exec, hyprctl keyword ${masterMonocle} $(($(hyprctl getoption ${masterMonocle} -j | ${jaq} -r '.int') ^ 1))"
+      "$mod SHIFT, M, exec, ${hyprctl} keyword ${dwindleMonocle} $(($(${hyprctl} getoption ${dwindleMonocle} -j | ${jaq} -r '.int') ^ 1))"
+      "$mod SHIFT, M, exec, ${hyprctl} keyword ${masterMonocle} $(($(${hyprctl} getoption ${masterMonocle} -j | ${jaq} -r '.int') ^ 1))"
       "$mod SHIFT, M, submap"
+
+      # Toggle animations
+      "$mod SHIFT, A, exec, ${hyprctl} keyword animations:enabled $(($(${hyprctl} getoption animations:enabled -j | ${jaq} -r '.int') ^ 1))"
 
       # Clipboard history
       "$mod CTRL, V, exec, ${cliphist} list | ${wofi} --dmenu | ${cliphist} decode | ${wl-copy}"
