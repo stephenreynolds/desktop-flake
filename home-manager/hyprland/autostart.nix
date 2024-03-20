@@ -17,6 +17,8 @@ in mkIf cfg.enable {
       cliphist = "${pkgs.cliphist}/bin/cliphist";
       wl-paste = "${pkgs.wl-clipboard}/bin/wl-paste";
     in [
+      "${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play -f ${pkgs.yaru-theme}/share/sounds/Yaru/stereo/desktop-login.oga"
+
       (optionalString (primaryMonitor != "")
         "${hyprctl} dispatch focusmonitor ${primaryMonitor}")
 
