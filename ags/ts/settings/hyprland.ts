@@ -1,6 +1,5 @@
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
-import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 import options from "options";
 
 function sendBatch(batch: Array<string>) {
