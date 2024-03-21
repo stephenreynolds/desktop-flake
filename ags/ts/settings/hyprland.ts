@@ -12,7 +12,7 @@ function sendBatch(batch: Array<string>) {
     Hyprland.messageAsync(`[[BATCH]]/${command}`);
 }
 
-const setGaps = (gapsout: number, gapsin: number) => Utils.timeout(10, () =>
+const setGaps = (gapsout: number, gapsin: number) =>
     Hyprland.workspaces.map((workspace) => {
         const tiledClients = Hyprland.clients.filter((c) => c.workspace.id === workspace.id && !c.floating && c.mapped);
 
@@ -26,7 +26,7 @@ const setGaps = (gapsout: number, gapsin: number) => Utils.timeout(10, () =>
 
         Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:${gapsout},gapsin:${gapsin}rounding:true,border:true`)
             .catch(() => { });
-    }));
+    });
 
 const onCloseWindow = () => {
     const workspace = Hyprland.getWorkspace(Hyprland.active.workspace.id);
