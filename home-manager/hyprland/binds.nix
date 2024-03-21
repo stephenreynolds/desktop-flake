@@ -45,7 +45,7 @@ mkIf cfg.enable {
       in
       [
         # Kill window and switch to previous workspace if it was the last one
-        "$mod, C, exec, ${scripts.killAndSwitch}"
+        "$mod, C, exec, ${scripts.killActive}"
 
         # Window mode
         "$mod, V, fullscreen, 1"
