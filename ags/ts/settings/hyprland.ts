@@ -11,8 +11,8 @@ function sendBatch(batch: Array<string>) {
     Hyprland.messageAsync(`[[BATCH]]/${command}`);
 }
 
-const setGaps = (gapsout: number, gapsin: number) =>
-    Hyprland.workspaces.map((workspace) => {
+function setGaps(gapsout: number, gapsin: number) {
+    return Hyprland.workspaces.map((workspace) => {
         const tiledClients = Hyprland.clients.filter((c) => c.workspace.id === workspace.id && !c.floating && c.mapped);
 
         const noGapsWindowClasses = options.hyprland.gaps.noGapsWindowClasses.value;
@@ -26,8 +26,9 @@ const setGaps = (gapsout: number, gapsin: number) =>
         Hyprland.messageAsync(`keyword workspace ${workspace.id},gapsout:${gapsout},gapsin:${gapsin}rounding:true,border:true`)
             .catch(() => { });
     });
+}
 
-const onCloseWindow = () => {
+function onCloseWindow() {
     const workspace = Hyprland.getWorkspace(Hyprland.active.workspace.id);
     if (!workspace || workspace.id === -99) {
         return;
@@ -40,7 +41,7 @@ const onCloseWindow = () => {
             Hyprland.messageAsync("dispatch workspace m-1");
         }
     }
-};
+}
 
 function listen(gapsout: number, gapsin: number) {
     const events = ['openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
