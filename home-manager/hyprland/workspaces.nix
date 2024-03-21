@@ -6,9 +6,8 @@ let
 
   primaryMonitor = config.desktop-flake.primaryMonitor;
   terminal = config.home.sessionVariables.TERMINAL;
-in
-mkIf cfg.enable {
+in mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.workspace = [
-    "special:special, monitor:${primaryMonitor}, on-created-empty:[group new] ${terminal}"
+    "special, monitor:${primaryMonitor}, on-created-empty:[group new] ${terminal}"
   ];
 }
