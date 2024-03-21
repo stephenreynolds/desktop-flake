@@ -3,7 +3,8 @@
 let
   inherit (lib) mkIf;
   cfg = config.desktop-flake.hyprland;
-in mkIf cfg.enable {
+in
+mkIf cfg.enable {
   wayland.windowManager.hyprland.settings = {
     general = {
       gaps_in = 4;
@@ -13,6 +14,8 @@ in mkIf cfg.enable {
 
       resize_on_border = true;
       no_focus_fallback = true;
+
+      layout = "master";
 
       allow_tearing = cfg.tearing.enable;
 
