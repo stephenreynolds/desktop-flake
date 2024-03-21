@@ -28,7 +28,7 @@ mkIf cfg.enable {
       float_switch_override_focus = 0;
       follow_mouse = 2;
       kb_layout = "us";
-      numlock_by_default = true;
+      numlock_by_default = false;
     };
 
     decoration = {
