@@ -138,7 +138,7 @@ export class Opt extends Service {
  * @param {OptionConfig<T> =} config
  * @returns {Opt<T>}
  */
-export function Option(value, config) {
+export function Option(value, config: any = undefined) {
     return new Opt(value, config);
 }
 
