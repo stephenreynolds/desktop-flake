@@ -26,7 +26,7 @@ export default {
             noGapsWhenOnly: Option(0),
             noGapsWindowClasses: Option(['firefox']),
         },
-        rounding: Option(10),
+        rounding: Option(0),
     },
 
     locale: {
