@@ -7,8 +7,8 @@ in
 mkIf cfg.enable {
   wayland.windowManager.hyprland.settings = {
     general = {
-      gaps_in = 4;
-      gaps_out = 5;
+      gaps_in = 0;
+      gaps_out = 0;
       gaps_workspaces = 50;
       border_size = 1;
 

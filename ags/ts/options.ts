@@ -21,8 +21,8 @@ export default {
             size: Option(1),
         },
         gaps: {
-            gapsIn: Option(5),
-            gapsOut: Option(10),
+            gapsIn: Option(0),
+            gapsOut: Option(0),
             noGapsWhenOnly: Option(0),
             noGapsWindowClasses: Option(['firefox']),
         },

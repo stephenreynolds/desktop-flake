@@ -44,6 +44,11 @@ function onCloseWindow() {
 }
 
 function listen(gapsout: number, gapsin: number) {
+    if (gapsout === 0 && gapsin === 0) {
+        Hyprland.connect('client-removed', onCloseWindow);
+        return;
+    }
+
     const events = ['openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
 
     App.connect('config-parsed', () => setGaps(gapsout, gapsin));
