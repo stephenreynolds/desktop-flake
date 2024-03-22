@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,39 +64,36 @@
           (google-fonts.override { fonts = [ "Gabarito" "Lexend" ]; })
           material-symbols
         ]);
-    in
-    {
+    in {
       inherit configDir runtimeDependencies;
 
       homeManagerModules.default = import ./home-manager self;
       nixosModules.default = import ./nixos self;
 
       devShells = genSystems (system: {
-        default =
-          let
-            ags = inputs.ags.packages.${system}.agsWithTypes;
-            projectRoot = toString (builtins.getEnv "PWD");
-            agsRoot = "${projectRoot}/ags";
-          in
-          pkgs.${system}.mkShell {
-            buildInputs = with pkgs.${system};
-              [
-                (writeShellScriptBin "ags" ''
-                  ${ags}/bin/ags --config ${agsRoot}/config.js $@
-                '')
-                nodejs
-                nodePackages_latest.eslint
-                typescript
-              ] ++ runtimeDependencies.${system};
-            shellHook = ''
-              if [ ! -d ${agsRoot}/node_modules ]; then
-                npm --prefix ${agsRoot} install
-              fi
-              ln -sf ${ags}/share/com.github.Aylur.ags/types ${agsRoot}/
-            '';
-            AGS_DEBUG = 1;
-            AGS_CONFIG_DIR = agsRoot;
-          };
+        default = let
+          ags = inputs.ags.packages.${system}.agsWithTypes;
+          projectRoot = toString (builtins.getEnv "PWD");
+          agsRoot = "${projectRoot}/ags";
+        in pkgs.${system}.mkShell {
+          buildInputs = with pkgs.${system};
+            [
+              (writeShellScriptBin "ags" ''
+                ${ags}/bin/ags --config ${agsRoot}/config.js $@
+              '')
+              nodejs
+              nodePackages_latest.eslint
+              typescript
+            ] ++ runtimeDependencies.${system};
+          shellHook = ''
+            if [ ! -d ${agsRoot}/node_modules ]; then
+              npm --prefix ${agsRoot} install
+            fi
+            ln -sf ${ags}/share/com.github.Aylur.ags/types ${agsRoot}/
+          '';
+          AGS_DEBUG = 1;
+          AGS_CONFIG_DIR = agsRoot;
+        };
       });
     };
 }
