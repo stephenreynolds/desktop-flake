@@ -11,6 +11,7 @@ in
     ./environment.nix
     ./layer-rules.nix
     ./options.nix
+    ./plugins.nix
     ./submaps.nix
     ./window-rules.nix
     ./workspaces.nix
