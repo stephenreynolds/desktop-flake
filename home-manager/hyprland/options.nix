@@ -7,15 +7,15 @@ in
 mkIf cfg.enable {
   wayland.windowManager.hyprland.settings = {
     general = {
-      gaps_in = 0;
-      gaps_out = 0;
-      gaps_workspaces = 50;
-      border_size = 1;
+      gaps_in = cfg.gaps.inner;
+      gaps_out = cfg.gaps.outer;
+      gaps_workspaces = cfg.gaps.workspaces;
+      border_size = cfg.borderSize;
 
       resize_on_border = true;
       no_focus_fallback = true;
 
-      layout = "master";
+      layout = cfg.defaultLayout;
 
       allow_tearing = cfg.tearing.enable;
 
@@ -32,7 +32,7 @@ mkIf cfg.enable {
     };
 
     decoration = {
-      rounding = 10;
+      rounding = cfg.rounding;
 
       blur = {
         enabled = true;
@@ -57,7 +57,7 @@ mkIf cfg.enable {
     };
 
     animations = {
-      enabled = true;
+      enabled = cfg.animations.enable;
       animation = [
         "windows, 1, 3, md3_decel, popin 60%"
         "border, 1, 10, default"

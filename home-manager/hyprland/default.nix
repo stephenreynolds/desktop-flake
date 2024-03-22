@@ -3,7 +3,8 @@
 let
   inherit (lib) mkEnableOption mkOption mkIf mkMerge types;
   cfg = config.desktop-flake.hyprland;
-in {
+in
+{
   imports = map (path: import path { inherit config lib pkgs inputs; }) [
     ./autostart.nix
     ./binds.nix
@@ -25,6 +26,45 @@ in {
       type = types.attrs;
       default = { };
       description = "List of environment variables to set on login";
+    };
+    animations = {
+      enable = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to enable animations";
+      };
+    };
+    gaps = {
+      outer = mkOption {
+        type = types.oneOf [ types.int types.str ];
+        default = 5;
+        description = "The size of outer gaps";
+      };
+      inner = mkOption {
+        type = types.oneOf [ types.int types.str ];
+        default = 4;
+        description = "The size of inner gaps";
+      };
+      workspaces = mkOption {
+        type = types.oneOf [ types.int types.str ];
+        default = 50;
+        description = "The size of gaps between workspaces";
+      };
+    };
+    borderSize = mkOption {
+      type = types.int;
+      default = 1;
+      description = "The size of the borders";
+    };
+    rounding = mkOption {
+      type = types.int;
+      default = 10;
+      description = "The amount of rounding around windows";
+    };
+    defaultLayout = mkOption {
+      type = types.enum [ "dwindle" "master" ];
+      default = "master";
+      description = "The default layout";
     };
     modifier = mkOption {
       type = types.str;
