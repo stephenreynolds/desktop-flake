@@ -19,6 +19,10 @@ export default (monitor = 0) => {
                 box.toggleClassName('bar-floating', true);
                 return;
             }
+            if (options.hyprland.gaps.gapsOut.value === 0) {
+                box.toggleClassName('bar-floating', false);
+                return;
+            }
             if (workspace.windows === 1) {
                 const layout = JSON.parse(await Utils.execAsync(['hyprctl', 'getoption', 'general:layout', '-j'])).str;
                 const noGapsWhenOnly = JSON.parse(await Utils.execAsync(['hyprctl', 'getoption', `${layout}:no_gaps_when_only`, '-j'])).int;
