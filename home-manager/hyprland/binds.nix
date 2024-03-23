@@ -207,7 +207,9 @@ mkIf cfg.enable {
         ", XF86AudioRewind, exec, ${playerctl} position -10"
         ", XF86AudioNext, exec, ${playerctl} next"
         ", XF86AudioPrev, exec, ${playerctl} previous"
+        ", XF86AudioPlay, exec, ${playerctl} play-pause"
         ", XF86AudioPause, exec, ${playerctl} pause"
+        ", XF86AudioStop, exec, ${playerctl} stop"
       ];
   };
 }
