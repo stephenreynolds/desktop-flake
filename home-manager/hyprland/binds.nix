@@ -45,7 +45,7 @@ mkIf cfg.enable {
       in
       [
         # Kill window and switch to previous workspace if it was the last one
-        "$mod, Backspace, exec, ${scripts.killActive}"
+        "$mod, C, exec, ${scripts.killActive}"
 
         # Window mode
         "$mod, V, fullscreen, 1"
@@ -131,7 +131,7 @@ mkIf cfg.enable {
         "$mod CTRL, L, exec, ${pkgs.wlogout}/bin/wlogout -p layer-shell"
 
         # Launch applications
-        "$mod, Return, exec, ${terminal}"
+        "$mod, T, exec, ${terminal}"
         "$mod, W, exec, ${browser}"
         "$mod SHIFT, W, exec, ${scripts.openPrivateBrowser}"
 
