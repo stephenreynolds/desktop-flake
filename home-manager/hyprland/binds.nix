@@ -20,12 +20,6 @@ mkIf cfg.enable {
             })
             (builtins.readDir path)) ./scripts;
 
-        gtk-launch = "${pkgs.gtk3}/bin/gtk-launch";
-        xdg-mime = "${pkgs.xdg-utils}/bin/xdg-mime";
-        defaultApp = type: "${gtk-launch} $(${xdg-mime} query default ${type})";
-
-        terminal = "xterm";
-        browser = defaultApp "x-scheme-handler/https";
         dwindleMonocle = "dwindle:no_gaps_when_only";
         masterMonocle = "master:no_gaps_when_only";
         jaq = "${pkgs.jaq}/bin/jaq";
@@ -45,110 +39,105 @@ mkIf cfg.enable {
       in
       [
         # Kill window and switch to previous workspace if it was the last one
-        "$mod, C, exec, ${scripts.killActive}"
+        ", D, exec, ${scripts.killActive}"
 
         # Window mode
-        "$mod, V, fullscreen, 1"
-        "$mod SHIFT, V, fullscreen, 0"
-        "$mod, F, toggleFloating"
-        "$mod SHIFT, F, pin"
-        "$mod ALT, F, workspaceopt, allfloat"
+        ", V, fullscreen, 1"
+        "SHIFT, V, fullscreen, 0"
+        ", F, toggleFloating"
+        "SHIFT, F, pin"
+        "ALT, F, workspaceopt, allfloat"
 
         # Layout
-        "$mod SHIFT, L, exec, ${scripts.toggleLayout}"
+        "SHIFT, U, exec, ${scripts.toggleLayout}"
 
         # Dwindle layout
-        "$mod, S, togglesplit"
-        "$mod, L, pseudo"
+        ", S, togglesplit"
+        ", U, pseudo"
 
         # Master layout
-        "$mod, S, layoutmsg, rollnext"
-        "$mod SHIFT, S, layoutmsg, rollprev"
-        "$mod, L, layoutmsg, orientationcycle right center left"
+        ", S, layoutmsg, rollnext"
+        "SHIFT, S, layoutmsg, rollprev"
+        ", U, layoutmsg, orientationcycle right center left"
 
         # Focus last window
-        "$mod, D, focuscurrentorlast"
+        ", D, focuscurrentorlast"
 
         # Move focus with {modifier} + arrow keys
-        "$mod, left, movefocus, l"
-        "$mod, right, movefocus, r"
-        "$mod, up, movefocus, u"
-        "$mod, down, movefocus, d"
+        ", H, movefocus, l"
+        ", L, movefocus, r"
+        ", K, movefocus, u"
+        ", J, movefocus, d"
 
         # Move window with {modifier} + Shift + arrow keys
-        "$mod SHIFT, left, movewindow, l"
-        "$mod SHIFT, right, movewindow, r"
-        "$mod SHIFT, up, movewindow, u"
-        "$mod SHIFT, down, movewindow, d"
+        "SHIFT, H, movewindow, l"
+        "SHIFT, L, movewindow, r"
+        "SHIFT, K, movewindow, u"
+        "SHIFT, J, movewindow, d"
 
         # Group window
-        "$mod, G, togglegroup"
-        "$mod CTRL, G, moveoutofgroup"
-        "$mod ALT, G, lockactivegroup, toggle"
-        "$mod ALT, left, moveintogroup, l"
-        "$mod ALT, right, moveintogroup, r"
-        "$mod ALT, up, moveintogroup, u"
-        "$mod ALT, down, moveintogroup, d"
+        ", G, togglegroup"
+        "CTRL, G, moveoutofgroup"
+        "ALT, G, lockactivegroup, toggle"
+        "ALT, H, moveintogroup, l"
+        "ALT, L, moveintogroup, r"
+        "ALT, K, moveintogroup, u"
+        "ALT, J, moveintogroup, d"
 
         # Switch to next window in group
-        "$mod, 8, changegroupactive, b"
-        "$mod, 9, changegroupactive, f"
-        "$mod SHIFT, 8, movegroupwindow, b"
-        "$mod SHIFT, 9, movegroupwindow, f"
+        ", 8, changegroupactive, b"
+        ", 9, changegroupactive, f"
+        "SHIFT, 8, movegroupwindow, b"
+        "SHIFT, 9, movegroupwindow, f"
 
         # Next/previous workspace on monitor
-        "$mod, 5, workspace, m-1"
-        "$mod, 6, workspace, m+1"
-        "$mod SHIFT, 5, movetoworkspace, m-1"
-        "$mod SHIFT, 6, movetoworkspace, m+1"
-        "$mod CTRL, 5, movetoworkspace, r-1"
+        ", left, workspace, m-1"
+        ", right, workspace, m+1"
+        "SHIFT, left, movetoworkspace, m-1"
+        "SHIFT, right, movetoworkspace, m+1"
+        "CTRL, left, movetoworkspace, r-1"
 
         # Next empty workspace on monitor
-        "$mod, 4, exec, ${scripts.focusEmpty}"
-        "$mod SHIFT, 4, exec, ${scripts.moveToEmpty}"
+        ", E, exec, ${scripts.focusEmpty}"
+        "SHIFT, E, exec, ${scripts.moveToEmpty}"
 
         # Previous workspace
-        "$mod, 3, workspace, previous"
-        "$mod SHIFT, 3, movetoworkspace, previous"
+        ", P, workspace, previous"
+        "SHIFT, P, movetoworkspace, previous"
 
         # Special workspaces
-        "$mod SHIFT, 0, movetoworkspace, special"
-        "$mod, 0, togglespecialworkspace"
+        "SHIFT, 0, movetoworkspace, special"
+        ", 0, togglespecialworkspace"
 
         # Move to monitor
-        "$mod, 1, focusmonitor, l"
-        "$mod, 2, focusmonitor, r"
-        "$mod SHIFT, 1, movewindow, mon:l"
-        "$mod SHIFT, 2, movewindow, mon:r"
-        "$mod CTRL, 1, movecurrentworkspacetomonitor, l"
-        "$mod CTRL, 2, movecurrentworkspacetomonitor, r"
+        ", 1, focusmonitor, l"
+        ", 2, focusmonitor, r"
+        "SHIFT, 1, movewindow, mon:l"
+        "SHIFT, 2, movewindow, mon:r"
+        "CTRL, 1, movecurrentworkspacetomonitor, l"
+        "CTRL, 2, movecurrentworkspacetomonitor, r"
 
         # Scroll through existing workspaces with {modifier} + scroll
         "$mod, mouse_down, workspace, m+1"
         "$mod, mouse_up, workspace, m-1"
 
         # Logout menu
-        "$mod CTRL, L, exec, ${pkgs.wlogout}/bin/wlogout -p layer-shell"
-
-        # Launch applications
-        "$mod, T, exec, ${terminal}"
-        "$mod, W, exec, ${browser}"
-        "$mod SHIFT, W, exec, ${scripts.openPrivateBrowser}"
+        "CTRL, U, exec, ${pkgs.wlogout}/bin/wlogout -p layer-shell"
 
         # Toggle no_gaps_when_only
-        "$mod SHIFT, M, exec, ${hyprctl} keyword ${dwindleMonocle} $(($(${hyprctl} getoption ${dwindleMonocle} -j | ${jaq} -r '.int') ^ 1))"
-        "$mod SHIFT, M, exec, ${hyprctl} keyword ${masterMonocle} $(($(${hyprctl} getoption ${masterMonocle} -j | ${jaq} -r '.int') ^ 1))"
-        "$mod SHIFT, M, submap"
+        "SHIFT, M, exec, ${hyprctl} keyword ${dwindleMonocle} $(($(${hyprctl} getoption ${dwindleMonocle} -j | ${jaq} -r '.int') ^ 1))"
+        "SHIFT, M, exec, ${hyprctl} keyword ${masterMonocle} $(($(${hyprctl} getoption ${masterMonocle} -j | ${jaq} -r '.int') ^ 1))"
+        "SHIFT, M, submap"
 
         # Toggle animations
-        "$mod SHIFT, A, exec, ${scripts.toggleAnimations}"
-        "$mod SHIFT, G, exec, ${scripts.toggleGaps}"
+        "SHIFT, A, exec, ${scripts.toggleAnimations}"
+        "SHIFT, G, exec, ${scripts.toggleGaps}"
 
         # Clipboard history
-        "$mod CTRL, V, exec, ${cliphist} list | ${wofi} --dmenu | ${cliphist} decode | ${wl-copy}"
+        "CTRL, V, exec, ${cliphist} list | ${wofi} --dmenu | ${cliphist} decode | ${wl-copy}"
 
         # Color picker
-        "$mod SHIFT, C, exec, ${hyprpicker} --format=hex --autocopy"
+        "SHIFT, C, exec, ${hyprpicker} --format=hex --autocopy"
 
         # Capture the active output
         ", Print, exec, ${grimblast} save output - | ${swappy} -f -"
@@ -165,23 +154,23 @@ mkIf cfg.enable {
           let ags = "${config.programs.ags.package}/bin/ags -b hyprland";
           in [
             # Toggle AGS windows
-            "$mod, Space, exec, ${ags} -t launcher"
-            "$mod, N, exec, ${ags} -t action-center"
+            ", Space, exec, ${ags} -t launcher"
+            ", N, exec, ${ags} -t action-center"
           ]
         ));
 
     binde = [
       # Resize window with {modifier} + Ctrl + arrow keys
-      "$mod CTRL, left, resizeactive, -10 0"
-      "$mod CTRL, right, resizeactive, 10 0"
-      "$mod CTRL, up, resizeactive, 0 -10"
-      "$mod CTRL, down, resizeactive, 0 10"
+      "CTRL, H, resizeactive, -10 0"
+      "CTRL, L, resizeactive, 10 0"
+      "CTRL, K, resizeactive, 0 -10"
+      "CTRL, J, resizeactive, 0 10"
     ];
 
     bindm = [
       # Move/resize windows with modifier + LMB/RMB and dragging
-      "$mod, mouse:272, movewindow"
-      "$mod, mouse:273, resizewindow"
+      ", mouse:272, movewindow"
+      ", mouse:273, resizewindow"
     ];
 
     bindle =
