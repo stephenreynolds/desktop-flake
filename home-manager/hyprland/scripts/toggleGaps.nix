@@ -24,6 +24,4 @@ pkgs.writeShellScript "toggle_hyprland_gaps" ''
   fi
 
   ${hyprctl} --batch "keyword general:gaps_out $gaps_out ; keyword general:gaps_in $gaps_in ; keyword general:rounding $rounding" 
-
-  ${pkgs.libnotify}/bin/notify-send "Hyprland" "Gaps $state" --transient
 ''

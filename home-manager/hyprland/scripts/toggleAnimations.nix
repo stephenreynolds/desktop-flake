@@ -10,6 +10,4 @@ in pkgs.writeShellScript "toggle_hyprland_gaps" ''
   else
     state="disabled"
   fi
-
-  ${pkgs.libnotify}/bin/notify-send "Hyprland" "Animations $state" --transient
 ''
