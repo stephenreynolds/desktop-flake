@@ -61,10 +61,10 @@ mkIf cfg.enable {
     animations = {
       enabled = cfg.animations.enable;
       animation = [
-        "windows, 1, 3, md3_decel, popin 60%"
+        "windows, 1, 1, md3_decel, popin 60%"
         "border, 1, 10, default"
-        "workspaces, 1, 7, fluent_decel, slide"
-        "specialWorkspace, 1, 3, md3_decel, slidevert"
+        "workspaces, 1, 1, fluent_decel, slide"
+        "specialWorkspace, 1, 1, md3_decel, slidevert"
       ];
       bezier = [ "md3_decel, 0.05, 0.7, 0.1, 1" "fluent_decel, 0.1, 1, 0, 1" ];
     };
