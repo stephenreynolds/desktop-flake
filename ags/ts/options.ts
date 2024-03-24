@@ -14,7 +14,7 @@ export default {
         showOnAllMonitors: Option(true),
     },
 
-    primaryMonitor: Option(2),
+    primaryMonitor: Option(0),
 
     hyprland: {
         borders: {
