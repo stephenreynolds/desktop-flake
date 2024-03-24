@@ -83,7 +83,7 @@ mkIf cfg.enable {
       new_is_master = true;
       new_on_top = true;
       no_gaps_when_only = 1;
-      orientation = "center";
+      orientation = "left";
       special_scale_factor = 0.95;
     };
 
