@@ -23,5 +23,5 @@ pkgs.writeShellScript "toggle_hyprland_gaps" ''
     gaps_in=0
   fi
 
-  ${hyprctl} --batch "keyword general:gaps_out $gaps_out ; keyword general:gaps_in $gaps_in ; keyword general:rounding $rounding" 
+  ${hyprctl} --batch "keyword general:gaps_out $gaps_out ; keyword general:gaps_in $gaps_in ; keyword decoration:rounding $rounding" 
 ''
