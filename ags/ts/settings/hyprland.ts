@@ -33,12 +33,12 @@ function onCloseWindow() {
     if (!workspace || workspace.id === -99) {
         return;
     }
-    let hasPictureInPicture = false;
+    let hasPinned = false;
     if (workspace.windows === 1) {
-        hasPictureInPicture = Hyprland.clients.some(c =>
-            c.workspace.id === workspace.id && c.title === "Picture-in-Picture");
+        hasPinned = Hyprland.clients.some(c =>
+            c.workspace.id === workspace.id && c.pinned);
     }
-    if (workspace.windows === 0 || hasPictureInPicture) {
+    if (workspace.windows === 0 || hasPinned) {
         const lastWorkspace = Hyprland.workspaces
             .filter(w => w.monitorID === Hyprland.active.monitor.id && w.id !== -99)
             .length === 1;
