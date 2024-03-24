@@ -12,15 +12,16 @@ mkIf cfg.enable {
       let
         hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
 
-        inherit (cfg) rounding;
-        gapsOut = cfg.gaps.outer;
-        gapsIn = cfg.gaps.inner;
-
         scripts = (path:
           lib.mapAttrs'
             (file: _: {
               name = builtins.replaceStrings [ ".nix" ] [ "" ] file;
-              value = import "${path}/${file}" { inherit pkgs hyprctl rounding gapsOut gapsIn; };
+              value = import "${path}/${file}" {
+                inherit pkgs hyprctl;
+                rounding = cfg.rounding;
+                gapsOut = cfg.gaps.outer;
+                gapsIn = cfg.gaps.inner;
+              };
             })
             (builtins.readDir path)) ./scripts;
 
