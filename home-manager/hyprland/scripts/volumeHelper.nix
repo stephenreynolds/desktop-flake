@@ -3,7 +3,7 @@ let wpctl = "${pkgs.wireplumber}/bin/wpctl";
 in pkgs.writeShellScript "volume_helper" ''
   set -x
   SINK="@DEFAULT_SINK@"
-  DEFAULT_STEP=2
+  DEFAULT_STEP=5
   LIMIT=''${LIMIT:-1}
   CHANGE=0
   VOLUME=-1

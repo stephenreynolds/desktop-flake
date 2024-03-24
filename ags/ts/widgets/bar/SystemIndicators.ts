@@ -4,7 +4,7 @@ import Network from 'resource:///com/github/Aylur/ags/service/network.js';
 import { truncateString } from 'utils';
 
 const AudioIndicator = () => {
-    const delta = 0.02;
+    const delta = 0.05;
     const incrementVolume = () => Audio.speaker.volume = Math.min(1, Audio.speaker.volume + delta);
     const decrementVolume = () => Audio.speaker.volume = Audio.speaker.volume - delta;
     const muteVolume = () => Audio.speaker.stream.isMuted = !Audio.speaker.stream.isMuted;
