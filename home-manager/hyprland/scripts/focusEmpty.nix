@@ -1,4 +1,4 @@
-{ hyprctl, pkgs }:
+{ hyprctl, pkgs, ... }:
 let jaq = "${pkgs.jaq}/bin/jaq";
 in pkgs.writeShellScript "focus_empty" ''
   active=$(${hyprctl} activeworkspace -j)

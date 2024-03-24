@@ -1,12 +1,12 @@
-{ hyprctl, pkgs }:
+{ hyprctl, pkgs, rounding, gapsOut, gapsIn }:
 let jaq = "${pkgs.jaq}/bin/jaq";
 in pkgs.writeShellScript "toggle_hyprland_gaps" ''
   gaps_out=$(${hyprctl} -j getoption general:gaps_out | ${jaq} -r '.custom' | awk '{print $1}')
   gaps_in=$(${hyprctl} -j getoption general:gaps_in | ${jaq} -r '.custom' | awk '{print $1}')
 
   if [[ $gaps_out -eq 0 ]]; then
-    gaps_out=10
-    rounding=4
+    gaps_out=${gapsOut}
+    rounding=${rounding}
     state="enabled"
   else
     gaps_out=0
@@ -15,7 +15,7 @@ in pkgs.writeShellScript "toggle_hyprland_gaps" ''
   fi
 
   if [[ $gaps_in -eq 0 ]]; then
-    gaps_in=10
+    gaps_in=${gapsIn}
   else
     gaps_in=0
   fi

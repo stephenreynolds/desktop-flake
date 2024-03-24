@@ -1,4 +1,4 @@
-{ hyprctl, pkgs }:
+{ hyprctl, pkgs, ... }:
 let jaq = "${pkgs.jaq}/bin/jaq";
 in pkgs.writeShellScript "toggle_hyprland_gaps" ''
   animations=$(${hyprctl} getoption animations:enabled -j | ${jaq} -r '.int')

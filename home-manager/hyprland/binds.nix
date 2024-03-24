@@ -12,11 +12,15 @@ mkIf cfg.enable {
       let
         hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
 
+        inherit (cfg) rounding;
+        gapsOut = cfg.gaps.outer;
+        gapsIn = cfg.gaps.inner;
+
         scripts = (path:
           lib.mapAttrs'
             (file: _: {
               name = builtins.replaceStrings [ ".nix" ] [ "" ] file;
-              value = import "${path}/${file}" { inherit pkgs hyprctl; };
+              value = import "${path}/${file}" { inherit pkgs hyprctl rounding gapsOut gapsIn; };
             })
             (builtins.readDir path)) ./scripts;
 
@@ -26,9 +30,6 @@ mkIf cfg.enable {
 
         terminal = "xterm";
         browser = defaultApp "x-scheme-handler/https";
-        dwindleMonocle = "dwindle:no_gaps_when_only";
-        masterMonocle = "master:no_gaps_when_only";
-        jaq = "${pkgs.jaq}/bin/jaq";
 
         cliphist = "${pkgs.cliphist}/bin/cliphist";
         wofi = "${pkgs.wofi}/bin/wofi";
@@ -45,7 +46,7 @@ mkIf cfg.enable {
       in
       [
         # Kill window and switch to previous workspace if it was the last one
-        "$mod, C, exec, ${scripts.killActive}"
+        "$mod, D, exec, ${scripts.killActive}"
 
         # Window mode
         "$mod, V, fullscreen, 1"
@@ -55,40 +56,40 @@ mkIf cfg.enable {
         "$mod ALT, F, workspaceopt, allfloat"
 
         # Layout
-        "$mod SHIFT, L, exec, ${scripts.toggleLayout}"
+        "$mod SHIFT, U, exec, ${scripts.toggleLayout}"
 
         # Dwindle layout
         "$mod, S, togglesplit"
-        "$mod, L, pseudo"
+        "$mod, U, pseudo"
 
         # Master layout
         "$mod, S, layoutmsg, rollnext"
         "$mod SHIFT, S, layoutmsg, rollprev"
-        "$mod, L, layoutmsg, orientationcycle center left"
+        "$mod, U, layoutmsg, orientationcycle center left"
 
         # Focus last window
-        "$mod, D, focuscurrentorlast"
+        "$mod, N, focuscurrentorlast"
 
         # Move focus with {modifier} + arrow keys
-        "$mod, left, movefocus, l"
-        "$mod, right, movefocus, r"
-        "$mod, up, movefocus, u"
-        "$mod, down, movefocus, d"
+        "$mod, H, movefocus, l"
+        "$mod, L, movefocus, r"
+        "$mod, K, movefocus, u"
+        "$mod, J, movefocus, d"
 
         # Move window with {modifier} + Shift + arrow keys
-        "$mod SHIFT, left, movewindow, l"
-        "$mod SHIFT, right, movewindow, r"
-        "$mod SHIFT, up, movewindow, u"
-        "$mod SHIFT, down, movewindow, d"
+        "$mod SHIFT, H, movewindow, l"
+        "$mod SHIFT, L, movewindow, r"
+        "$mod SHIFT, K, movewindow, u"
+        "$mod SHIFT, J, movewindow, d"
 
         # Group window
         "$mod, G, togglegroup"
         "$mod CTRL, G, moveoutofgroup"
         "$mod ALT, G, lockactivegroup, toggle"
-        "$mod ALT, left, moveintogroup, l"
-        "$mod ALT, right, moveintogroup, r"
-        "$mod ALT, up, moveintogroup, u"
-        "$mod ALT, down, moveintogroup, d"
+        "$mod ALT, H, moveintogroup, l"
+        "$mod ALT, L, moveintogroup, r"
+        "$mod ALT, K, moveintogroup, u"
+        "$mod ALT, J, moveintogroup, d"
 
         # Switch to next window in group
         "$mod, 8, changegroupactive, b"
@@ -112,8 +113,8 @@ mkIf cfg.enable {
         "$mod SHIFT, 3, movetoworkspace, previous"
 
         # Special workspaces
-        "$mod SHIFT, 0, movetoworkspace, special"
-        "$mod, 0, togglespecialworkspace"
+        "$mod SHIFT, Return, movetoworkspace, special"
+        "$mod, Return, togglespecialworkspace"
 
         # Move to monitor
         "$mod, 1, focusmonitor, l"
@@ -128,17 +129,12 @@ mkIf cfg.enable {
         "$mod, mouse_up, workspace, m-1"
 
         # Logout menu
-        "$mod CTRL, L, exec, ${pkgs.wlogout}/bin/wlogout -p layer-shell"
+        "$mod CTRL, Q, exec, ${pkgs.wlogout}/bin/wlogout -p layer-shell"
 
         # Launch applications
         "$mod, T, exec, ${terminal}"
         "$mod, W, exec, ${browser}"
         "$mod SHIFT, W, exec, ${scripts.openPrivateBrowser}"
-
-        # Toggle no_gaps_when_only
-        "$mod SHIFT, M, exec, ${hyprctl} keyword ${dwindleMonocle} $(($(${hyprctl} getoption ${dwindleMonocle} -j | ${jaq} -r '.int') ^ 1))"
-        "$mod SHIFT, M, exec, ${hyprctl} keyword ${masterMonocle} $(($(${hyprctl} getoption ${masterMonocle} -j | ${jaq} -r '.int') ^ 1))"
-        "$mod SHIFT, M, submap"
 
         # Toggle animations
         "$mod SHIFT, A, exec, ${scripts.toggleAnimations}"
@@ -172,10 +168,10 @@ mkIf cfg.enable {
 
     binde = [
       # Resize window with {modifier} + Ctrl + arrow keys
-      "$mod CTRL, left, resizeactive, -10 0"
-      "$mod CTRL, right, resizeactive, 10 0"
-      "$mod CTRL, up, resizeactive, 0 -10"
-      "$mod CTRL, down, resizeactive, 0 10"
+      "$mod CTRL, H, resizeactive, -10 0"
+      "$mod CTRL, L, resizeactive, 10 0"
+      "$mod CTRL, K, resizeactive, 0 -10"
+      "$mod CTRL, J, resizeactive, 0 10"
     ];
 
     bindm = [
