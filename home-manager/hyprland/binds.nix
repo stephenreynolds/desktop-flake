@@ -68,7 +68,7 @@ mkIf cfg.enable {
         "$mod, U, layoutmsg, orientationcycle center left"
 
         # Focus last window
-        "$mod, N, focuscurrentorlast"
+        "$mod, Y, focuscurrentorlast"
 
         # Move focus with {modifier} + arrow keys
         "$mod, H, movefocus, l"
@@ -92,43 +92,31 @@ mkIf cfg.enable {
         "$mod ALT, J, moveintogroup, d"
 
         # Switch to next window in group
-        "$mod, 8, changegroupactive, b"
-        "$mod, 9, changegroupactive, f"
-        "$mod SHIFT, 8, movegroupwindow, b"
-        "$mod SHIFT, 9, movegroupwindow, f"
+        "$mod, Comma, changegroupactive, b"
+        "$mod, Period, changegroupactive, f"
+        "$mod SHIFT, Comma, movegroupwindow, b"
+        "$mod SHIFT, Period, movegroupwindow, f"
 
         # Next/previous workspace on monitor
-        "$mod, 5, workspace, m-1"
-        "$mod, 6, workspace, m+1"
-        "$mod SHIFT, 5, movetoworkspace, m-1"
-        "$mod SHIFT, 6, movetoworkspace, m+1"
-        "$mod CTRL, 5, movetoworkspace, r-1"
+        "$mod, N, workspace, m-1"
+        "$mod, E, workspace, m+1"
+        "$mod SHIFT, N, movetoworkspace, m-1"
+        "$mod SHIFT, E, movetoworkspace, m+1"
 
         # Next empty workspace on monitor
-        "$mod, 4, exec, ${scripts.focusEmpty}"
-        "$mod SHIFT, 4, exec, ${scripts.moveToEmpty}"
-
-        # Previous workspace
-        "$mod, 3, workspace, previous"
-        "$mod SHIFT, 3, movetoworkspace, previous"
+        "$mod, O, exec, ${scripts.focusEmpty}"
+        "$mod SHIFT, O, exec, ${scripts.moveToEmpty}"
 
         # Special workspaces
         "$mod SHIFT, Return, movetoworkspace, special"
         "$mod, Return, togglespecialworkspace"
-
-        # Move to monitor
-        "$mod, 1, focusmonitor, l"
-        "$mod, 2, focusmonitor, r"
-        "$mod SHIFT, 1, movewindow, mon:l"
-        "$mod SHIFT, 2, movewindow, mon:r"
-        "$mod CTRL, 1, movecurrentworkspacetomonitor, l"
-        "$mod CTRL, 2, movecurrentworkspacetomonitor, r"
 
         # Scroll through existing workspaces with {modifier} + scroll
         "$mod, mouse_down, workspace, m+1"
         "$mod, mouse_up, workspace, m-1"
 
         # Logout menu
+        "$mod SHIFT, Q, exec, ${hyprctl} reload"
         "$mod CTRL, Q, exec, ${pkgs.wlogout}/bin/wlogout -p layer-shell"
 
         # Launch applications
@@ -162,7 +150,7 @@ mkIf cfg.enable {
           in [
             # Toggle AGS windows
             "$mod, Space, exec, ${ags} -t launcher"
-            "$mod, N, exec, ${ags} -t action-center"
+            "$mod, Tab, exec, ${ags} -t action-center"
           ]
         ));
 
