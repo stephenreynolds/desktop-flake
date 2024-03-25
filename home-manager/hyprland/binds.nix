@@ -66,7 +66,7 @@ mkIf cfg.enable {
         # Master layout
         "$mod, S, layoutmsg, rollnext"
         "$mod SHIFT, S, layoutmsg, rollprev"
-        "$mod, U, layoutmsg, orientationcycle center left"
+        "$mod, U, layoutmsg, orientationcycle center right"
 
         # Focus last window
         "$mod, Y, focuscurrentorlast"
