@@ -60,7 +60,6 @@ export default (monitor = 0) => {
         monitor,
         name: `bar-${monitor}`,
         exclusivity: 'exclusive',
-        layer: 'bottom',
         anchor: options.bar.position.bind('value').transform(pos => ([
             pos, 'left', 'right'
         ])),
