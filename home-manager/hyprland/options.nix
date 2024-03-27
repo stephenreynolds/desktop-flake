@@ -19,8 +19,6 @@ mkIf cfg.enable {
 
       allow_tearing = cfg.tearing.enable;
 
-      cursor_inactive_timeout = 10;
-
       # Fallback colors
       "col.active_border" = "rgba(0DB7D4FF)";
       "col.inactive_border" = "rgba(31313600)";
