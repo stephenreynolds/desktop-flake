@@ -12,17 +12,36 @@ export default (monitor = 0) => {
         try {
             const monitorObject = Hyprland.getMonitor(monitor);
             const activeWorkspace = monitorObject?.activeWorkspace.id;
-            if (!activeWorkspace) return;
+            if (!activeWorkspace) {
+                return;
+            }
+
             const workspace = Hyprland.getWorkspace(activeWorkspace);
-            if (!workspace) return;
+            if (!workspace) {
+                return;
+            }
+
+            // Float if workspace is empty
             if (workspace.windows === 0) {
                 box.toggleClassName('bar-floating', true);
                 return;
             }
-            if (options.hyprland.gaps.gapsOut.value === 0) {
+
+            const clients = Hyprland.clients.filter(c => c.workspace.id === workspace.id && c.mapped);
+
+            // Do not float if a window is fullscreen
+            if (clients.some(c => c.fullscreen)) {
                 box.toggleClassName('bar-floating', false);
                 return;
             }
+
+            // Float if all windows are floating
+            if (clients.every(c => c.floating)) {
+                box.toggleClassName('bar-floating', true);
+                return;
+            }
+
+            // Do not float if there is 1 window and no_gaps_when_only is enabled
             if (workspace.windows === 1) {
                 const layout = JSON.parse(await Utils.execAsync(['hyprctl', 'getoption', 'general:layout', '-j'])).str;
                 const noGapsWhenOnly = JSON.parse(await Utils.execAsync(['hyprctl', 'getoption', `${layout}:no_gaps_when_only`, '-j'])).int;
@@ -31,9 +50,13 @@ export default (monitor = 0) => {
                     return;
                 }
             }
+
+            // Float if there are bottom gaps
             const workspacerules = JSON.parse(await Utils.execAsync(['hyprctl', 'workspacerules', '-j']));
             const barWorkspace = workspacerules.find(rule => rule.workspaceString === activeWorkspace.toString());
-            if (!barWorkspace) return;
+            if (!barWorkspace) {
+                return;
+            }
             const bottomGaps = barWorkspace.gapsOut[2];
             box.toggleClassName('bar-floating', bottomGaps > 0);
         } catch (e) {
