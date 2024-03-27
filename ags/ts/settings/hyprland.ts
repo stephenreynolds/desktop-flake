@@ -1,6 +1,7 @@
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
 import options from "options";
+import { Workspace, type Client } from "types/service/hyprland";
 
 function sendBatch(batch: Array<string>) {
     const command = batch
@@ -28,41 +29,55 @@ function setGaps(gapsout: number, gapsin: number) {
     });
 }
 
-function onCloseWindow() {
-    const workspace = Hyprland.getWorkspace(Hyprland.active.workspace.id);
-    if (!workspace || workspace.id === -99) {
+function onCloseWindow(client: Client) {
+    const activeWorkspace = Hyprland.getWorkspace(Hyprland.active.workspace.id);
+
+    if (!activeWorkspace || activeWorkspace.id === -99 || activeWorkspace.windows > 1) {
         return;
     }
-    let hasPinned = false;
-    if (workspace.windows === 1) {
-        hasPinned = Hyprland.clients.some(c =>
-            c.workspace.id === workspace.id && c.pinned);
-    }
-    if (workspace.windows === 0 || hasPinned) {
-        const lastWorkspace = Hyprland.workspaces
-            .filter(w => w.monitorID === Hyprland.active.monitor.id && w.id !== -99)
-            .length === 1;
-        if (!lastWorkspace) {
-            Hyprland.messageAsync("dispatch workspace m-1");
+
+    if (activeWorkspace.windows === 1) {
+        const lastClient = Hyprland.clients.find(c => c.workspace.id === activeWorkspace.id);
+
+        if (lastClient && lastClient.title !== 'Picture-in-Picture') {
+            return;
         }
     }
+    else if (activeWorkspace.windows === 0 && ["Picture-in-Picture", "Launching..."].includes(client.title)) {
+        return;
+    }
+
+    const isLastWorkspaceOnMonitor = Hyprland.workspaces
+        .filter(w => w.monitorID === Hyprland.active.monitor.id && w.id !== -99)
+        .length === 1;
+    if (isLastWorkspaceOnMonitor) {
+        return;
+    }
+
+    Hyprland.messageAsync("dispatch workspace m-1");
 }
 
-function listen(gapsout: number, gapsin: number) {
-    if (gapsout === 0 && gapsin === 0) {
-        Hyprland.connect('client-removed', onCloseWindow);
-        return;
-    }
+const clients = new Map<string, Client>();
 
-    const events = ['openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
+function listen(gapsout: number, gapsin: number) {
+    Hyprland.connect('client-added', (_, address) => {
+        const client = Hyprland.getClient(address);
+        if (client) {
+            clients.set(address, client);
+        }
+    });
+
+    Hyprland.connect('client-removed', (_, address) => {
+        const client = clients.get(address);
+        if (client) {
+            onCloseWindow(client);
+            clients.delete(address);
+        }
+    });
 
     App.connect('config-parsed', () => setGaps(gapsout, gapsin));
-
+    const events = ['openwindow', 'closewindow', 'movewindow', 'changefloatingmode'];
     Hyprland.connect('event', (_, event) => {
-        if (event === "closewindow") {
-            onCloseWindow();
-        }
-
         if (events.includes(event)) {
             setGaps(gapsout, gapsin);
         }
