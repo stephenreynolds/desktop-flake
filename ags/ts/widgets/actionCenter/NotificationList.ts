@@ -62,7 +62,7 @@ export const clearNotifications = () => {
     Utils.timeout(210, () => App.toggleWindow('action-center'));
 };
 
-export default (props) => {
+export default (props = {}) => {
     const ListActionButton = (icon, name, action, { ...rest } = {}) => Widget.Button({
         className: 'notification-listaction-button',
         onClicked: action,

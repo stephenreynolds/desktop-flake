@@ -101,9 +101,9 @@ const ActionCenter = () => Widget.Box({
         })
     ],
     setup: (self) => self
-        .keybind(['MOD1', 'MOD2'], 'c', clearNotifications)
-        .keybind(['MOD1', 'MOD2'], 's', () => Notifications.dnd = !Notifications.dnd)
-        .keybind(['MOD1', 'MOD2'], 'Tab', () => {
+        .keybind(['MOD1'], 'c', clearNotifications)
+        .keybind(['MOD1'], 's', () => Notifications.dnd = !Notifications.dnd)
+        .keybind(['MOD1'], 'Tab', () => {
             if (contentStack.shown === 'calendar') {
                 contentStack.shown = 'todo';
                 calendarButton.toggleClassName('sidebar-navrail-btn-active', false);
