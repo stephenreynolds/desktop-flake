@@ -89,7 +89,7 @@ mkIf cfg.enable {
 
     binds = {
       allow_workspace_cycles = true;
-      movefocus_cycles_fullscreen = false;
+      movefocus_cycles_fullscreen = true;
       workspace_back_and_forth = false;
     };
 
