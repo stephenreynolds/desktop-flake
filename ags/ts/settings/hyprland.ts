@@ -1,7 +1,7 @@
 import App from "resource:///com/github/Aylur/ags/app.js";
 import Hyprland from "resource:///com/github/Aylur/ags/service/hyprland.js";
 import options from "options";
-import { Workspace, type Client } from "types/service/hyprland";
+import { type Client } from "types/service/hyprland";
 
 function sendBatch(batch: Array<string>) {
     const command = batch
@@ -29,7 +29,7 @@ function setGaps(gapsout: number, gapsin: number) {
     });
 }
 
-function onCloseWindow(client: Client) {
+function onCloseWindow(client: Client | undefined) {
     const activeWorkspace = Hyprland.getWorkspace(Hyprland.active.workspace.id);
 
     if (!activeWorkspace || activeWorkspace.id === -99 || activeWorkspace.windows > 1) {
@@ -43,7 +43,7 @@ function onCloseWindow(client: Client) {
             return;
         }
     }
-    else if (activeWorkspace.windows === 0 && ["Picture-in-Picture", "Launching..."].includes(client.title)) {
+    else if (activeWorkspace.windows === 0 && client && ["Picture-in-Picture", "Launching..."].includes(client.title)) {
         return;
     }
 
@@ -70,9 +70,9 @@ function listen(gapsout: number, gapsin: number) {
     Hyprland.connect('client-removed', (_, address) => {
         const client = clients.get(address);
         if (client) {
-            onCloseWindow(client);
             clients.delete(address);
         }
+        onCloseWindow(client);
     });
 
     App.connect('config-parsed', () => setGaps(gapsout, gapsin));
