@@ -29,10 +29,14 @@ function setGaps(gapsout: number, gapsin: number) {
     });
 }
 
+function clientInSpecial(client: Client | undefined) {
+    return client && client.workspace.id === -99;
+}
+
 function onCloseWindow(client: Client | undefined) {
     const activeWorkspace = Hyprland.getWorkspace(Hyprland.active.workspace.id);
 
-    if (!activeWorkspace || activeWorkspace.id === -99 || activeWorkspace.windows > 1) {
+    if (!activeWorkspace || activeWorkspace.windows > 1 || clientInSpecial(client)) {
         return;
     }
 
