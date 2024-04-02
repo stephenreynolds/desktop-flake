@@ -52,7 +52,11 @@ in
         };
 
         backgrounds = [{
-          path = "screenshot";
+          path =
+            if config.desktop-flake.ags.enable then
+              "${config.xdg.cacheHome}/ags/user/wallpaper"
+            else
+              "screenshot";
           color = "rgba(130f0f77)";
           blur_size = 5;
           blur_passes = 4;
