@@ -30,9 +30,25 @@ export function truncateString(str: string, len: number) {
     return str.length > len ? str.slice(0, len) + '...' : str;
 }
 
-export async function launchApp(app: Application) {
-    await Utils.execAsync([`${app.executable}`]);
-    app.frequency += 1;
+export async function bash(strings: TemplateStringsArray | string, ...values: unknown[]) {
+    const cmd = typeof strings === "string" ? strings : strings
+        .flatMap((str, i) => str + `${values[i] ?? ""}`)
+        .join("")
+
+    return Utils.execAsync(["bash", "-c", cmd]).catch(err => {
+        console.error(cmd, err)
+        return ""
+    })
+}
+
+export function launchApp(app: Application) {
+    const exe = app.executable
+        .split(/\s+/)
+        .filter(str => !str.startsWith("%") && !str.startsWith("@"))
+        .join(" ")
+
+    bash(`${exe} &`)
+    app.frequency += 1
 }
 
 export function config<T extends Gtk.Window>(config: Config<T>) {
