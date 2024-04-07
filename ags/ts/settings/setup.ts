@@ -14,7 +14,7 @@ export async function init() {
     scssWatcher();
     setupHyprland();
 
-    if (fileExists("/tmp/ags/scss/style.css")) {
+    if (fileExists(`${Utils.CACHE_DIR}/user/scss/style.css`)) {
         reloadScss();
         restoreTheme();
     }

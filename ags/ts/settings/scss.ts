@@ -3,7 +3,7 @@ import { monitorFile, ensureDirectory, execAsync } from 'resource:///com/github/
 import { dependencies } from 'utils';
 
 const sourcePath = `${App.configDir}/scss`;
-const outputPath = `${Utils.CACHE_DIR}/scss`;
+const outputPath = `${Utils.CACHE_DIR}/user/scss`;
 
 export function scssWatcher() {
     monitorFile(sourcePath, reloadScss);
@@ -16,8 +16,12 @@ export async function reloadScss() {
 
     try {
         ensureDirectory(outputPath);
+        ensureDirectory('/tmp/ags/scss');
         await execAsync([
-            'sass', `${sourcePath}/main.scss`, `${outputPath}/style.css`,
+            'cp', '-f', `${outputPath}/_material.scss`, '/tmp/ags/scss/_material.scss'
+        ]);
+        await execAsync([
+            'sass', `${sourcePath}/main.scss`, `${outputPath}/style.css`
         ]);
         App.resetCss();
         App.applyCss(`${outputPath}/style.css`);
