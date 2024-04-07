@@ -5,10 +5,10 @@ let
   cfg = config.desktop-flake.hyprland;
 
   primaryMonitor = config.desktop-flake.primaryMonitor;
-  terminal = config.home.sessionVariables.TERMINAL;
+  terminal = "xterm";
 in
 mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.workspace = [
-    "special:special, monitor:${primaryMonitor}, on-created-empty:[group new] ${terminal}"
+    "special, monitor:${primaryMonitor}, on-created-empty:[group new] ${terminal}"
   ];
 }
