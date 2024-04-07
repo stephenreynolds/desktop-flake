@@ -4,8 +4,9 @@ import Applications from 'resource:///com/github/Aylur/ags/service/applications.
 import PopupWindow from 'widgets/misc/PopupWindow';
 import Fuse from 'lib/fuse';
 import { launchApp } from 'utils';
+import { Application } from 'types/service/applications';
 
-const AppItem = (app) =>
+const AppItem = (app: Application) =>
     Widget.Button({
         class_name: 'app',
         onClicked: () => {
@@ -15,7 +16,7 @@ const AppItem = (app) =>
         child: Widget.Box({
             children: [
                 Widget.Icon({
-                    icon: app.iconName,
+                    icon: app.icon_name || undefined,
                     size: 48,
                 }),
                 Widget.Box({
@@ -70,11 +71,21 @@ const fuseOptions = {
 
 const fuse = new Fuse(Applications.list, fuseOptions);
 
-function filterApps(term) {
+function filterApps(term: string) {
     const entries = fuse.search(term);
     return entries.map((entry) =>
         Applications.list.find((app) => app.name === entry.item.name),
     );
+}
+
+function queryFilteredApps(text: string) {
+    let items: Application[] = [];
+    if (text === '') {
+        items = Applications.query(text);
+    } else {
+        items = filterApps(text);
+    }
+    return items;
 }
 
 const Launcher = () => {
@@ -100,19 +111,14 @@ const Launcher = () => {
         text: '-',
         placeholderText: 'Search',
         onAccept: ({ text }) => {
-            const list = Applications.query(text);
-            if (list[0]) {
+            const items = queryFilteredApps(text || '');
+            if (items[0]) {
                 App.closeWindow('launcher');
-                list[0].launch();
+                items[0].launch();
             }
         },
         onChange: ({ text }) => {
-            let items = [];
-            if (text === '') {
-                items = Applications.query(text);
-            } else {
-                items = filterApps(text);
-            }
+            const items = queryFilteredApps(text || '');
             list.children = items.map((app) => [AppItem(app)]).flat();
             list.show_all();
 
