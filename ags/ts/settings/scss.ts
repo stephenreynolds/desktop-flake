@@ -3,7 +3,7 @@ import { monitorFile, ensureDirectory, execAsync } from 'resource:///com/github/
 import { dependencies } from 'utils';
 
 const sourcePath = `${App.configDir}/scss`;
-const outputPath = '/tmp/ags/scss';
+const outputPath = `${Utils.CACHE_DIR}/scss`;
 
 export function scssWatcher() {
     monitorFile(sourcePath, reloadScss);

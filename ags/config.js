@@ -1,4 +1,4 @@
-const main = '/tmp/ags/main.js';
+const main = `${Utils.CACHE_DIR}/main.js`;
 const outdir = `${App.configDir}/ts/main.ts`;
 
 try {
