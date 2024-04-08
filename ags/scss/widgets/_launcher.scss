@@ -40,7 +40,10 @@
   }
 
   .app {
+    @include mixins.elevation-border;
+    @include mixins.small-rounding;
     margin: 0.25rem 0;
+    border-color: transparent;
 
     label {
       &.title {
@@ -58,8 +61,7 @@
 
     &:hover,
     &:focus {
-      @include mixins.elevation-border;
-      @include mixins.small-rounding;
+      border-color: mix(colors.$t_t_surface, material.$onSurface, 90%);
       background-color: colors.$t_surfaceVariant;
     }
   }
