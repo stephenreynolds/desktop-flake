@@ -17,7 +17,7 @@ const AppItem = (app: Application) =>
             children: [
                 Widget.Icon({
                     icon: app.icon_name || undefined,
-                    size: 48,
+                    size: 36,
                 }),
                 Widget.Box({
                     vertical: true,
