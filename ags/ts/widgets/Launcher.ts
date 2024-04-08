@@ -133,13 +133,7 @@ const Launcher = () => {
         children: [
             Widget.Box({
                 className: 'header',
-                children: [
-                    Widget.Label({
-                        className: 'icon-material text-3xl',
-                        label: 'search',
-                    }),
-                    entry,
-                ],
+                child: entry,
             }),
             Widget.Scrollable({
                 hscroll: 'never',
