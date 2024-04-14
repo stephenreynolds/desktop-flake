@@ -5,7 +5,8 @@ let
   cfg = config.desktop-flake.hypridle;
 
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-in {
+in
+{
   imports = [ inputs.hypridle.homeManagerModules.default ];
 
   options.desktop-flake.hypridle = {
@@ -14,8 +15,7 @@ in {
       default = config.desktop-flake.hyprland.enable;
       description = "Whether to enable hypridle";
     };
-    dim = let brightnessctl = getExe pkgs.brightnessctl;
-    in {
+    dim = {
       enable = mkEnableOption "Whether to dim display";
       timeout = mkOption {
         type = types.int;
@@ -27,21 +27,45 @@ in {
       };
       onTimeout = mkOption {
         type = types.str;
-        default = "${brightnessctl} -s set 10";
+        default = getExe (pkgs.writeShellApplication {
+          name = "dimBrightness";
+          runtimeInputs = [ pkgs.brightnessctl ];
+          text = ''
+            brightnessctl -s set 10
+          '';
+        });
       };
       onResume = mkOption {
         type = types.str;
-        default = "${brightnessctl} -r";
+        default = getExe (pkgs.writeShellApplication {
+          name = "restoreBrightness";
+          runtimeInputs = [ pkgs.brightnessctl ];
+          text = ''
+            brightnessctl -r
+          '';
+        });
       };
     };
     dpms = {
       onTimeout = mkOption {
         type = types.str;
-        default = "${hyprctl} dispatch dpms off";
+        default = getExe (pkgs.writeShellApplication {
+          name = "dpmsOff";
+          runtimeInputs = [ hyprctl ];
+          text = ''
+            hyprctl dispatch dpms off
+          '';
+        });
       };
       onResume = mkOption {
         type = types.str;
-        default = "${hyprctl} dispatch dpms on";
+        default = getExe (pkgs.writeShellApplication {
+          name = "dpmsOn";
+          runtimeInputs = [ hyprctl ];
+          text = ''
+            hyprctl dispatch dpms on
+          '';
+        });
       };
       timeout = mkOption {
         type = types.int;
@@ -60,16 +84,26 @@ in {
       };
       onTimeout = mkOption {
         type = types.str;
-        default = "${getExe pkgs.playerctl} --all-players pause";
+        default = getExe (pkgs.writeShellApplication {
+          name = "pause";
+          runtimeInputs = [ pkgs.playerctl ];
+          text = ''
+            playerctl --all-players pause
+          '';
+        });
       };
     };
     lock = {
       onTimeout = mkOption {
         type = types.str;
-        default =
-          "${cfg.pause.onTimeout} ; pidof hyprlock || PATH=$PATH:${pkgs.coreutils}/bin ${
-            getExe config.programs.hyprlock.package
-          }";
+        default = getExe (pkgs.writeShellApplication {
+          name = "lock";
+          runtimeInputs = [ pkgs.coreutils config.programs.hyprlock.package ];
+          text = ''
+            ${cfg.pause.onTimeout}
+            pidof hyprlock || hyprlock
+          '';
+        });
       };
       timeout = mkOption {
         type = types.int;
@@ -88,16 +122,34 @@ in {
       };
       onTimeout = mkOption {
         type = types.str;
-        default = "systemctl suspend";
+        default = getExe (pkgs.writeShellApplication {
+          name = "suspend";
+          runtimeInputs = [ pkgs.systemd ];
+          text = ''
+            systemctl suspend
+          '';
+        });
       };
       beforeCmd = mkOption {
         type = types.str;
-        default =
-          "${cfg.pause.onTimeout} ; ${pkgs.systemd}/bin/loginctl lock-session";
+        default = getExe (pkgs.writeShellApplication {
+          name = "beforeSuspend";
+          runtimeInputs = [ pkgs.systemd ];
+          text = ''
+            ${cfg.pause.onTimeout} 
+            loginctl lock-session
+          '';
+        });
       };
       afterCmd = mkOption {
         type = types.str;
-        default = "${hyprctl} dispatch dpms on";
+        default = getExe (pkgs.writeShellApplication {
+          name = "afterSuspend";
+          runtimeInputs = [ hyprctl ];
+          text = ''
+            hyprctl dispatch dpms on
+          '';
+        });
       };
       timeout = mkOption {
         type = types.int;
