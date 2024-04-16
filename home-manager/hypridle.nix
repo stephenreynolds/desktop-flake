@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  inherit (lib) mkIf mkMerge mkOption mkEnableOption types getExe;
+  inherit (lib) mkIf mkMerge mkOption mkEnableOption types getExe optionalString;
   cfg = config.desktop-flake.hypridle;
 
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
@@ -96,14 +96,15 @@ in
     lock = {
       onTimeout = mkOption {
         type = types.str;
-        default = getExe (pkgs.writeShellApplication {
-          name = "lock";
-          runtimeInputs = [ pkgs.coreutils config.programs.hyprlock.package ];
-          text = ''
-            ${cfg.pause.onTimeout}
-            pidof hyprlock || hyprlock
-          '';
-        });
+        default = optionalString config.desktop-flake.hyprlock.enable
+          (getExe (pkgs.writeShellApplication {
+            name = "lock";
+            runtimeInputs = [ pkgs.coreutils config.programs.hyprlock.package ];
+            text = ''
+              ${cfg.pause.onTimeout}
+              pidof hyprlock || hyprlock
+            '';
+          }));
       };
       timeout = mkOption {
         type = types.int;
