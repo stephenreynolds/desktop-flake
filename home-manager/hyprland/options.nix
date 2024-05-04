@@ -20,6 +20,7 @@ mkIf cfg.enable {
       allow_tearing = cfg.tearing.enable;
 
       cursor_inactive_timeout = 10;
+      default_cursor_monitor = config.desktop-flake.primaryMonitor;
 
       # Fallback colors
       "col.active_border" = "rgba(0DB7D4FF)";
