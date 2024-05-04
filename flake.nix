@@ -45,7 +45,6 @@
           gradience
           gsettings-desktop-schemas
           gtk3
-          hyprpaper
           (python3.withPackages (ps:
             with ps; [
               material-color-utilities

@@ -19,7 +19,6 @@ mkIf cfg.enable {
     exec-once =
       let
         hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-        hyprpaper = "${pkgs.hyprpaper}/bin/hyprpaper";
         cliphist = "${pkgs.cliphist}/bin/cliphist";
         wl-paste = "${pkgs.wl-clipboard}/bin/wl-paste";
       in
@@ -28,8 +27,6 @@ mkIf cfg.enable {
 
         (optionalString (primaryMonitor != "")
           "${hyprctl} dispatch focusmonitor ${primaryMonitor}")
-
-        hyprpaper
 
         "${wl-paste} --type text --watch ${cliphist} store"
         "${wl-paste} --type image --watch ${cliphist} store"
