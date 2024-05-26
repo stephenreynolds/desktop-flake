@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf mkMerge mkOption mkEnableOption types getExe optionalString;
@@ -7,8 +7,6 @@ let
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
 in
 {
-  imports = [ inputs.hypridle.homeManagerModules.default ];
-
   options.desktop-flake.hypridle = {
     enable = mkOption {
       type = types.bool;
@@ -175,28 +173,32 @@ in
     {
       services.hypridle = {
         enable = true;
-        lockCmd = cfg.lock.onTimeout;
-        beforeSleepCmd = cfg.suspend.beforeCmd;
-        afterSleepCmd = cfg.suspend.afterCmd;
-        listeners = [
-          # Dim display
-          (mkIf cfg.dim.enable {
-            inherit (cfg.dim) timeout onTimeout onResume;
-          })
+        settings = {
+          general = {
+            lock_cmd = cfg.lock.onTimeout;
+            before_sleep_cmd = cfg.suspend.beforeCmd;
+            after_sleep_cmd = cfg.suspend.afterCmd;
+          };
+          listener = [
+            # Dim display
+            (mkIf cfg.dim.enable {
+              inherit (cfg.dim) timeout onTimeout onResume;
+            })
 
-          # Display on/off
-          {
-            inherit (cfg.dpms) timeout onTimeout onResume;
-          }
+            # Display on/off
+            {
+              inherit (cfg.dpms) timeout onTimeout onResume;
+            }
 
-          # Lock session
-          {
-            inherit (cfg.lock) timeout onTimeout;
-          }
+            # Lock session
+            {
+              inherit (cfg.lock) timeout onTimeout;
+            }
 
-          # Suspend
-          (mkIf cfg.suspend.enable { inherit (cfg.suspend) timeout onTimeout; })
-        ];
+            # Suspend
+            (mkIf cfg.suspend.enable { inherit (cfg.suspend) timeout onTimeout; })
+          ];
+        };
       };
     }
   ]);
