@@ -16,10 +16,6 @@
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
     };
-
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
