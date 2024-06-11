@@ -105,8 +105,8 @@ mkIf cfg.enable {
         "$mod SHIFT, E, movetoworkspace, m+1"
 
         # Next empty workspace on monitor
-        "$mod, O, exec, ${scripts.focusEmpty}"
-        "$mod SHIFT, O, exec, ${scripts.moveToEmpty}"
+        "$mod, O, exec, workspace emptym"
+        "$mod SHIFT, O, exec, movetoworkspace emptym"
 
         # Special workspaces
         "$mod SHIFT, Return, movetoworkspace, special"
