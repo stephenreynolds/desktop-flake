@@ -19,9 +19,6 @@ mkIf cfg.enable {
 
       allow_tearing = cfg.tearing.enable;
 
-      cursor_inactive_timeout = 10;
-      default_cursor_monitor = config.desktop-flake.primaryMonitor;
-
       # Fallback colors
       "col.active_border" = "rgba(0DB7D4FF)";
       "col.inactive_border" = "rgba(31313600)";
@@ -32,6 +29,11 @@ mkIf cfg.enable {
       follow_mouse = 2;
       kb_layout = "us";
       numlock_by_default = false;
+    };
+
+    cursor = {
+      inactive_timeout = 10;
+      default_monitor = config.desktop-flake.primaryMonitor;
     };
 
     decoration = {
