@@ -24,17 +24,25 @@ let
     ];
 
   rule = rules: namespace: { inherit rules namespace; };
-in mkIf cfg.enable {
+in
+mkIf cfg.enable {
   wayland.windowManager.hyprland.settings.layerrule =
-    (optionals config.desktop-flake.ags.enable (let
-      bar = [ "bar-.*" ];
-      notifications = [ "notifications-.*" ];
-      actionCenter = [ "action-center" ];
-      launcher = [ "launcher" ];
-    in mapLayerRules [
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] bar)
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] notifications)
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] actionCenter)
-      (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] launcher)
-    ]));
+    (optionals config.desktop-flake.ags.enable (
+      let
+        bar = [ "bar-.*" ];
+        notifications = [ "notifications-.*" ];
+        actionCenter = [ "action-center" ];
+        launcher = [ "launcher" ];
+        hyprpicker = [ "hyprpicker" ];
+        selection = [ "selection" ];
+      in
+      mapLayerRules [
+        (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] bar)
+        (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] notifications)
+        (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] actionCenter)
+        (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] launcher)
+        (rule [ "animation fade" ] hyprpicker)
+        (rule [ "animation fade" ] selection)
+      ]
+    ));
 }
