@@ -27,12 +27,12 @@ export default {
       size: Option(1),
     },
     gaps: {
-      gapsIn: Option(0),
-      gapsOut: Option(0),
+      gapsIn: Option(5),
+      gapsOut: Option(4),
       noGapsWhenOnly: Option(0),
       noGapsWindowClasses: Option(["firefox"]),
     },
-    rounding: Option(0),
+    rounding: Option(10),
   },
 
   locale: {
