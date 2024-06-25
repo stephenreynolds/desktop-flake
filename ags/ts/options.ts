@@ -28,7 +28,7 @@ export default {
     },
     gaps: {
       gapsIn: Option(5),
-      gapsOut: Option(4),
+      gapsOut: Option(10),
       noGapsWhenOnly: Option(0),
       noGapsWindowClasses: Option(["firefox"]),
     },
