@@ -1,6 +1,8 @@
 { pkgs, ... }:
-let wpctl = "${pkgs.wireplumber}/bin/wpctl";
-in pkgs.writeShellScript "volume_helper" ''
+let
+  volumectl = "${pkgs.avizo}/bin/volumectl";
+in
+pkgs.writeShellScript "volume_helper" ''
   set -x
   SINK="@DEFAULT_SINK@"
   DEFAULT_STEP=5
@@ -42,13 +44,13 @@ in pkgs.writeShellScript "volume_helper" ''
   }
 
   if [ "$CHANGE" -gt 0 ]; then
-    ${wpctl} set-volume $SINK $CHANGE%+ --limit $LIMIT
+    ${volumectl} -u up
     play_sound
   elif [ "$CHANGE" -lt 0 ]; then
-    ${wpctl} set-volume $SINK $((-CHANGE))%- --limit $LIMIT
+    ${volumectl} -u down
     play_sound
   elif [ "$VOLUME" -ge 0 ]; then
-    ${wpctl} set-volume $SINK $VOLUME --limit $LIMIT
+    ${volumectl} -u up
     play_sound
   fi
 ''

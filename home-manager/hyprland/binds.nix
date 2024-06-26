@@ -179,13 +179,13 @@ mkIf cfg.enable {
 
     bindl =
       let
-        wpctl = "${pkgs.wireplumber}/bin/wpctl";
+        volumectl = "${pkgs.avizo}/bin/volumectl";
         playerctl = "${config.services.playerctld.package}/bin/playerctl";
       in
       [
         # Mute volume keys
-        ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_SINK@ toggle"
-        ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_SOURCE@ toggle"
+        ", XF86AudioMute, exec, ${volumectl} toggle-mute"
+        ", XF86AudioMicMute, exec, ${volumectl} -m toggle-mute"
 
         # Media keys
         ", XF86AudioForward, exec, ${playerctl} position +10"
