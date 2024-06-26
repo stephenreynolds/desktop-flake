@@ -35,12 +35,14 @@ mkIf cfg.enable {
         launcher = [ "launcher" ];
         hyprpicker = [ "hyprpicker" ];
         selection = [ "selection" ];
+        avizo = [ "avizo" ];
       in
       mapLayerRules [
         (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] bar)
         (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] notifications)
         (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] actionCenter)
         (rule [ "blur" "ignorealpha 0.4" "xray on" "noanim" ] launcher)
+        (rule [ "blur" "ignorealpha 0.65" "xray on" "noanim" ] avizo)
         (rule [ "animation fade" ] hyprpicker)
         (rule [ "animation fade" ] selection)
       ]

@@ -30,7 +30,7 @@ apply_hyprland() {
 	primary=${colorvalues[1]#\#}
 	secondaryContainer=${colorvalues[7]#\#}
 	hyprctl --batch "keyword general:col.active_border rgba(${primary}FF) ; \
-        keyword general:col.inactive_border rgba(${secondaryContainer}CC)"
+    keyword general:col.inactive_border rgba(${secondaryContainer}CC)"
 }
 
 apply_ags() {
@@ -110,9 +110,20 @@ apply_vesktop() {
 	done
 }
 
+apply_avizo() {
+	mkdir -p "$XDG_CONFIG_HOME/avizo"
+	config_file="$XDG_CONFIG_HOME/avizo/config.ini"
+	cp "scripts/color_generation/templates/avizo.ini" "$config_file"
+
+	hex=${colorvalues[7]:1:6}
+	rgb=$(printf "%d, %d, %d" 0x"${hex:0:2}" 0x"${hex:2:2}" 0x"${hex:4:2}")
+	sed -i "s/{{ background }}/rgba($rgb, 0.7)/g" "$config_file"
+}
+
 apply_ags &
 apply_hyprland &
 apply_term &
 apply_gtk &
 apply_electronmail &
 apply_vesktop &
+apply_avizo &

@@ -108,6 +108,8 @@ in
           ];
         };
       };
+
+      services.avizo.enable = true;
     }
 
     (mkIf cfg.xdg-autostart {

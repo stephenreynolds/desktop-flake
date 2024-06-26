@@ -20,15 +20,12 @@ mkIf cfg.enable {
       let
         cliphist = "${pkgs.cliphist}/bin/cliphist";
         wl-paste = "${pkgs.wl-clipboard}/bin/wl-paste";
-        avizo = "${pkgs.avizo}/bin/avizo-service";
       in
       [
         "sleep 0.5 ; ${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play -f ${pkgs.yaru-theme}/share/sounds/Yaru/stereo/desktop-login.oga"
 
         "${wl-paste} --type text --watch ${cliphist} store"
         "${wl-paste} --type image --watch ${cliphist} store"
-
-        "${avizo}"
       ];
   };
 }
