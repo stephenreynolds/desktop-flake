@@ -84,6 +84,9 @@ in
       wayland.windowManager.hyprland = {
         enable = true;
         package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+        systemd.variables = [
+          "--all"
+        ];
       };
 
       # Stolen from https://github.com/alebastr/sway-systemd/commit/0fdb2c4b10beb6079acd6073c5b3014bd58d3b74
