@@ -86,7 +86,7 @@ mkIf cfg.enable {
       always_center_master = true;
       inherit_fullscreen = true;
       mfact = 0.55;
-      new_is_master = true;
+      new_status = "master";
       new_on_top = true;
       no_gaps_when_only = 1;
       orientation = "right";
