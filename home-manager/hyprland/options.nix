@@ -109,6 +109,10 @@ mkIf cfg.enable {
       };
     };
 
+    render = {
+      explicit_sync = 0;
+    };
+
     misc = {
       allow_session_lock_restore = true;
       disable_hyprland_logo = true;
