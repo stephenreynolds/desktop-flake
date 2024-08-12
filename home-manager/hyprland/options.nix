@@ -34,7 +34,8 @@ mkIf cfg.enable {
     cursor = {
       inactive_timeout = 10;
       default_monitor = config.desktop-flake.primaryMonitor;
-      no_hardware_cursors = true;
+      no_hardware_cursors = config.desktop-flake.nvidia;
+      allow_dumb_copy = config.desktop-flake.nvidia;
     };
 
     decoration = {
