@@ -30,7 +30,12 @@ export default {
       gapsIn: Option(5),
       gapsOut: Option(10),
       noGapsWhenOnly: Option(0),
-      noGapsWindowClasses: Option(["firefox", "firefox-nightly"]),
+      noGapsWindowClasses: Option([
+        "firefox",
+        "firefox-nightly",
+        "firefox-devedition",
+        "firefox-aurora",
+      ]),
     },
     rounding: Option(10),
   },
