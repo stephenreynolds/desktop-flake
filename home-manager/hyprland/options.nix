@@ -90,7 +90,7 @@ mkIf cfg.enable {
       new_status = "master";
       new_on_top = true;
       no_gaps_when_only = 1;
-      orientation = "right";
+      orientation = "center";
       special_scale_factor = 0.95;
     };
 
