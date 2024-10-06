@@ -101,6 +101,7 @@ mkIf cfg.enable {
     };
 
     group = {
+      auto_group = true;
       insert_after_current = false;
 
       groupbar = {
