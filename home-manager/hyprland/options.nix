@@ -76,7 +76,6 @@ mkIf cfg.enable {
 
     dwindle = {
       force_split = 2; # Split right
-      no_gaps_when_only = 0;
       permanent_direction_override = true;
       preserve_split = true;
       pseudotile = true;
@@ -89,7 +88,6 @@ mkIf cfg.enable {
       mfact = 0.6;
       new_status = "master";
       new_on_top = true;
-      no_gaps_when_only = 1;
       orientation = "right";
       special_scale_factor = 0.95;
     };
