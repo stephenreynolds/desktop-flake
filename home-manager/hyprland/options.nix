@@ -22,6 +22,11 @@ mkIf cfg.enable {
       # Fallback colors
       "col.active_border" = "rgba(0DB7D4FF)";
       "col.inactive_border" = "rgba(31313600)";
+
+      snap = {
+        enabled = true;
+        border_overlap = true;
+      };
     };
 
     input = {
