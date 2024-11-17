@@ -39,8 +39,8 @@ mkIf cfg.enable {
     cursor = {
       inactive_timeout = 10;
       default_monitor = config.desktop-flake.primaryMonitor;
-      no_hardware_cursors = config.desktop-flake.nvidia;
-      allow_dumb_copy = config.desktop-flake.nvidia;
+      no_hardware_cursors = 0;
+      use_cpu_buffer = true;
     };
 
     decoration = {
@@ -60,12 +60,13 @@ mkIf cfg.enable {
         xray = true;
       };
 
-      drop_shadow = true;
-      shadow_ignore_window = true;
-      shadow_range = 20;
-      shadow_offset = "0 2";
-      shadow_render_power = 2;
-      "col.shadow" = "rgba(0000001A)";
+      shadow = {
+        ignore_window = true;
+        range = 20;
+        offset = "0 2";
+        render_power = 2;
+        color = "rgba(0000001A)";
+      };
     };
 
     animations = {
