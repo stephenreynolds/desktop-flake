@@ -39,8 +39,7 @@ mkIf cfg.enable {
     cursor = {
       inactive_timeout = 10;
       default_monitor = config.desktop-flake.primaryMonitor;
-      no_hardware_cursors = 0;
-      use_cpu_buffer = true;
+      # use_cpu_buffer = true;
     };
 
     decoration = {
