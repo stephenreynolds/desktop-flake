@@ -114,7 +114,6 @@ export async function setupHyprland() {
   const batch: Array<string> = [];
 
   batch.push(
-    `general:border_size ${options.hyprland.borders.size.value}`,
     `general:gaps_in ${options.hyprland.gaps.gapsIn.value}`,
     `general:gaps_out ${options.hyprland.gaps.gapsOut.value}`,
     `decoration:rounding ${options.hyprland.rounding.value}`,
