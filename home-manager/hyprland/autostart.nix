@@ -13,7 +13,7 @@ mkIf cfg.enable {
         ags =
           "${inputs.ags.packages.${pkgs.system}.default}/bin/ags -b hyprland";
       in
-      [ "${ags} -q; ${ags}" ]
+      [ "uwsm app -- ${ags} -q; ${ags}" ]
     ));
 
     exec-once =
@@ -24,8 +24,8 @@ mkIf cfg.enable {
       [
         "sleep 0.5 ; ${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play -f ${pkgs.yaru-theme}/share/sounds/Yaru/stereo/desktop-login.oga"
 
-        "${wl-paste} --type text --watch ${cliphist} store"
-        "${wl-paste} --type image --watch ${cliphist} store"
+        "uwsm app -- ${wl-paste} --type text --watch ${cliphist} store"
+        "uwsm app -- ${wl-paste} --type image --watch ${cliphist} store"
       ];
   };
 }

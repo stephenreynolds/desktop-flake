@@ -25,25 +25,25 @@ mkIf cfg.enable {
             })
             (builtins.readDir path)) ./scripts;
 
-        gtk-launch = "${pkgs.gtk3}/bin/gtk-launch";
+        gtk-launch = "uwsm app -- ${pkgs.gtk3}/bin/gtk-launch";
         xdg-mime = "${pkgs.xdg-utils}/bin/xdg-mime";
         defaultApp = type: "${gtk-launch} $(${xdg-mime} query default ${type})";
 
         terminal = "xterm";
         browser = defaultApp "x-scheme-handler/https";
 
-        cliphist = "${pkgs.cliphist}/bin/cliphist";
-        wofi = "${pkgs.wofi}/bin/wofi";
-        wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
+        cliphist = "uwsm app -- ${pkgs.cliphist}/bin/cliphist";
+        wofi = "uwsm app -- ${pkgs.wofi}/bin/wofi";
+        wl-copy = "uwsm app -- ${pkgs.wl-clipboard}/bin/wl-copy";
 
-        hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
+        hyprpicker = "uwsm app -- ${pkgs.hyprpicker}/bin/hyprpicker";
 
-        grimblast = "${
+        grimblast = "uwsm app -- ${
           inputs.hyprland-contrib.packages.${pkgs.system}.grimblast
         }/bin/grimblast";
-        swappy = lib.getExe pkgs.swappy;
-        tesseract = "${pkgs.tesseract}/bin/tesseract";
-        notify-send = "${pkgs.libnotify}/bin/notify-send";
+        swappy = "uwsm app -- ${lib.getExe pkgs.swappy}";
+        tesseract = "uwsm app -- ${pkgs.tesseract}/bin/tesseract";
+        notify-send = "uwsm app -- ${pkgs.libnotify}/bin/notify-send";
       in
       [
         # Kill window and switch to previous workspace if it was the last one

@@ -4,7 +4,8 @@ let
   cfg = config.desktop-flake;
 
   hyprland = inputs.hyprland.packages.${pkgs.system};
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     programs.hyprland = {
       enable = true;
@@ -15,6 +16,15 @@ in {
       enable = true;
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
       configPackages = [ hyprland.xdg-desktop-portal-hyprland ];
+    };
+
+    programs.uwsm = {
+      enable = true;
+      waylandCompositors.hyprland = {
+        binPath = "/run/current-system/sw/bin/Hyprland";
+        comment = "Hyprland session managed by uwsm";
+        prettyName = "Hyprland";
+      };
     };
   };
 }
